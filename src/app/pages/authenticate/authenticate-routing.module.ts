@@ -4,10 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthenticatePage } from './authenticate.page';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: AuthenticatePage
-  }
+  { path:'', component: AuthenticatePage}
+
 ];
 
 @NgModule({

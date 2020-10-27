@@ -26,6 +26,8 @@ export class AuthService {
       this._isLogged = true;
     }
   }
+
+
   logOut() {
     if(!this._isLogged) {
       this._isLogged = false;

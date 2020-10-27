@@ -1,9 +1,27 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>authenticate</ion-title>
+    <ion-title class="ion-text-center">waiterApp</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
+  <div class="logo-container">
+  <ion-icon class="logo" name="restaurant-outline"></ion-icon>
+</div>
+  <h2>Zaloguj się jako kelner</h2>
+  <form (ngSubmit) = "authenticateWaiter()" [formGroup] = "authenticationForm">
+        <ion-item class="formControll">
+          <ion-label position="floating">Imie</ion-label>
+          <ion-input type="text"></ion-input>
+          <div *ngIf="">
 
+          </div>
+        </ion-item>
+        <ion-item class="formControll">
+          <ion-label position="floating">Nazwisko</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
+    
+        <ion-button size = "large" fill="solid" type="submit" expand="block" color="primary">Zaloguj</ion-button>
+    
+</form>
 </ion-content>

@@ -1,19 +1,15 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
-import { IonicModule } from '@ionic/angular';
-
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { AuthenticatePageRoutingModule } from './authenticate-routing.module';
-
 import { AuthenticatePage } from './authenticate.page';
 
 @NgModule({
   imports: [
-    CommonModule,
+    AuthenticatePageRoutingModule,
     FormsModule,
-    IonicModule,
-    AuthenticatePageRoutingModule
+    ReactiveFormsModule
   ],
   declarations: [AuthenticatePage]
 })
