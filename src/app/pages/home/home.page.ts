@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterEvent } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePage implements OnInit {
 
-  constructor() { }
+  public pages = [{
+    title:'Zamówienia',
+    url:'allOrders'
+  },
+  {
+    title:'Dodaj zamówienie',
+    url:'addOrder'
+  }]
+
+  public selectedPath;
+
+  constructor(private router: Router,private route: ActivatedRoute) {
+    /* this.router.events.subscribe((event:RouterEvent) => {
+      this.selectedPath = event.url
+      console.log(this.selectedPath)
+    })  */
+  }
 
   ngOnInit() {
+ 
+  }
+
+  public navigate(url: string) {
+    console.log(this.route);
+    this.router.navigate([`/home/${url}`]);
+    console.log('XDD');
+
   }
 
 }

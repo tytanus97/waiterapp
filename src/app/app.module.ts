@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomePageModule } from './pages/home/home.module';
 import { AuthenticatePageModule } from './pages/authenticate/authenticate.module';
-import { CommonModule } from '@angular/common';
+
 
 
 @NgModule({
@@ -18,8 +18,6 @@ import { CommonModule } from '@angular/common';
   entryComponents: [],
   imports: [BrowserModule,
      IonicModule.forRoot(),
-     CommonModule,
-     BrowserModule,
      HttpClientModule,
      AuthenticatePageModule,
      HomePageModule,
@@ -32,6 +30,7 @@ import { CommonModule } from '@angular/common';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     HttpClient
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports:[IonicModule]
 })
 export class AppModule {}

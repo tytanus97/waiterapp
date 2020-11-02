@@ -1,9 +1,22 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>home</ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content>
+  <ion-menu contentId="content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-menu-toggle slot="start">
+          <ion-icon name="chevron-back-outline" size="large" ></ion-icon>
+        </ion-menu-toggle>
+        <ion-title></ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle auto-hide="false" *ngFor="let p of pages">
+          <ion-item (click) = "navigate(p.url)">
+            {{p.title}}
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="content"></ion-router-outlet>
 
-</ion-content>

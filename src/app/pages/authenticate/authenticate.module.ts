@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
+import { IonicModule } from '@ionic/angular';
 import { AuthenticatePageRoutingModule } from './authenticate-routing.module';
 import { AuthenticatePage } from './authenticate.page';
 
@@ -9,7 +9,9 @@ import { AuthenticatePage } from './authenticate.page';
   imports: [
     AuthenticatePageRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule,
+    IonicModule
   ],
   declarations: [AuthenticatePage]
 })

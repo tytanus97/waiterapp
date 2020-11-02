@@ -5,10 +5,10 @@ import { HomePageModule } from './pages/home/home.module';
 import { AuthGuard } from './utils/guards/auth.guard';
 
 const routes: Routes = [
-  { path:'', redirectTo: 'home', pathMatch: 'full' },
+  { path:'', redirectTo:'home', pathMatch: 'full' },
   {
-      path:'home',canActivate:[AuthGuard],
-      loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+    path:'home',//canActivate: [AuthGuard],
+    loadChildren: () => import('../app/pages/home/home.module').then( m => m.HomePageModule)
   },
   {
     path:'authenticate',
