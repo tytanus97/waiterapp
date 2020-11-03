@@ -6,14 +6,14 @@ export class Dish {
     private _dishName: string,
     private _dishPrice: number,
     private _dishDescription: string,
-    private _dishCategor: DishCategory
+    private _dishCategory: DishCategory
   ) {}
 
-  public get dishCategor(): DishCategory {
-    return this._dishCategor;
+  public get dishCategory(): DishCategory {
+    return this._dishCategory;
 }
-public set dishCategor(value: DishCategory) {
-    this._dishCategor = value;
+public set dishCategory(value: DishCategory) {
+    this._dishCategory = value;
 }
 public get dishDescription(): string {
     return this._dishDescription;

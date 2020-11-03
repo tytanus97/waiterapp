@@ -1,4 +1,5 @@
 import { Dish } from './dish';
+import { OrderedDish } from './orderedDish';
 import { OrderStatus } from "./orderStatus";
 import { Table } from "./Table";
 import { Waiter } from "./waiter";
@@ -12,7 +13,7 @@ export class Order {
     private _orderDate: Date,
     private _totalPrice: number,
     private _orderStatus: OrderStatus,
-    private _orderedDishes: Array<Dish>
+    private _orderedDishes: Array<OrderedDish>
   ) {}
 
   public get orderStatus(): OrderStatus {
@@ -51,10 +52,10 @@ export class Order {
   public set orderId(value) {
     this._orderId = value;
   }
-  public get orderedDishes(): Array<Dish> {
+  public get orderedDishes(): Array<OrderedDish> {
     return this._orderedDishes;
   }
-  public set orderedDishes(value: Array<Dish>) {
+  public set orderedDishes(value: Array<OrderedDish>) {
     this._orderedDishes = value;
   }
 }
