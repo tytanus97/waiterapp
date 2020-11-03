@@ -1,8 +1,10 @@
+import { Dish } from './dish';
 import { OrderStatus } from "./orderStatus";
 import { Table } from "./Table";
 import { Waiter } from "./waiter";
 
 export class Order {
+  
   constructor(
     private _orderId,
     private _waiter: Waiter,
@@ -10,7 +12,7 @@ export class Order {
     private _orderDate: Date,
     private _totalPrice: number,
     private _orderStatus: OrderStatus,
-    private _orderDishes: Array<Dish>
+    private _orderedDishes: Array<Dish>
   ) {}
 
   public get orderStatus(): OrderStatus {
@@ -48,5 +50,11 @@ export class Order {
   }
   public set orderId(value) {
     this._orderId = value;
+  }
+  public get orderedDishes(): Array<Dish> {
+    return this._orderedDishes;
+  }
+  public set orderedDishes(value: Array<Dish>) {
+    this._orderedDishes = value;
   }
 }
