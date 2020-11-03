@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterEvent } from '@angular/router';
+import { take, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -10,20 +11,20 @@ export class HomePage implements OnInit {
 
   public pages = [{
     title:'Zamówienia',
-    url:'allOrders'
+    url:'/home/allOrders'
   },
   {
     title:'Dodaj zamówienie',
-    url:'addOrder'
+    url:'/home/addOrder'
   }]
 
   public selectedPath;
 
   constructor(private router: Router,private route: ActivatedRoute) {
-    /* this.router.events.subscribe((event:RouterEvent) => {
-      this.selectedPath = event.url
+     this.router.events.subscribe((event:RouterEvent) => {
+      this.selectedPath = event.url;
       console.log(this.selectedPath)
-    })  */
+    })  
   }
 
   ngOnInit() {
@@ -31,9 +32,7 @@ export class HomePage implements OnInit {
   }
 
   public navigate(url: string) {
-    console.log(this.route);
-    this.router.navigate([`/home/${url}`]);
-    console.log('XDD');
+    this.router.navigate([url]);
 
   }
 

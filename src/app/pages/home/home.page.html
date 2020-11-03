@@ -5,15 +5,18 @@
         <ion-menu-toggle slot="start">
           <ion-icon name="chevron-back-outline" size="large" ></ion-icon>
         </ion-menu-toggle>
-        <ion-title></ion-title>
+        <ion-title>Opcje</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
       <ion-list>
         <ion-menu-toggle auto-hide="false" *ngFor="let p of pages">
-          <ion-item (click) = "navigate(p.url)">
+          <ion-item [routerLink] = "p.url"   [class.active-item] = "selectedPath === p.url">
             {{p.title}}
           </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item>Wyloguj</ion-item>
         </ion-menu-toggle>
       </ion-list>
     </ion-content>
