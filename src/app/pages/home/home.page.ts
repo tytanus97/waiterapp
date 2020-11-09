@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterEvent } from '@angular/router';
 import { take, takeUntil } from 'rxjs/operators';
+import { AuthService } from 'src/app/services/authentication/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -20,8 +21,8 @@ export class HomePage implements OnInit {
 
   public selectedPath;
 
-  constructor(private router: Router,private route: ActivatedRoute) {
-     this.router.events.subscribe((event:RouterEvent) => {
+  constructor(private _router: Router,private _route: ActivatedRoute,private _authService: AuthService) {
+     this._router.events.subscribe((event:RouterEvent) => {
       this.selectedPath = event.url;
       console.log(this.selectedPath)
     })  
@@ -32,8 +33,13 @@ export class HomePage implements OnInit {
   }
 
   public navigate(url: string) {
-    this.router.navigate([url]);
+    this._router.navigate([url]);
+  }
 
+  public logout() {
+    this._authService.logOut().then(res => {
+      this._router.navigate(['/authenticate']);
+    })
   }
 
 }

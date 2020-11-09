@@ -10,19 +10,22 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomePageModule } from './pages/home/home.module';
 import { AuthenticatePageModule } from './pages/authenticate/authenticate.module';
+import { CommonModule } from '@angular/common';
+import { HasAnnotationPipe } from './utils/pipes/has-annotation/has-annotation.pipe';
+
 
 
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule,
+  imports: [CommonModule,
+    BrowserModule,
      IonicModule.forRoot(),
      HttpClientModule,
      AuthenticatePageModule,
      HomePageModule,
-     AppRoutingModule,
-     
+     AppRoutingModule,     
   ],
   providers: [
     StatusBar,

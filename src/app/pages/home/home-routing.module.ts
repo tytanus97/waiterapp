@@ -16,7 +16,7 @@ const routes: Routes = [
       {
         path:'',redirectTo:'allOrders',pathMatch:'full'
       }
-    ]//,canActivateChild:[AuthGuard]
+    ],canActivateChild:[AuthGuard]
   }
 ];
 

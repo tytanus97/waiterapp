@@ -2,31 +2,32 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { WaiterCredentials } from 'src/app/models/waiterCredentials';
+import { Storage } from '@capacitor/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
- 
-  private _isLogged: boolean = false;
+  
 
   constructor(private httpClient: HttpClient) {
    }
 
   isLogged() {
-    return this._isLogged;
+    return Storage.get({'key':'loggedUser'}).then(res => {
+      if(res.value) return true;
+      return false;
+    });
   }
 
-  authenticate(waiterCredentials: WaiterCredentials): Observable<Boolean> {
+  authenticate(waiterCredentials: WaiterCredentials) {
       if(waiterCredentials.firstName === 'Pawel' && waiterCredentials.lastName === 'Ataman') {
-      this._isLogged = true;
+        Storage.set({'key':'loggedUser','value':waiterCredentials.firstName});
+        return of(true);
       } else return of(false);
-    return of(true);
   }
 
   logOut() {
-    if(!this._isLogged) {
-      this._isLogged = false;
-    }
+    return Storage.remove({'key':'loggedUser'});
   }
 }

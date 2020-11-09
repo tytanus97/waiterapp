@@ -17,11 +17,17 @@ export class AuthenticatePage implements OnInit {
 
   constructor(private authService: AuthService, private router: Router,private fb: FormBuilder
     ,private toastController: ToastController) { }
+
   ngOnInit() {
     this.authenticationForm = this.fb.group({
       firstName:[null,{validators:[Validators.required]}],
       lastName: [null,{validators:[Validators.required]}]
     })
+  }
+
+  public ionViewWillEnter() {
+    this.authenticationForm.reset();
+    console.log('enter');
   }
 
   authenticateWaiter() {

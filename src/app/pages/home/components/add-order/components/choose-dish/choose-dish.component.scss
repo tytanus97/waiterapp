@@ -1,0 +1,20 @@
+.back-icon {
+    margin-left:1rem;
+}
+
+ion-card-header {
+    border-bottom:2px solid var(--ion-color-primary);
+}
+
+ion-header > ion-title {
+    text-align:center;
+}
+
+ion-select-option {
+    text-transform: capitalize;
+}
+
+ion-card {
+    overflow-y: scroll;
+}
+

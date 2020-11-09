@@ -7,5 +7,63 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <p> Dodaj zamowienie </p>
+  <ion-item class="ion-margin">
+    <ion-select
+      [(ngModel)]="choosenTable"
+      okText="OK"
+      cancelText="Anuluj"
+      placeholder="Wybierz stolik"
+    >
+      <ion-select-option *ngFor="let table of tables" [value]="table" >
+        Stolik {{ table }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-card>
+    <ion-card-header class="ion-no-padding">
+      <ion-item >
+      <ion-card-subtitle slot="start">Zamowione pozycje</ion-card-subtitle>
+      <span slot="end">{{orderedDishes.length}}</span>
+    </ion-item>
+    </ion-card-header>
+    <ion-card-content class="ion-no-padding">
+     <ion-grid *ngIf="orderedDishes.length > 0;else noOrderedDishes">
+       <ion-row *ngFor="let orderedDish of orderedDishes">
+        <ion-col size="8">
+          {{orderedDish.dish.dishName}} 
+        </ion-col>
+        <ion-col size="3">
+          {{orderedDish.dish.dishPrice | number:'1.2-2'}} zl
+        </ion-col>
+        <ion-col class="ion-padding-top" size="1"><ion-icon name="chevron-forward-outline"></ion-icon></ion-col>
+       </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>  
+  <ion-item>
+    <ion-item slot="start">Suma:</ion-item>
+    <ion-item slot="end"><h3>{{totalPrice}} zł</h3></ion-item>
+  </ion-item>
+
+  <ion-item class="ion-margin ion-no-padding">
+    <ion-list class="ion-no-padding">
+      <ion-item><ion-icon name="alert-circle-outline" class="ion-margin-end" color="warning"></ion-icon>Uwagi:</ion-item>
+      <ion-list *ngIf="orderedDishes.length > 0;else noOrderedDishes" class="ion-no-margin">
+        <ion-item *ngFor="let orderedDish of orderedDishes | hasAnnotation">
+          {{orderedDish.orderedDishAnnotation}}
+        </ion-item>
+      </ion-list>
+    </ion-list>
+  </ion-item>
+
+  <ion-fab vertical="bottom" horizontal = "end" slot = "fixed" class="ion-margin">
+    <ion-fab-button color="tertiary" (click) = "goToSelectDish()">
+      <ion-icon name="add" color="light"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
+
+<ng-template #noOrderedDishes>
+  <ion-item>Brak dodanych dań</ion-item>
+</ng-template>

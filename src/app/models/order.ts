@@ -9,7 +9,7 @@ export class Order {
   constructor(
     private _orderId,
     private _waiter: Waiter,
-    private _table: Table,
+    private _table: number,
     private _orderDate: Date,
     private _totalPrice: number,
     private _orderStatus: OrderStatus,
@@ -34,10 +34,10 @@ export class Order {
   public set orderDate(value: Date) {
     this._orderDate = value;
   }
-  public get table(): Table {
+  public get table(): number {
     return this._table;
   }
-  public set table(value: Table) {
+  public set table(value: number) {
     this._table = value;
   }
   public get waiter(): Waiter {

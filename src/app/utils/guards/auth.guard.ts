@@ -14,17 +14,19 @@ export class AuthGuard implements CanActivate,CanActivateChild {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if(!this.authService.isLogged()) {
-        this.router.navigate(['authenticate']);
-        return false;
-      } else return true;
+      return this.authService.isLogged().then(result => {
+        if(!result){
+          return this.router.parseUrl('/authenticate');
+        } return true;
+      })
   }
 
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    if(!this.authService.isLogged()) {
-      this.router.navigate(['authenticate']);
-      return false;
-    } else return true;
+    return this.authService.isLogged().then(result => {
+      if(!result){
+        return this.router.parseUrl('/authenticate');
+      } return true;
+    })
   }
 
 
