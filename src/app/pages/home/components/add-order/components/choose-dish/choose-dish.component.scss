@@ -54,6 +54,9 @@ ion-card {
     margin:0;
 }
 
+.dish-element {
+    font-size:0.9rem;
+}
 .dish-element:not(:last-child) {
     border-bottom:1px solid white;
 }
@@ -61,7 +64,7 @@ ion-card {
 .dish-name {
     flex-grow:2;
     margin:0;
-    padding:0;
+    padding:5px 0 5px 0;
     line-height: 1rem;
 }
 .dish-price {
