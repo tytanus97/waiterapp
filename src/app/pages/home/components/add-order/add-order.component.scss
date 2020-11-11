@@ -3,9 +3,49 @@ ion-card-header {
 }
 
 ion-col {
-    text-align: center;
+    text-align: left;
 }
 
 ion-row:not(:last-child) {
     border-bottom:1px solid rgba(255,255,255,0.5);
+}
+ion-card-content {
+    max-height:150px;
+    overflow-y: scroll;
+    overflow-x:hidden;
+}
+
+.dishOption {
+    font-size:2rem;
+}
+
+.annotationList {
+    width:100%;
+}
+
+.dishAnnotationHeader {
+    font-size:0.9rem;
+    color:grey;
+}
+
+.deleteAnnotation {
+    margin-top:0.5rem;
+    text-align:center;
+}
+
+.annotationContainer {
+    max-height:190px;
+    margin-top:5px;
+    overflow-y: scroll;
+}
+
+ion-card {
+    margin-top:5px;
+    margin-bottom:5px;
+}
+
+.sendOrderButton {
+    position:absolute;
+    bottom:10px;
+    left:10px;
 }
