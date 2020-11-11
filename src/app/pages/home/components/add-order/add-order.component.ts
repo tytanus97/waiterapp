@@ -137,6 +137,9 @@ export class AddOrderComponent implements OnInit {
         this.orderedDishes
       );
       this._orderService.addOrder(order);
+      this.prompt('Dodano zamowienie','success');
+      this.reset();
+      
     } else {
       await this.prompt("Brakujace dane!", "warning");
     }
@@ -154,11 +157,18 @@ export class AddOrderComponent implements OnInit {
   private async prompt(message: string, color: string) {
     const warningToast = this._toastCtrl.create({
       message: message,
-      duration: 2000,
+      duration: 1500,
       position: "bottom",
       animated: true,
       color: color,
     });
     (await warningToast).present();
+  }
+
+  private reset() {
+    this.orderedDishes.length = 0;
+    this.chosenTable = undefined;
+    this.orderedDishesAnnotations.clear();
+    this.totalPrice = 0;
   }
 }
