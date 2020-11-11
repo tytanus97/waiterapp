@@ -6,8 +6,8 @@ import { OrderedDish } from 'src/app/models/orderedDish';
 })
 export class HasAnnotationPipe implements PipeTransform {
 
-  transform(value: Array<OrderedDish>): unknown {
-    return value.filter(od => od.orderedDishAnnotation);
+  transform(value: Array<OrderedDish>): Array<OrderedDish> {
+    return value.filter(od => od.orderedDishAnnotation !== 'undefined');
   }
 
 }

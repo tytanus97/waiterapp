@@ -6,9 +6,9 @@ import { Dish } from 'src/app/models/dish';
 })
 export class FilterByCategoryPipe implements PipeTransform {
 
-  transform(value: Array<Dish>, dishCategory: string): Array<Dish> {
+  transform(value: Array<{key:string,value:Dish}>, dishCategory: string): Array<{key:string,value:Dish}> {
     if(!value || !dishCategory || dishCategory === 'wszystkie') return value;
-    return value.filter(d => d.dishCategory === dishCategory);
+    return value.filter((kv) => kv.key === dishCategory);
   }
 
 }
