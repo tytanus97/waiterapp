@@ -11,12 +11,13 @@
     <ion-content>
       <ion-list>
         <ion-menu-toggle auto-hide="false" *ngFor="let p of pages">
-          <ion-item [routerLink] = "p.url"   [class.active-item] = "selectedPath === p.url">
+          <ion-item [routerLink] = "p.url">
+            <ion-icon [name] = "p.icon" class="menuIcon"></ion-icon>
             {{p.title}}
           </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>
-          <ion-item (click) = "logout()">Wyloguj</ion-item>
+          <ion-item (click) = "logout()"><ion-icon name="log-out" class="menuIcon"></ion-icon>Wyloguj</ion-item>
         </ion-menu-toggle>
       </ion-list>
     </ion-content>

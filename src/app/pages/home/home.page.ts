@@ -12,11 +12,13 @@ export class HomePage implements OnInit {
 
   public pages = [{
     title:'Zamówienia',
-    url:'/home/allOrders'
+    url:'/home/allOrders',
+    icon:'flag'
   },
   {
     title:'Dodaj zamówienie',
-    url:'/home/addOrder'
+    url:'/home/addOrder',
+    icon:'add-circle'
   }]
 
   public selectedPath;
@@ -24,7 +26,6 @@ export class HomePage implements OnInit {
   constructor(private _router: Router,private _route: ActivatedRoute,private _authService: AuthService) {
      this._router.events.subscribe((event:RouterEvent) => {
       this.selectedPath = event.url;
-      console.log(this.selectedPath)
     })  
   }
 
