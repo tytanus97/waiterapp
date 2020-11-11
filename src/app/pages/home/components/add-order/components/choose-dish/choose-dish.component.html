@@ -15,16 +15,18 @@
         {{ dishCategory | titlecase }}</ion-select-option>
     </ion-select>
   </ion-item>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Lista dań</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-list>
-        <ion-item *ngFor = "let dish of allDishes | filterByCategory: selectedCategory" (click) = "addDish(dish)" class="ion-no-padding">
-            {{dish.dishName}}
-        </ion-item>
+  <ion-list class="dish-category-list">
+    <ion-item *ngFor="let category of dishesWithCategories | keyvalue"
+      class="dish-category-list-category-element">
+      <ion-list class="dish-category-list-dish-element">
+        <ion-item class="category-header"><ion-label>{{category.key | uppercase}}</ion-label></ion-item>
+        <ion-list class="dish-list">
+          <ion-item *ngFor="let dish of category.value" class="dish-element" lines="full">
+            <ion-label text-wrap slot="start" class="dish-name">{{dish.dishName}}</ion-label>
+            <ion-label slot="end" class="dish-price">{{dish.dishPrice | number:'1.2-2'}}</ion-label>
+          </ion-item>
+        </ion-list>
       </ion-list>
-    </ion-card-content>
-  </ion-card>
+    </ion-item>
+  </ion-list>
 </ion-content>

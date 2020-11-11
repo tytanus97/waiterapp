@@ -11,7 +11,8 @@ import { DishesService } from 'src/app/services/dishes/dishes.service';
   styleUrls: ['./choose-dish.component.scss'],
 })
 export class ChooseDishComponent implements OnInit {
-  public allDishes: Array<Dish>;
+  private allDishes: Array<Dish>;
+  public dishesWithCategories: Map<string,Array<Dish>>;
   public dishCategories: Set<string>
   public allCategory = 'wszystkie';
   public selectedCategory;
@@ -23,8 +24,17 @@ export class ChooseDishComponent implements OnInit {
   this.allDishes = this._dishesService.getAllDishes();
   this.dishCategories = this._dishesService.getAllCategories();
   this.selectedCategory = this.allCategory;
-  this.selectedDish = new FormControl('');
+  this.dishesWithCategories = new Map();
+  this.allDishes.forEach(d => {
+    let dishSubArray = this.dishesWithCategories.get(d.dishCategory);
+    if(!dishSubArray) dishSubArray = new Array<Dish>();
+    dishSubArray.push(d);
+    this.dishesWithCategories.set(d.dishCategory,dishSubArray);
+    })
   }
+
+
+  
 
   public async addDish(dish: Dish) {
     await this._modalController.dismiss({dish});
@@ -33,6 +43,5 @@ export class ChooseDishComponent implements OnInit {
   public async cancel() {
     await this._modalController.dismiss();
   }
-
 
 }

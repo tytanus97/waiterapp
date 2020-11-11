@@ -10,7 +10,7 @@ ion-header > ion-title {
     text-align:center;
 }
 
-ion-select-option {
+ion-option {
     text-transform: capitalize;
 }
 
@@ -18,3 +18,54 @@ ion-card {
     overflow-y: scroll;
 }
 
+.categoryHeader {
+    text-align:center;
+}
+.dish-category-list {
+    padding:0;
+    margin:1rem;
+}
+.dish-category-list-category-element {
+    padding:0;
+    margin:0;
+}
+.dish-category-list-dish-element {
+    width:100%;
+    padding:0;
+    margin:0;
+}
+.category-header {
+    width:100%;
+    padding:0;
+    margin:10px 0 0 0;
+    color: white;
+}
+
+.category-header > ion-label {
+    background-color: rgb(255, 255, 255,0.1);
+    width:100%;
+    text-align:center;
+    border-radius:20px;
+    padding:5px;
+}
+
+.dish-list {
+    padding:0;
+    margin:0;
+}
+
+.dish-element:not(:last-child) {
+    border-bottom:1px solid white;
+}
+
+.dish-name {
+    flex-grow:2;
+    margin:0;
+    padding:0;
+    line-height: 1rem;
+}
+.dish-price {
+    margin:0;
+    padding:0;
+    flex-grow:1;
+}
