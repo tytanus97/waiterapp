@@ -74,12 +74,16 @@
     </ion-list>
   </ion-item>
 
-  <ion-button color="secondary" class="sendOrderButton" (click) = "sendOrder()">
-    Dodaj zamówienie
-  </ion-button>
+
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed" >
+    <ion-fab-button color="warning" (click) = "sendOrder()">
+      <ion-icon name="send"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+ 
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
-    <ion-fab-button color="tertiary" (click)="goToSelectDish()">
+    <ion-fab-button color="secondary" (click)="goToSelectDish()">
       <ion-icon name="add" color="light"></ion-icon>
     </ion-fab-button>
   </ion-fab>
