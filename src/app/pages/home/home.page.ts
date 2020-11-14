@@ -28,7 +28,6 @@ export class HomePage implements OnInit {
       this.selectedPath = event.url;
     })  
   }
-
   ngOnInit() {
  
   }

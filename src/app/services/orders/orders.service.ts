@@ -1,10 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { Order } from 'src/app/models/order';
-
 import { Plugins } from '@capacitor/core';
-import { WaiterService } from '../waiters/waiter.service';
 
 const { Storage } = Plugins;
 

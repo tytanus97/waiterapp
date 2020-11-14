@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class AllOrdersComponent implements OnInit {
 
   constructor() {
-   }
+  }
 
   ngOnInit() {
   }

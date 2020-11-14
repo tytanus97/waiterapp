@@ -1,11 +1,9 @@
 import { Dish } from "./dish";
-import { Order } from "./order";
 
 export class OrderedDish {
   constructor(
     private _orderedDishId?: number,
     private _dish?: Dish,
-    private _order?: Order,
     private _orderDishStatus?,
     private _orderedDishAnnotation?: string
   ) {}
@@ -14,12 +12,6 @@ export class OrderedDish {
   }
   public set orderDishStatus(value) {
     this._orderDishStatus = value;
-  }
-  public get order(): Order {
-    return this._order;
-  }
-  public set order(value: Order) {
-    this._order = value;
   }
   public get dish(): Dish {
     return this._dish;

@@ -11,7 +11,7 @@ import { AuthenticatePage } from './authenticate.page';
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    IonicModule.forRoot()
+    IonicModule
   ],
   declarations: [AuthenticatePage]
 })

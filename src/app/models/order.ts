@@ -7,12 +7,12 @@ export class Order {
   
   constructor(
     private _orderId:string,
-    private _waiter: Waiter,
-    private _table: number,
-    private _orderDate: Date,
-    private _totalPrice: number,
-    private _orderStatus: string,
-    private _orderedDishes: Array<OrderedDish>
+    private _waiter?: Waiter,
+    private _table?: number,
+    private _orderDate?: Date,
+    private _totalPrice?: number,
+    private _orderStatus?: string,
+    private _orderedDishes?: Array<OrderedDish>
   ) {}
 
   public get orderStatus(): string {

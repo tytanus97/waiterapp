@@ -11,21 +11,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomePageModule } from './pages/home/home.module';
 import { AuthenticatePageModule } from './pages/authenticate/authenticate.module';
 import { CommonModule } from '@angular/common';
-import { HasAnnotationPipe } from './utils/pipes/has-annotation/has-annotation.pipe';
-
-
-
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [CommonModule,
-    BrowserModule,
+  imports: [BrowserModule,
      IonicModule.forRoot(),
      HttpClientModule,
      AuthenticatePageModule,
      HomePageModule,
-     AppRoutingModule,     
+     AppRoutingModule
   ],
   providers: [
     StatusBar,
@@ -34,6 +29,6 @@ import { HasAnnotationPipe } from './utils/pipes/has-annotation/has-annotation.p
     HttpClient
   ],
   bootstrap: [AppComponent],
-  exports:[IonicModule]
+  exports:[IonicModule,BrowserModule]
 })
 export class AppModule {}

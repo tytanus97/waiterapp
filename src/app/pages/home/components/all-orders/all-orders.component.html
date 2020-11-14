@@ -1,3 +1,4 @@
+
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -7,5 +8,23 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <p>Aktualne zamówienia</p>
+<ion-tabs>
+  <ion-tab-bar slot="top">
+    
+    <ion-tab-button tab="active">
+    <ion-icon name="alert-outline" size="large"></ion-icon>
+    <ion-label>Aktywne</ion-label>
+  </ion-tab-button>
+
+    <ion-tab-button tab="finished">
+      <ion-icon name="checkmark-outline" size="large"></ion-icon>
+      <ion-label>Zakończone</ion-label>
+  </ion-tab-button>
+  
+    <ion-tab-button tab="closed">
+      <ion-icon name="close-outline" size="large"></ion-icon>
+      <ion-label>Zamknięte</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
 </ion-content>

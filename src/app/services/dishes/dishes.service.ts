@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Dish } from 'src/app/models/dish';
-import { DishCategory } from 'src/app/models/dishCategory';
-import { OrderedDishStatus } from 'src/app/models/orderedDishStatus';
 
 @Injectable({
   providedIn: 'root'
