@@ -11,6 +11,8 @@ import { OrdersService } from "src/app/services/orders/orders.service";
 import { TablesService } from "src/app/services/tables/tables.service";
 import { WaiterService } from "src/app/services/waiters/waiter.service";
 import { ChooseDishComponent } from "./components/choose-dish/choose-dish.component";
+import 'lodash';
+declare let _ :any;
 
 @Component({
   selector: "app-add-order",
@@ -124,7 +126,7 @@ export class AddOrderComponent implements OnInit {
       this._currentOrder.orderStatus = 'active';
       this._currentOrder.totalPrice = this.totalPrice;
       this._currentOrder.waiter = this._waiterService.getLoggedWaiter();
-      let orderTransfer: Order = JSON.parse(JSON.stringify(this._currentOrder));
+      const orderTransfer: Order =   _.cloneDeep(this._currentOrder); // JSON.parse(JSON.stringify(this._currentOrder));
       this._orderService.addOrder(orderTransfer);
       this.prompt('Dodano zamowienie','success');
       this.reset();

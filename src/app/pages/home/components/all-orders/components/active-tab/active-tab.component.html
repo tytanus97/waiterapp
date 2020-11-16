@@ -1,3 +1,10 @@
-<p>
-  active-tab works!
-</p>
+<ion-content>
+    <ion-card *ngFor = "let order of activeOrders">
+        <ion-card-header>
+            <ion-card-title><ion-label class="ion-text-center">Stolik {{order.table}}</ion-label></ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+
+        </ion-card-content>
+    </ion-card>
+</ion-content>

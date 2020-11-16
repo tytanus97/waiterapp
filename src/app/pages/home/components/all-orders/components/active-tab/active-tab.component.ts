@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Order } from 'src/app/models/order';
+import { OrdersService } from 'src/app/services/orders/orders.service';
 
 @Component({
   selector: 'app-active-tab',
@@ -7,16 +10,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ActiveTabComponent implements OnInit {
 
-  constructor() {
+  public activeOrders: Array<Order>;
+  private _today: Date;
+
+  constructor(private _ordersService: OrdersService,private _route: ActivatedRoute) {
     console.log('ActiveTab konstruktor')
+    this._today = new Date();
+
+    this._route.data.subscribe(result => {
+      this.activeOrders = result.activeOrders
+    })
    }
 
   ngOnInit() {
-  console.log('ActiveTab onInit')
+    this.activeOrders = this._ordersService.getAllOrdersByDateAndStatus(this._today,'active');
+   
   }
-
-  ionViewWillEnter() {
-    console.log('ActiveTab viewWillEnter');
-  }
-
 }
