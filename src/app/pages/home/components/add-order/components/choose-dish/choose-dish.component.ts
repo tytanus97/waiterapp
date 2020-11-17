@@ -18,7 +18,7 @@ export class ChooseDishComponent implements OnInit {
   public selectedCategory;
   public selectedDish;
 
-  constructor(private _dishesService: DishesService,private _modalController: ModalController, private _fb : FormBuilder) { }
+  constructor(private _dishesService: DishesService,private _modalController: ModalController) { }
 
   ngOnInit() {
   this.allDishes = this._dishesService.getAllDishes();
@@ -32,9 +32,6 @@ export class ChooseDishComponent implements OnInit {
     this.dishesWithCategories.set(d.dishCategory,dishSubArray);
     })
   }
-
-
-  
 
   public async addDish(dish: Dish) {
     await this._modalController.dismiss({dish});

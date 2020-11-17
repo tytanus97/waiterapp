@@ -55,7 +55,7 @@ export class AddOrderComponent implements OnInit {
         const orderedDish = new OrderedDish(
           0,
           res.data.dish,
-          "active",'');
+          "inProgress",'');
         this.orderedDishes.push(orderedDish);
         this.updateTotalPrice();
       }

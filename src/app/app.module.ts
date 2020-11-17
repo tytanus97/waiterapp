@@ -10,7 +10,9 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomePageModule } from './pages/home/home.module';
 import { AuthenticatePageModule } from './pages/authenticate/authenticate.module';
-import { CommonModule } from '@angular/common';
+import { MarkOrderedDishDirective } from './utils/directives/mark-ordered-dish/mark-ordered-dish.directive';
+
+
 
 @NgModule({
   declarations: [AppComponent],

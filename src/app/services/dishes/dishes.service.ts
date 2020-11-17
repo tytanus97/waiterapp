@@ -19,6 +19,7 @@ export class DishesService {
 
     this.orderedDishStatusSet.add('inProgress');
     this.orderedDishStatusSet.add('ready');
+    this.orderedDishStatusSet.add('delivered');
   
   
     this.dishesCategoriesExmplDataSet.add('obiad');

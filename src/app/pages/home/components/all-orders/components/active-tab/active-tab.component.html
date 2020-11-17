@@ -1,10 +1,38 @@
 <ion-content>
-    <ion-card *ngFor = "let order of activeOrders">
-        <ion-card-header>
-            <ion-card-title><ion-label class="ion-text-center">Stolik {{order.table}}</ion-label></ion-card-title>
+    <ion-card *ngFor = "let order of activeOrders | sortByTime;trackBy:trackOrderStatus">
+        <ion-card-header class="ion-no-padding ion-padding-horizontal" color="light">
+            <ion-item class="ion-no-padding ion-no-margin" color="light">
+            <ion-card-title slot="start">
+                <ion-label>Stolik {{order.table}}</ion-label>
+            </ion-card-title>
+            <ion-label class="ion-text-center">{{order.orderedDishes | quantityByStatus:'delivered'}}/{{order.orderedDishes.length}}</ion-label>
+                <ion-label slot="end" class="ion-no-padding ion-no-margin ion-text-end">{{order.orderDate | date: 'shortTime'}}</ion-label>
+            </ion-item>
         </ion-card-header>
-        <ion-card-content>
-
+        <ion-card-content class="ion-no-padding">
+            <ion-item appMarkOrderedDish  *ngFor = "let orderedDish of order.orderedDishes;trackBy:trackOrderedDishStatus;let i = index;"  
+            [orderedDish]="orderedDish" class="ion-no-padding ion-no-margin">
+                <ion-label text-wrap class="ion-padding-start">
+                    {{i+1}}. {{orderedDish.dish.dishName}}
+                    <ion-label *ngIf = "orderedDish.orderedDishAnnotation" class="ordered-dish-annotation" tex-wrap>{{orderedDish.orderedDishAnnotation}}</ion-label>
+                </ion-label>
+               <ion-item slot="end" lines="none" class="ion-no-padding ion-no-margin">
+                   <div [ngSwitch] = "orderedDish.orderDishStatus" slot="end">
+                        <div *ngSwitchCase = "'inProgress'" class="icon-container">
+                            <ion-icon name="timer-outline" color="warning" style="font-size:1.4rem !important;"></ion-icon>       
+                        </div>
+                        <div *ngSwitchCase = "'delivered'" class="icon-container">
+                            <ion-icon name="checkmark-done-outline" style="font-size:1.4rem !important;"></ion-icon>          
+                        </div>
+                        <div *ngSwitchCase = "'ready'" class="icon-container">
+                            <ion-icon name="alert-outline" class="ready-icon" (click) = "changeStatus(orderedDish,order)"></ion-icon>     
+                        </div>
+                    </div>
+                    {{xd}}
+               </ion-item>
+            </ion-item>
+        
+                <ion-button color="primary">Zapłać</ion-button>
         </ion-card-content>
     </ion-card>
 </ion-content>
