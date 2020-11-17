@@ -1,7 +1,6 @@
-import { renderFlagCheckIfStmt } from '@angular/compiler/src/render3/view/template';
-import { ChangeDetectorRef, Component, DoCheck, ElementRef, IterableDiffer, IterableDiffers, KeyValueDiffer, KeyValueDiffers, NgZone, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, IonCard, ModalController } from '@ionic/angular';
+import { ApplicationRef, ChangeDetectorRef, Component, DoCheck, KeyValueDiffers, OnInit,  } from '@angular/core';
+import { ActivatedRoute  } from '@angular/router';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Order } from 'src/app/models/order';
 import { OrderedDish } from 'src/app/models/orderedDish';
 import { OrdersService } from 'src/app/services/orders/orders.service';
@@ -12,57 +11,29 @@ import { ChooseDishComponent } from '../../../add-order/components/choose-dish/c
   templateUrl: './active-tab.component.html',
   styleUrls: ['./active-tab.component.scss'],
 })
-export class ActiveTabComponent implements OnInit, DoCheck {
+export class ActiveTabComponent implements OnInit {
 
   public activeOrders: Array<Order>;
   private _today: Date;
-
-  private orderedDishDiffer = new Map<number,any>();
-  private orderedDishMap = new Map<number,OrderedDish>();
-
-  private arrayDiffer: any;
-
+  public trigger: boolean = false;
 
   constructor(private _ordersService: OrdersService,
     private _route: ActivatedRoute,
     private _alertController: AlertController,
-    private _differs: KeyValueDiffers,
-    private _changeRef: ChangeDetectorRef,
     private _modalCtrl: ModalController) {
-   // console.log('ActiveTab konstruktor')
+ 
     this._today = new Date();
 
     this._route.data.subscribe(result => {
-     // console.log('new orders incoming');
+    
       this.activeOrders = result.activeOrders;
     })
   }
-  ngDoCheck(): void {
-    //console.log('zmiany');
-    
-    for(let [key, odDiffer] of this.orderedDishDiffer) {
-      let odChanges = odDiffer.diff(this.orderedDishMap.get(key));
-      if(odChanges) {
-        odChanges.forEachChangedItem(record => {
-          this._changeRef.markForCheck();
-          /* console.log(record.previousValue);
-          console.log(record.currentValue); */
-          console.log('dodano');
-        })
-      }
-    }
-    this._changeRef.detectChanges();
-    }
   
   ngOnInit() {
-    this.activeOrders = this._ordersService.getAllOrdersByDateAndStatus(this._today, 'active');
-  //  this.activeOrders.flatMap(ao => ao.orderedDishes).forEach(od => console.log(od));
-    this.activeOrders.flatMap(ao => ao.orderedDishes).forEach(od => {
-      this.orderedDishDiffer[od.orderedDishId] = this._differs.find(od).create();
-      this.orderedDishMap[od.orderedDishId] = od;
-      
-    })
+   
   }
+  
   public async changeStatus(orderedDish: OrderedDish, order: Order) {
     const alert = await this._alertController.create({
       message: 'Oznaczyć jako dostarczone?',
@@ -74,9 +45,7 @@ export class ActiveTabComponent implements OnInit, DoCheck {
         {
           text: 'OK',
           handler: () => {
-            orderedDish.orderDishStatus = 'delivered';
-            this._changeRef.detectChanges();
-            this._checkIfAllDelivered(order);
+            this._checkIfAllDelivered(order,orderedDish);
           }
         }
       ]
@@ -84,7 +53,8 @@ export class ActiveTabComponent implements OnInit, DoCheck {
     await alert.present();
   }
 
-  private _checkIfAllDelivered(order: Order) {
+  private _checkIfAllDelivered(order: Order,orderedDish:OrderedDish) {
+    orderedDish.orderDishStatus = 'delivered';
     const result = order.orderedDishes.filter(o => o.orderDishStatus !== 'delivered').length;
     if (!result) {
       order.orderStatus = 'finished';
@@ -93,6 +63,7 @@ export class ActiveTabComponent implements OnInit, DoCheck {
       }, 1000);
 
     }
+    this.trigger = !this.trigger;
   }
 
   public async addToOrder(order: Order) {

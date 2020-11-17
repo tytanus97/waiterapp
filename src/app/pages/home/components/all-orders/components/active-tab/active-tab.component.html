@@ -6,7 +6,7 @@
             <ion-card-title slot="start">
                 <ion-label>Stolik {{order.table}}</ion-label>
             </ion-card-title>
-            <ion-label class="ion-text-center">{{order.orderedDishes | quantityByStatus:'delivered'}}/{{order.orderedDishes.length}}</ion-label>
+            <ion-label class="ion-text-center">{{order.orderedDishes | quantityByStatus:'delivered':trigger}}/{{order.orderedDishes.length}}</ion-label>
                 <ion-label slot="end" class="ion-no-padding ion-no-margin ion-text-end">{{order.orderDate | date: 'shortTime'}}</ion-label>
             </ion-item>
         </ion-card-header>
@@ -32,7 +32,7 @@
                    
                </ion-item>
             </ion-item>
-        <ion-button (click) = "addToOrder(order)">Dodaj do zamówienia</ion-button>
+        <ion-buttgit on (click) = "addToOrder(order)">Dodaj do zamówienia</ion-button>
         </ion-card-content>
     </ion-card>
 </ion-content>
