@@ -35,6 +35,11 @@ ion-item > div {
         color:var(--ion-color-success);
     }
 }
+.ion-card-farewell {
+  animation-name:farewell;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
 
 @keyframes notify {
     0% {
@@ -52,6 +57,15 @@ ion-item > div {
     }
 }
 
+
+@keyframes farewell {
+    from {
+        opacity:1;
+    }
+    to {
+        opacity:0;
+    }
+}
 
 
 

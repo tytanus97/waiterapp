@@ -1,5 +1,6 @@
 <ion-content>
-    <ion-card *ngFor = "let order of activeOrders | sortByTime;trackBy:trackOrderStatus">
+    <ion-card *ngFor = "let order of activeOrders | sortByTime;trackBy:trackOrderStatus"
+      [ngClass] = "order.orderStatus == 'finished'?'ion-card-farewell':'none'">
         <ion-card-header class="ion-no-padding ion-padding-horizontal" color="light">
             <ion-item class="ion-no-padding ion-no-margin" color="light">
             <ion-card-title slot="start">
@@ -28,11 +29,10 @@
                             <ion-icon name="alert-outline" class="ready-icon" (click) = "changeStatus(orderedDish,order)"></ion-icon>     
                         </div>
                     </div>
-                    {{xd}}
+                   
                </ion-item>
             </ion-item>
-        
-                <ion-button color="primary">Zapłać</ion-button>
+        <ion-button (click) = "addToOrder(order)">Dodaj do zamówienia</ion-button>
         </ion-card-content>
     </ion-card>
 </ion-content>
