@@ -4,8 +4,7 @@ export class OrderedDish {
   constructor(
     private _orderedDishId?: number,
     private _dish?: Dish,
-    private _orderDishStatus?,
-    private _orderedDishAnnotation?: string
+    private _orderDishStatus?
   ) {}
   public get orderDishStatus() {
     return this._orderDishStatus;
@@ -24,11 +23,5 @@ export class OrderedDish {
   }
   public set orderedDishId(value: number) {
     this._orderedDishId = value;
-  }
-  public get orderedDishAnnotation() {
-    return this._orderedDishAnnotation;
-  }
-  public set orderedDishAnnotation(value) {
-    this._orderedDishAnnotation = value;
   }
 }

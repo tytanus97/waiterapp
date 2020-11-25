@@ -25,7 +25,7 @@ export class ActiveTabComponent implements OnInit {
     this._today = new Date();
 
     this._route.data.subscribe(result => {
-    
+      console.log(result.status);
       this.activeOrders = result.activeOrders;
     })
   }
@@ -45,6 +45,7 @@ export class ActiveTabComponent implements OnInit {
         {
           text: 'OK',
           handler: () => {
+            
             this._checkIfAllDelivered(order,orderedDish);
           }
         }
@@ -63,6 +64,7 @@ export class ActiveTabComponent implements OnInit {
       }, 1000);
 
     }
+    this._ordersService.updateReadyToDeliver();
     this.trigger = !this.trigger;
   }
 
@@ -77,19 +79,12 @@ export class ActiveTabComponent implements OnInit {
         const orderedDish = new OrderedDish(
           this._ordersService.getRandomId(),
           res.data.dish,
-          "inProgress",'');
+          "inProgress");
         console.log(orderedDish);
         order.orderedDishes.push(orderedDish);
+        order.totalPrice += orderedDish.dish.dishPrice;
       }
     });
-  }
-
-  public trackOrderStatus(index, item) {
-    return item.orderStatus;
-  }
-
-  public trackOrderedDishStatus(index, item: OrderedDish) {
-    return item.orderDishStatus;
   }
 }
 

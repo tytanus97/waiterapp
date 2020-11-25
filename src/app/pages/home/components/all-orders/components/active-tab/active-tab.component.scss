@@ -1,13 +1,5 @@
 ion-card {
-
-    ion-card-content {
-
-        ion-label {
-            font-size:0.9rem;
-        }
-    } 
     ion-card-header {
-
         * {
             background-color: var(--ion-color-light) !important;
         }
@@ -41,6 +33,14 @@ ion-item > div {
   animation-fill-mode: forwards;
 }
 
+.add-to-order-button {
+    padding:0;
+    icon {
+        margin:0;
+        padding:0;
+    }
+}
+
 @keyframes notify {
     0% {
         font-size:1.8rem;
@@ -65,13 +65,4 @@ ion-item > div {
     to {
         opacity:0;
     }
-}
-
-
-
-
-@mixin center {
-    display:flex;
-    justify-content: center;
-    align-items: center;
 }

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Dish } from 'src/app/models/dish';
-import { DishCategory } from 'src/app/models/dishCategory';
 import { DishesService } from 'src/app/services/dishes/dishes.service';
 
 @Component({
@@ -40,5 +38,8 @@ export class ChooseDishComponent implements OnInit {
   public async cancel() {
     await this._modalController.dismiss();
   }
+
+
+  
 
 }

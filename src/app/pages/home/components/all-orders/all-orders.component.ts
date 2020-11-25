@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { OrdersService } from 'src/app/services/orders/orders.service';
 
 
 @Component({
@@ -8,8 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AllOrdersComponent implements OnInit {
 
-  constructor() {
+  public readyToDeliver:number;
+
+
+  constructor(private _ordersService: OrdersService) {
   }
-  ngOnInit() {}
+  ngOnInit() {
+  
+    this._ordersService.getReadyToDeliver().subscribe(value => {
+      this.readyToDeliver = value;
+    })
+    
+  }
 
 }

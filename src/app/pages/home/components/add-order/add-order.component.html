@@ -4,6 +4,8 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Dodaj zamówienie</ion-title>
+    <ion-icon name="document-text-outline" size="large" class="questionnaire-icon" slot="end"
+      (click)="openQuestionnaire()"></ion-icon>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -33,57 +35,43 @@
             {{orderedDish.dish.dishPrice | number:'1.2-2'}} zl
           </ion-col>
           <ion-col size="2">
-            <ion-icon name="ellipsis-vertical" class="dishOption ion-margin-right"
-              (click)="showDishOption(orderedDish)"></ion-icon>
+            <ion-icon name="trash-outline" class="dishOption ion-margin-right" (click)="showDishOption(orderedDish)">
+            </ion-icon>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card-content>
   </ion-card>
   <ion-item>
-    <ion-item slot="start">Suma:</ion-item>
+    <ion-item slot="start">
+      <h3>Suma:</h3>
+    </ion-item>
     <ion-item slot="end">
       <h3>{{totalPrice | number:'1.2-2'}} zł</h3>
 
     </ion-item>
   </ion-item>
 
-  <ion-item class="ion-no-margin ion-margin-horizontal ion-no-padding annotationContainer">
-    <ion-list class="ion-no-padding ion-no-margin annotationList">
-      <ion-item>
-        <ion-icon name="alert-circle-outline" class="ion-margin-end" color="warning"></ion-icon>Uwagi:
-        <ion-item *ngIf="orderedDishesAnnotations.size <= 0">Brak uwag do dań</ion-item>
-      </ion-item>
-      <div class="dishAnnotation">
-      <ion-item *ngFor="let orderedDishAnnotation of orderedDishesAnnotations | keyvalue;let i = index" class="ion-no-margin">
-        <ion-grid class="ion-no-padding" >
-          <ion-row>
-            <ion-col text-wrap class="dishAnnotationHeader ion-no-padding" size="12"><span>{{i+1}}. {{orderedDishAnnotation.key.dish.dishName}}</span></ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col class="ion-no-padding" text-wrap size="10">
-              <ion-item text-wrap>{{orderedDishAnnotation.value}}</ion-item>
-            </ion-col>
-            <ion-col size="2" class="deleteAnnotation">
-              <ion-icon name="trash-outline" size="large" (click) ="deleteAnnotation(orderedDishAnnotation)"></ion-icon>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-    </div>
-    </ion-list>
-  </ion-item>
+
+<ion-item class='order-annotation'>
+  <ion-textarea [(ngModel)] = "orderAnnotation" placeholder="Uwagi do zamówienia" rows="6" inputmode="text"></ion-textarea>
+</ion-item>
 
 
-  <ion-fab vertical="bottom" horizontal="start" slot="fixed" >
-    <ion-fab-button color="warning" (click) = "sendOrder()">
+  <!--  <ion-label *ngIf="orderAnnotation != undefined && orderAnnotation.length != 0; else noAnnotation"></ion-label> -->
+  <!--  <ion-icon name="create-outline" class="add-order-annotation-icon" size="large" (click) = "editOrderAnnotation()"></ion-icon> -->
+  <!--     <ion-textarea placeholder="Enter more information here..."></ion-textarea>
+ -->
+
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button color="primary" (click)="sendOrder()">
       <ion-icon name="send"></ion-icon>
     </ion-fab-button>
   </ion-fab>
- 
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
-    <ion-fab-button color="secondary" (click)="goToSelectDish()">
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="success" (click)="goToSelectDish()">
       <ion-icon name="add" color="light"></ion-icon>
     </ion-fab-button>
   </ion-fab>

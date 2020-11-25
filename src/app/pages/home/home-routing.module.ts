@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/app/utils/guards/auth.guard';
-import { ActiveOrdersResolverService } from 'src/app/utils/resolvers/active-orders-resolver/active-orders-resolver.service';
+import { OrdersResolverService } from 'src/app/utils/resolvers/orders-resolver/active-orders-resolver.service';
 import { AddOrderComponent } from './components/add-order/add-order.component';
 import { AllOrdersComponent } from './components/all-orders/all-orders.component';
 import { ActiveTabComponent } from './components/all-orders/components/active-tab/active-tab.component';
@@ -10,31 +10,37 @@ import { FinishedTabComponent } from './components/all-orders/components/finishe
 import { HomePage } from './home.page';
 const routes: Routes = [
   {
-    path:'home',component:HomePage,children:[
+    path: 'home', component: HomePage, children: [
       {
-        path:'allOrders',component:AllOrdersComponent,children: [
+        path: 'allOrders', component: AllOrdersComponent, children: [
           {
-            path:'active',component:ActiveTabComponent,resolve:{activeOrders:ActiveOrdersResolverService}
+            path: 'active',
+            component: ActiveTabComponent,
+            resolve: { activeOrders: OrdersResolverService },
+            data: { status: 'active' }
           },
           {
-            path:'finished',component:FinishedTabComponent
+            path: 'finished',
+            component: FinishedTabComponent,
+            resolve: { finishedOrders: OrdersResolverService },
+            data: { status: 'finished' }
           },
           {
-            path:'closed',component:ClosedTabComponent
+            path: 'closed', component: ClosedTabComponent
           },
           {
-            path:'',redirectTo:'active',pathMatch:'full'
+            path: '', redirectTo: 'active', pathMatch: 'full'
           }
         ]
-        
+
       },
       {
-        path:'addOrder',component:AddOrderComponent
+        path: 'addOrder', component: AddOrderComponent
       },
       {
-        path:'',redirectTo:'allOrders',pathMatch:'full'
+        path: '', redirectTo: 'allOrders', pathMatch: 'full'
       }
-    ],canActivateChild:[AuthGuard]
+    ], canActivateChild: [AuthGuard]
   }
 ];
 
@@ -42,4 +48,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class HomePageRoutingModule {}
+export class HomePageRoutingModule { }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Order } from 'src/app/models/order';
 
 @Component({
   selector: 'app-finished-tab',
@@ -7,8 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FinishedTabComponent implements OnInit {
 
-  constructor() { }
+  public finishedOrders: Array<Order>;
 
-  ngOnInit() {}
+  constructor(private _route: ActivatedRoute) { }
 
+  ngOnInit() {
+    this._route.data.subscribe(result => {
+      this.finishedOrders = result.finishedOrders;
+      console.log(this.finishedOrders);
+    })
+  }
+
+
+  public addToOrder(order:Order) {
+    
+  }
 }

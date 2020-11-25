@@ -1,51 +1,59 @@
-ion-card-header {
-    border-bottom:1px solid white;
+ion-header {
+  & ion-icon {
+    margin-right: 1rem;
+  }
 }
 
 ion-col {
-    text-align: left;
+  text-align: left;
 }
 
 ion-row:not(:last-child) {
-    border-bottom:1px solid rgba(255,255,255,0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
-ion-card-content {
-    max-height:150px;
-    overflow-y: scroll;
-    overflow-x:hidden;
+
+ion-toast.alertToast {
+  background-color: red !important;
+  text-align: center;
 }
 
 .dishOption {
-    font-size:2rem;
-}
-
-.annotationList {
-    width:100%;
-}
-
-.dishAnnotationHeader {
-    font-size:0.9rem;
-    color:grey;
-}
-
-.deleteAnnotation {
-    margin-top:0.5rem;
-    text-align:center;
-}
-
-.annotationContainer {
-    max-height:190px;
-    margin-top:5px;
-    overflow-y: scroll;
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
 }
 
 ion-card {
-    margin-top:5px;
-    margin-bottom:5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+
+  ion-card-header {
+    border-bottom: 1px solid white;
+  }
+
+  ion-card-content {
+    max-height: 200px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
 }
 
 .sendOrderButton {
-    position:absolute;
-    bottom:10px;
-    left:10px;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
 }
+
+.order-annotation {
+  margin:1rem;
+  border-radius: 10px;
+  ion-textarea {
+    margin:5px;
+    padding:5px;
+    height:140px;
+    color:gray;
+    
+  }
+}
+
+
+

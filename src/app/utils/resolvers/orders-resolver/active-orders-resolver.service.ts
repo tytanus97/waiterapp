@@ -7,10 +7,11 @@ import { OrdersService } from 'src/app/services/orders/orders.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ActiveOrdersResolverService implements Resolve<Array<Order>>{
+export class OrdersResolverService implements Resolve<Array<Order>>{
 
   constructor(private _orderService: OrdersService) { }
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Order[] | Observable<Order[]> | Promise<Order[]> {
-    return of(this._orderService.getAllOrdersByDateAndStatus(new Date(),'active'));
+    const status = route.data['status'];
+    return of(this._orderService.getAllOrdersByDateAndStatus(new Date(),status));
   }
 }

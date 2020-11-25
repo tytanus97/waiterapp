@@ -6,12 +6,12 @@ import {
 } from "@ionic/angular";
 import { Order } from "src/app/models/order";
 import { OrderedDish } from "src/app/models/orderedDish";
-import { Table } from "src/app/models/Table";
 import { OrdersService } from "src/app/services/orders/orders.service";
 import { TablesService } from "src/app/services/tables/tables.service";
 import { WaiterService } from "src/app/services/waiters/waiter.service";
 import { ChooseDishComponent } from "./components/choose-dish/choose-dish.component";
 import 'lodash';
+import { QuestionnaireComponent } from './components/questionnaire/questionnaire.component';
 declare let _ :any;
 
 @Component({
@@ -22,9 +22,9 @@ declare let _ :any;
 export class AddOrderComponent implements OnInit {
   public tables: Array<number>;
   public chosenTable: number;
+  public orderAnnotation: string;
   public orderedDishes: Array<OrderedDish>;
   public totalPrice = 0;
-  public orderedDishesAnnotations: Map<OrderedDish, string>;
   private _currentOrder: Order;
 
   constructor(
@@ -40,7 +40,6 @@ export class AddOrderComponent implements OnInit {
   ngOnInit() {
     this.tables = this._tablesService.getAllTables();
     this.orderedDishes = new Array<OrderedDish>();
-    this.orderedDishesAnnotations = new Map();
     this._currentOrder = new Order("0");
   }
 
@@ -55,7 +54,7 @@ export class AddOrderComponent implements OnInit {
         const orderedDish = new OrderedDish(
           0,
           res.data.dish,
-          "inProgress",'');
+          "inProgress");
         this.orderedDishes.push(orderedDish);
         this.updateTotalPrice();
       }
@@ -64,31 +63,18 @@ export class AddOrderComponent implements OnInit {
 
   public async showDishOption(orderedDish: OrderedDish) {
     const orderedDishOption = await this._alertCtrl.create({
-      header: "Opcje",
-      inputs: [
-        {
-          name: "annotation",
-          placeholder: "Uwagi",
-          value: this.orderedDishesAnnotations.get(orderedDish),
-          type: "text",
-        },
-      ],
+      message:'Usunąć danie z zamówienia?',
       buttons: [
         {
-          text: "Usuń danie",
-          handler: () => this.deleteOrderedDish(orderedDish),
-          cssClass: "optionButton",
+          text:'Nie',
+          role:'cancel'
         },
         {
-          text: "Ok",
-          handler: (data) => {
-            if (data.annotation) {
-              this._zone.run(() =>
-                this.orderedDishesAnnotations.set(orderedDish, data.annotation)
-              );
-            }
-          },
-        },
+          text: "Tak",
+          handler: () => this.deleteOrderedDish(orderedDish),
+          cssClass: "optionButton",
+        }
+       
       ],
     });
 
@@ -97,7 +83,6 @@ export class AddOrderComponent implements OnInit {
 
   private deleteOrderedDish(orderedDish: OrderedDish) {
     this.orderedDishes = this.orderedDishes.filter((od) => od != orderedDish);
-    this.orderedDishesAnnotations.delete(orderedDish);
     this._zone.run(() => this.updateTotalPrice());
   }
   private updateTotalPrice() {
@@ -106,19 +91,10 @@ export class AddOrderComponent implements OnInit {
     this.totalPrice = sum;
   }
 
-  public deleteAnnotation(orderedDishAnnotation: {
-    key: OrderedDish;
-    value: string;
-  }) {
-    this.orderedDishesAnnotations.delete(orderedDishAnnotation.key);
-    this.orderedDishes.find(
-      (od) => orderedDishAnnotation.key == od
-    ).orderedDishAnnotation = '';
-  }
+
 
   public async sendOrder() {
     if (this.validate()) {
-
       this._currentOrder.orderId =  String(Math.floor(Math.random() * 20));
       this._currentOrder.table = this.chosenTable;
       this._currentOrder.orderDate = new Date();
@@ -126,6 +102,7 @@ export class AddOrderComponent implements OnInit {
       this._currentOrder.orderStatus = 'active';
       this._currentOrder.totalPrice = this.totalPrice;
       this._currentOrder.waiter = this._waiterService.getLoggedWaiter();
+      this._currentOrder.orderAnnotation = this.orderAnnotation;
       const orderTransfer: Order =   _.cloneDeep(this._currentOrder); // JSON.parse(JSON.stringify(this._currentOrder));
       this._orderService.addOrder(orderTransfer);
       this.prompt('Dodano zamowienie','success');
@@ -139,19 +116,17 @@ export class AddOrderComponent implements OnInit {
     return this.orderedDishes.length > 0 && this.chosenTable !== undefined;
   }
 
-  compareFn(t1: Table, t2: Table): boolean {
-    return t1 && t2 ? t1.tableId === t2.tableId : t1 === t2;
-  }
 
   private async prompt(message: string, color: string) {
-    const warningToast = this._toastCtrl.create({
+    this._toastCtrl.create({
       message: message,
-      duration: 1500,
-      position: "bottom",
-      animated: true,
+      duration: 1000,
+      position:'top',
+      cssClass:'alertToast',
       color: color,
-    });
-    (await warningToast).present();
+    }).then(toast => toast.present())
+    .finally(() => console.log('toast presented'));
+
   }
 
   private reset() {
@@ -159,7 +134,18 @@ export class AddOrderComponent implements OnInit {
     this._currentOrder = new Order("0");
     this.orderedDishes.length = 0;
     this.chosenTable = undefined;
-    this.orderedDishesAnnotations.clear();
     this.totalPrice = 0;
+    this.orderAnnotation = '';
+  }
+
+  public async openQuestionnaire() {
+
+    const questionnaire = await this._modalCtrl.create({component:QuestionnaireComponent});
+
+    await questionnaire.present();
+    await questionnaire.onDidDismiss().then(res => {
+      console.log('questionnaire dismissed');
+    });
+
   }
 }

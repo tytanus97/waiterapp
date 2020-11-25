@@ -13,6 +13,7 @@
     <ion-tab-button tab="active">
     <ion-icon name="alert-outline" size="large"></ion-icon>
     <ion-label>Aktywne</ion-label>
+    <ion-badge id="notifications-badge" color="danger" *ngIf="readyToDeliver > 0"><span>{{readyToDeliver}}</span></ion-badge>
   </ion-tab-button>
 
     <ion-tab-button tab="finished">

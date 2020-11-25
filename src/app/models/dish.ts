@@ -1,4 +1,4 @@
-import { DishCategory } from "./dishCategory";
+
 
 export class Dish {
   constructor(
@@ -9,13 +9,14 @@ export class Dish {
     private _dishCategory: string
   ) {}
 
-  public get dishCategory(): string {
+public get dishCategory(): string {
     return this._dishCategory;
 }
 public set dishCategory(value: string) {
     this._dishCategory = value;
 }
 public get dishDescription(): string {
+
     return this._dishDescription;
 }
 public set dishDescription(value: string) {
