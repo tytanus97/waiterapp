@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content *ngIf="activeOrders != null && activeOrders.length > 0;else noActiveOrders">
     <ion-card *ngFor = "let order of activeOrders | sortByTime;"
       [ngClass] = "order.orderStatus == 'finished'?'ion-card-farewell':'none'">
         <ion-card-header class="ion-no-padding ion-padding-horizontal" color="light">
@@ -38,3 +38,9 @@
         </ion-card-content>
     </ion-card>
 </ion-content>
+
+<ng-template #noActiveOrders>
+    <ion-content class="ion-text-center ion-padding">
+        <ion-label>Brak aktywynych zamówień</ion-label>
+    </ion-content>
+</ng-template>

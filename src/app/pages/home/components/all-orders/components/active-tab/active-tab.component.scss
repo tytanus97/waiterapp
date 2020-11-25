@@ -1,21 +1,7 @@
-ion-card {
-    ion-card-header {
-        * {
-            background-color: var(--ion-color-light) !important;
-        }
-    }  
-}
 
 ion-item > div {
     text-align: center;
 }
-
-.ordered-dish-annotation {
-    font-size:0.8rem !important;
-    color:darkgrey; 
-}
-
-
 
 .icon-container {
 
@@ -28,7 +14,7 @@ ion-item > div {
     }
 }
 .ion-card-farewell {
-  animation-name:farewell;
+  animation-name:leftToRight;
   animation-duration: 1s;
   animation-fill-mode: forwards;
 }
@@ -58,11 +44,13 @@ ion-item > div {
 }
 
 
-@keyframes farewell {
+@keyframes leftToRight {
     from {
         opacity:1;
     }
     to {
+        transform:translateX(100%);
         opacity:0;
+        
     }
 }

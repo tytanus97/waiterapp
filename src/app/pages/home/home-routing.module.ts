@@ -26,7 +26,10 @@ const routes: Routes = [
             data: { status: 'finished' }
           },
           {
-            path: 'closed', component: ClosedTabComponent
+            path: 'closed',
+            component: ClosedTabComponent,
+            resolve:{closedOrders: OrdersResolverService },
+            data: { status: 'closed'}
           },
           {
             path: '', redirectTo: 'active', pathMatch: 'full'

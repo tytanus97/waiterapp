@@ -1,0 +1,35 @@
+
+
+
+ion-item > div {
+    text-align: center;
+}
+
+.icon-container {
+
+    min-width:2.5rem;
+    text-align:center;
+}
+.ion-card-farewell {
+  animation-name:rightToLeft;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.add-to-order-button {
+    padding:0;
+    icon {
+        margin:0;
+        padding:0;
+    }
+}
+
+@keyframes rightToLeft {
+    from {
+        opacity:1;
+    }
+    to {
+        transform:translateX(-100%);
+        opacity:0;
+    }
+}

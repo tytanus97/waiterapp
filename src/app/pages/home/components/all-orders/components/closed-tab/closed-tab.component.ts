@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { Order } from 'src/app/models/order';
+import { ChooseDishComponent } from '../../../add-order/components/choose-dish/choose-dish.component';
 
 @Component({
   selector: 'app-closed-tab',
@@ -7,8 +11,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ClosedTabComponent implements OnInit {
 
-  constructor() { }
+  public closedOrders: Array<Order>;
 
-  ngOnInit() {}
+  constructor(private _route: ActivatedRoute) { }
+
+  ngOnInit() {
+
+    this._route.data.subscribe(result => {
+      this.closedOrders = result.closedOrders;
+    })
+  }
+
+ 
 
 }
