@@ -1,21 +1,21 @@
 <ion-content *ngIf="finishedOrders != undefined && finishedOrders.length > 0; else noFinishedOrders">
-  <ion-card *ngFor="let order of finishedOrders | sortByTime"
-    [ngClass] = "order.orderStatus == 'active'?'ion-card-farewell':'none'">
-      <ion-card-header class="ion-no-padding ion-padding-horizontal" color="light">
+  <ion-card *ngFor="let order of finishedOrders | sortByTime;let orderIndex = index"
+    [class.ion-card-right-to-left] = "order.orderStatus == 'active'"
+    [class.ion-card-left-to-right] = "order.orderStatus == 'closed'">
+      <ion-card-header class="ion-no-padding ion-padding-start" color="light">
           <ion-item class="ion-no-padding ion-no-margin" color="light">
           <ion-card-title slot="start">
               <ion-label>Stolik {{order.table}}</ion-label>
           </ion-card-title>
-          <ion-label class="ion-text-center">{{order.orderedDishes | quantityByStatus:'delivered'}}/{{order.orderedDishes.length}}</ion-label>
-              <ion-label slot="end" class="ion-no-padding ion-no-margin ion-text-end">{{order.orderDate | date: 'shortTime'}}</ion-label>
+          <ion-label class="ion-no-margin ion-no-padding">Suma: {{order.totalPrice}} zł</ion-label>
           </ion-item>
       </ion-card-header>
       <ion-card-content class="ion-no-padding">
+        <ion-label *ngIf="order.orderAnnotation != undefined && order.orderAnnotation.length > 0" class="ion-padding">{{order.orderAnnotation}}</ion-label>
           <ion-item appMarkOrderedDish  *ngFor = "let orderedDish of order.orderedDishes;let i = index;"  
           [orderedDish]="orderedDish" class="ion-no-padding ion-no-margin">
               <ion-label text-wrap class="ion-padding-start">
                   {{i+1}}. {{orderedDish.dish.dishName}}
-                 <!--  <ion-label *ngIf = "orderedDish.orderedDishAnnotation" class="ordered-dish-annotation" tex-wrap>{{orderedDish.orderedDishAnnotation}}</ion-label> -->
               </ion-label>
              <ion-item slot="end" lines="none" class="ion-no-padding ion-no-margin">
                  <div [ngSwitch] = "orderedDish.orderDishStatus" slot="end">
@@ -26,18 +26,16 @@
                         <ion-icon name="checkmark-done-outline" style="font-size:1.4rem !important;"></ion-icon>          
                     </div>
                   </div>
-                 
              </ion-item>
           </ion-item>
+          <ion-item class="ion-no-padding">
       <ion-button class="add-to-order-button ion-no-padding ion-padding-end ion-margin-start" (click) = "addToOrder(order)" color="light">
           <ion-icon name="add-outline" class="ion-no-margin ion-margin-horizontal"></ion-icon>
           Dodaj
         </ion-button>
-        <ion-button class="add-to-order-button ion-no-padding ion-padding-end ion-margin-start" (click) = "addToOrder(order)" color="light">
-            <ion-icon name="add-outline" class="ion-no-margin ion-margin-horizontal"></ion-icon>
-            Finalizuj
-          </ion-button>
-    
+        
+        <ion-button slot="end" (click) = "finalizeOrder(order,finishedOrders[orderIndex])" color="primary">Finalizuj</ion-button>
+        </ion-item>
       </ion-card-content>
   </ion-card>
 </ion-content>

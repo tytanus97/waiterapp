@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Order } from 'src/app/models/order';
 import { OrderedDish } from 'src/app/models/orderedDish';
 import { OrdersService } from 'src/app/services/orders/orders.service';
@@ -15,10 +16,13 @@ export class FinishedTabComponent implements OnInit {
 
   public finishedOrders: Array<Order>;
 
-  constructor(private _route: ActivatedRoute,
-              private _modalCtrl: ModalController,
-              private _ordersService: OrdersService) { }
 
+  constructor(
+              private _route: ActivatedRoute,
+              private _modalCtrl: ModalController,
+              private _alertCtrl: AlertController,
+              private _ordersService: OrdersService,
+              ){}
   ngOnInit() {
     this._route.data.subscribe(result => {
       this.finishedOrders = result.finishedOrders;
@@ -42,4 +46,27 @@ export class FinishedTabComponent implements OnInit {
         }
     });
   }
+
+  public async finalizeOrder(order:Order) {
+    const alert = await this._alertCtrl.create({
+      message:'Zfinalizować zamówienie?',
+      buttons:[
+        {
+          text:'Nie',
+          role:'cancel'
+        }, {
+          text:'Tak',
+          handler:() => {
+            order.orderStatus = 'closed';
+            this.finishedOrders = this.finishedOrders.splice(this.finishedOrders.indexOf(order),0);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  
+     /*  console.log(el.nativeElement);
+      this._renderer.addClass(el.nativeElement,'leftToRight') */
+  } 
 }

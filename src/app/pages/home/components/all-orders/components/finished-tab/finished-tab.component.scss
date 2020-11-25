@@ -10,10 +10,16 @@ ion-item > div {
     min-width:2.5rem;
     text-align:center;
 }
-.ion-card-farewell {
+.ion-card-right-to-left {
   animation-name:rightToLeft;
   animation-duration: 1s;
   animation-fill-mode: forwards;
+}
+
+.ion-card-left-to-right {
+    animation-name:leftToRight;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
 }
 
 .add-to-order-button {
@@ -30,6 +36,16 @@ ion-item > div {
     }
     to {
         transform:translateX(-100%);
+        opacity:0;
+    }
+}
+
+@keyframes leftToRight {
+    from {
+        opacity:1;
+    }
+    to {
+        transform:translateX(100%);
         opacity:0;
     }
 }

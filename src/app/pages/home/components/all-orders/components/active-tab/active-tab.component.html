@@ -11,11 +11,11 @@
             </ion-item>
         </ion-card-header>
         <ion-card-content class="ion-no-padding">
+            <ion-label *ngIf="order.orderAnnotation != undefined && order.orderAnnotation.length > 0" class="ion-padding ion-margin">{{order.orderAnnotation}}</ion-label>
             <ion-item appMarkOrderedDish  *ngFor = "let orderedDish of order.orderedDishes;let i = index;"  
             [orderedDish]="orderedDish" class="ion-no-padding ion-no-margin">
                 <ion-label text-wrap class="ion-padding-start">
                     {{i+1}}. {{orderedDish.dish.dishName}}
-                   <!--  <ion-label *ngIf = "orderedDish.orderedDishAnnotation" class="ordered-dish-annotation" tex-wrap>{{orderedDish.orderedDishAnnotation}}</ion-label> -->
                 </ion-label>
                <ion-item slot="end" lines="none" class="ion-no-padding ion-no-margin">
                    <div [ngSwitch] = "orderedDish.orderDishStatus" slot="end">
@@ -32,9 +32,12 @@
                    
                </ion-item>
             </ion-item>
-        <ion-button class="add-to-order-button ion-no-padding ion-padding-end ion-margin-start" (click) = "addToOrder(order)" color="light">
-            <ion-icon name="add-outline"  class="ion-no-margin ion-margin-horizontal"></ion-icon>
-            Dodaj</ion-button>
+            <ion-item class="ion-no-padding">
+                <ion-button class="add-to-order-button ion-no-padding ion-padding-end ion-margin-start" (click) = "addToOrder(order)" color="light">
+                    <ion-icon name="add-outline" class="ion-no-margin ion-margin-horizontal"></ion-icon>
+                    Dodaj
+                  </ion-button>
+    </ion-item>
         </ion-card-content>
     </ion-card>
 </ion-content>
