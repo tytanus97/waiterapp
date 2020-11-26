@@ -1,4 +1,4 @@
-import { AfterViewInit, ApplicationRef, ChangeDetectorRef, Component, DoCheck, ElementRef, KeyValueDiffers, OnInit, QueryList, ViewChildren,  } from '@angular/core';
+import { AfterViewInit, ApplicationRef, ChangeDetectorRef, Component, DoCheck, ElementRef, KeyValueDiffers, OnInit, QueryList, Renderer2, ViewChildren,  } from '@angular/core';
 import { ActivatedRoute  } from '@angular/router';
 import { AlertController, GestureController, IonCard, ModalController } from '@ionic/angular';
 import { Order } from 'src/app/models/order';
@@ -24,12 +24,12 @@ export class ActiveTabComponent implements OnInit,AfterViewInit {
     private _route: ActivatedRoute,
     private _alertController: AlertController,
     private _modalCtrl: ModalController,
-    private _gestureCtrl: GestureController) {
+    private _gestureCtrl: GestureController,
+    private _renderer: Renderer2) {
  
     this._today = new Date();
 
     this._route.data.subscribe(result => {
-      console.log(result.status);
       this.activeOrders = result.activeOrders;
     })
   }
@@ -100,13 +100,22 @@ export class ActiveTabComponent implements OnInit,AfterViewInit {
 
   private bindLongPress(cardArr: Array<ElementRef>) {
     console.log(cardArr);
-  
+    
     cardArr.forEach((item:ElementRef) => {
+      console.log(item);
       const gesture = this._gestureCtrl.create({
         el: item.nativeElement,
         gestureName:'long-press',
-        onStart:() => console.log('long press started'),
-        onEnd:() => console.log('long press stop')
+        onStart:() =>{
+          setTimeout(() => {
+            const lastChild = item.nativeElement.lastChild;
+            this._renderer.addClass(lastChild,"drop-down");
+            console.log('long press started');
+          },500);
+        }  
+        //onEnd:() => console.log('long press stop'),
+        
+        
       })
 
       gesture.enable(true);

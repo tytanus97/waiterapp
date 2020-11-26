@@ -1,70 +1,79 @@
-
 ion-item > div {
-    text-align: center;
+  text-align: center;
 }
 
 .icon-container {
+  min-width: 2.5rem;
+  text-align: center;
 
-    min-width:2.5rem;
-    text-align:center;
-
-    .ready-icon {
-        animation:notify 1.5s infinite;
-        color:var(--ion-color-success);
-    }
+  .ready-icon {
+    animation: notify 1.5s infinite;
+    color: var(--ion-color-success);
+  }
 }
 .ion-card-farewell {
-  animation-name:leftToRight;
+  animation-name: leftToRight;
   animation-duration: 1s;
   animation-fill-mode: forwards;
 }
 
 .add-to-order-button {
-    padding:0;
-    icon {
-        margin:0;
-        padding:0;
-    }
+  padding: 0;
+  icon {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 ion-card {
+
+  .order-card-action {
     position:relative;
-    &::after {
-        position:absolute;
-        top:0;
-        bottom:0;
-        left:0;
-        right:0;
-        content:'';
+    display: grid;
+    transform:translateY(-100%);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+   
+    ion-button {
+      --border-radius: 0;
     }
+  }
 }
 
-
-
-@keyframes notify {
-    0% {
-        font-size:1.8rem;
-        color:var(--ion-color-success);
-    }
-    50% {
-        font-size:2.3rem;
-        color:#e6ff06;
-    }
-
-    100% {
-        font-size:1.8rem;
-        color:var(--ion-color-success);
-    }
+.drop-down {
+    animation: drop-down 500ms forwards ease-out;
 }
-
-
-@keyframes leftToRight {
+@keyframes drop-down {
     from {
-        opacity:1;
+        transform:translateY(-100%);
     }
     to {
-        transform:translateX(100%);
-        opacity:0;
-        
+        transform:translateY(0);
     }
+}
+
+@keyframes notify {
+  0% {
+    font-size: 1.8rem;
+    color: var(--ion-color-success);
+  }
+  50% {
+    font-size: 2.3rem;
+    color: #e6ff06;
+  }
+
+  100% {
+    font-size: 1.8rem;
+    color: var(--ion-color-success);
+  }
+}
+
+@keyframes leftToRight {
+  from {
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
 }

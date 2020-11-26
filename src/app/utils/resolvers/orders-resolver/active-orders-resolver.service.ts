@@ -12,6 +12,7 @@ export class OrdersResolverService implements Resolve<Array<Order>>{
   constructor(private _orderService: OrdersService) { }
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Order[] | Observable<Order[]> | Promise<Order[]> {
     const status = route.data['status'];
+
     return of(this._orderService.getAllOrdersByDateAndStatus(new Date(),status));
   }
 }
