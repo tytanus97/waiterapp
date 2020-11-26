@@ -1,6 +1,6 @@
-import { ApplicationRef, ChangeDetectorRef, Component, DoCheck, KeyValueDiffers, OnInit,  } from '@angular/core';
+import { AfterViewInit, ApplicationRef, ChangeDetectorRef, Component, DoCheck, ElementRef, KeyValueDiffers, OnInit, QueryList, ViewChildren,  } from '@angular/core';
 import { ActivatedRoute  } from '@angular/router';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, GestureController, IonCard, ModalController } from '@ionic/angular';
 import { Order } from 'src/app/models/order';
 import { OrderedDish } from 'src/app/models/orderedDish';
 import { OrdersService } from 'src/app/services/orders/orders.service';
@@ -11,16 +11,20 @@ import { ChooseDishComponent } from '../../../add-order/components/choose-dish/c
   templateUrl: './active-tab.component.html',
   styleUrls: ['./active-tab.component.scss'],
 })
-export class ActiveTabComponent implements OnInit {
+export class ActiveTabComponent implements OnInit,AfterViewInit {
 
   public activeOrders: Array<Order>;
   private _today: Date;
   public trigger: boolean = false;
 
+
+  @ViewChildren(IonCard,{read:ElementRef})private ordersCards: QueryList<ElementRef>;
+
   constructor(private _ordersService: OrdersService,
     private _route: ActivatedRoute,
     private _alertController: AlertController,
-    private _modalCtrl: ModalController) {
+    private _modalCtrl: ModalController,
+    private _gestureCtrl: GestureController) {
  
     this._today = new Date();
 
@@ -29,9 +33,17 @@ export class ActiveTabComponent implements OnInit {
       this.activeOrders = result.activeOrders;
     })
   }
-  
+
   ngOnInit() {
-   
+    
+  }
+
+  ngAfterViewInit() {
+    
+    const cardArr = this.ordersCards.toArray();
+    
+    this.bindLongPress(cardArr);
+
   }
   
   public async changeStatus(orderedDish: OrderedDish, order: Order) {
@@ -62,7 +74,6 @@ export class ActiveTabComponent implements OnInit {
       setTimeout(() => {
         this.activeOrders = this._ordersService.getAllOrdersByDateAndStatus(this._today, 'active');
       }, 1000);
-
     }
     this._ordersService.updateReadyToDeliver();
     this.trigger = !this.trigger;
@@ -85,6 +96,21 @@ export class ActiveTabComponent implements OnInit {
         order.totalPrice += orderedDish.dish.dishPrice;
       }
     });
+  }
+
+  private bindLongPress(cardArr: Array<ElementRef>) {
+    console.log(cardArr);
+  
+    cardArr.forEach((item:ElementRef) => {
+      const gesture = this._gestureCtrl.create({
+        el: item.nativeElement,
+        gestureName:'long-press',
+        onStart:() => console.log('long press started'),
+        onEnd:() => console.log('long press stop')
+      })
+
+      gesture.enable(true);
+    })
   }
 }
 

@@ -43,13 +43,17 @@ export class FinishedTabComponent implements OnInit {
             'inProgress');
             order.orderedDishes.push(orderedDish);
             order.orderStatus = 'active';
+            setTimeout(() => {
+              this.finishedOrders = this.finishedOrders.splice(this.finishedOrders.indexOf(order),0);
+            },1000)
         }
     });
   }
 
   public async finalizeOrder(order:Order) {
     const alert = await this._alertCtrl.create({
-      message:'Zfinalizować zamówienie?',
+      header:'Zfinalizować zamówienie?',
+      message:`Do zapłaty ${order.totalPrice} zł`,
       buttons:[
         {
           text:'Nie',
@@ -58,7 +62,10 @@ export class FinishedTabComponent implements OnInit {
           text:'Tak',
           handler:() => {
             order.orderStatus = 'closed';
-            this.finishedOrders = this.finishedOrders.splice(this.finishedOrders.indexOf(order),0);
+            setTimeout(() => {
+              this.finishedOrders = this.finishedOrders.splice(this.finishedOrders.indexOf(order),0);
+            },1000)
+           
           }
         }
       ]

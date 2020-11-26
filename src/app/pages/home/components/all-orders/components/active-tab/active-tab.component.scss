@@ -27,6 +27,20 @@ ion-item > div {
     }
 }
 
+ion-card {
+    position:relative;
+    &::after {
+        position:absolute;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+        content:'';
+    }
+}
+
+
+
 @keyframes notify {
     0% {
         font-size:1.8rem;

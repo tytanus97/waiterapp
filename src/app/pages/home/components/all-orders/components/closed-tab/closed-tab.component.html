@@ -1,6 +1,5 @@
 <ion-content *ngIf="closedOrders != null && closedOrders.length > 0;else noClosedOrders">
-  <ion-card *ngFor = "let order of closedOrders | sortByTime;"
-    [ngClass] = "order.orderStatus == 'finished'?'ion-card-farewell':'none'">
+  <ion-card *ngFor = "let order of closedOrders | sortByTime;">
       <ion-card-header class="ion-no-padding ion-padding-horizontal" color="light">
           <ion-item class="ion-no-padding ion-no-margin" color="light">
           <ion-card-title slot="start">
