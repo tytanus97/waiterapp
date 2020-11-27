@@ -25,31 +25,31 @@ ion-item > div {
   }
 }
 
-ion-card {
-
-  .order-card-action {
-    position:relative;
-    display: grid;
-    transform:translateY(-100%);
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: auto;
-   
-    ion-button {
-      --border-radius: 0;
-    }
+.card-container {
+  margin:0.5rem;
+  position:relative;
+    .order-card-action {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: auto;
+      height:0;
+      opacity:0;
+      ion-button {
+        --border-radius: 0;
+      }
   }
 }
 
-.drop-down {
-    animation: drop-down 500ms forwards ease-out;
+.zoom-little {
+  animation: zoomLittleAnim 500ms forwards linear;
 }
-@keyframes drop-down {
-    from {
-        transform:translateY(-100%);
-    }
-    to {
-        transform:translateY(0);
-    }
+@keyframes zoomLittleAnim {
+  from {
+    --transform: scale(1);
+  }
+  to {
+    --transform: scale(1.1);
+  }
 }
 
 @keyframes notify {
