@@ -1,5 +1,5 @@
 <ion-content *ngIf="activeOrders != null && activeOrders.length > 0;else noActiveOrders">
-    <div class="card-container" #cardContainer *ngFor="let order of activeOrders | sortByTime;"
+    <div class="card-container" appCardActionBarAnimation *ngFor="let order of activeOrders | sortByTime;let i = index"
     [ngClass]="order.orderStatus == 'finished'?'ion-card-farewell':'none'">
         <ion-card class="ion-no-margin">
             <ion-card-header class="ion-no-padding ion-padding-horizontal" color="light">
@@ -47,8 +47,9 @@
             </ion-card-content>
         </ion-card>
         <div class="order-card-action">
-            <ion-button color="primary" class="ion-no-margin">Zmień</ion-button>
-            <ion-button color="danger" class="ion-no-margin">Usuń</ion-button>
+            <ion-button color="primary" class="ion-no-margin"><ion-icon size = "large" name="create"></ion-icon>
+                </ion-button>
+            <ion-button  color="danger" class="ion-no-margin"><ion-icon size = "large" name="trash"></ion-icon></ion-button>
         </div>
     </div>
 </ion-content>

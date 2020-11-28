@@ -1,7 +1,7 @@
-import { AfterViewInit, ApplicationRef, ChangeDetectorRef, Component, DoCheck, ElementRef, KeyValueDiffers, OnInit, QueryList, Renderer2, ViewChildren, } from '@angular/core';
+import {Component,OnInit,Renderer2} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, GestureController, IonCard, ModalController } from '@ionic/angular';
-import { drop } from 'lodash';
+
 import { Order } from 'src/app/models/order';
 import { OrderedDish } from 'src/app/models/orderedDish';
 import { OrdersService } from 'src/app/services/orders/orders.service';
@@ -12,15 +12,11 @@ import { ChooseDishComponent } from '../../../add-order/components/choose-dish/c
   templateUrl: './active-tab.component.html',
   styleUrls: ['./active-tab.component.scss'],
 })
-export class ActiveTabComponent implements OnInit, AfterViewInit {
+export class ActiveTabComponent implements OnInit {
 
   public activeOrders: Array<Order>;
   private _today: Date;
   public trigger: boolean = false;
-  private _longPressActive = false;
-
-
-  @ViewChildren('cardContainer', { read: ElementRef }) private ordersCards: QueryList<ElementRef>;
 
   constructor(private _ordersService: OrdersService,
     private _route: ActivatedRoute,
@@ -40,13 +36,6 @@ export class ActiveTabComponent implements OnInit, AfterViewInit {
 
   }
 
-  ngAfterViewInit() {
-
-    const cardArr = this.ordersCards.toArray();
-
-    this.bindLongPress(cardArr);
-
-  }
 
   public async changeStatus(orderedDish: OrderedDish, order: Order) {
     const alert = await this._alertController.create({
@@ -98,58 +87,6 @@ export class ActiveTabComponent implements OnInit, AfterViewInit {
         order.totalPrice += orderedDish.dish.dishPrice;
       }
     });
-  }
-
-  private bindLongPress(cardArr: Array<ElementRef>) {
-    console.log(cardArr);
-
-    cardArr.forEach((item: ElementRef) => {
-      console.log(item);
-      const gesture = this._gestureCtrl.create({
-        el: item.nativeElement,
-        gestureName: 'long-press',
-        onStart: () => {
-          console.log('long press start');
-          this._longPressActive = true;
-          this.countPressDuration(0,item);
-        },
-        onEnd: () => {
-          this._longPressActive = false;
-          console.log('long press stop');
-        }
-      })
-      gesture.enable(true);
-    })
-  }
-
-  private countPressDuration(pressDuration: number,element: ElementRef) {
-    
-    setTimeout(() => {
-      if(this._longPressActive) {
-        console.log(pressDuration);
-        pressDuration++;
-        if(pressDuration > 3) {
-          console.log('XD');
-            this._longPressActive = false;
-            const lastChild = element.nativeElement.lastChild;  
-            const dropDownAnimation : Animation =  lastChild.animate(
-            [
-              {transform:'translateY(-100%)',height:0,opacity:0},
-              {
-                opacity:0
-              },
-              {transform:'translateY(0)',height:'initial',opacity:1}
-            ],
-            {
-              duration:500,
-              fill:'forwards',
-              easing:'ease-out'
-            });
-        } else {
-          this.countPressDuration(pressDuration,element);
-        }
-      }
-    },300);
   }
 }
 
