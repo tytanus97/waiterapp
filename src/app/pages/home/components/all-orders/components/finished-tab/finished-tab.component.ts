@@ -44,7 +44,7 @@ export class FinishedTabComponent implements OnInit {
             order.orderedDishes.push(orderedDish);
             order.orderStatus = 'active';
             setTimeout(() => {
-              this.finishedOrders = this.finishedOrders.splice(this.finishedOrders.indexOf(order),0);
+             this.finishedOrders.splice(this.finishedOrders.indexOf(order),1);
             },1000)
         }
     });

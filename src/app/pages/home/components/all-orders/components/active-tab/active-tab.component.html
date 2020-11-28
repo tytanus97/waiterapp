@@ -47,9 +47,9 @@
             </ion-card-content>
         </ion-card>
         <div class="order-card-action">
-            <ion-button color="primary" class="ion-no-margin"><ion-icon size = "large" name="create"></ion-icon>
+            <ion-button color="primary" class="ion-no-margin" (click) = "editOrder(order)"><ion-icon size = "large" name="create" ></ion-icon>
                 </ion-button>
-            <ion-button  color="danger" class="ion-no-margin"><ion-icon size = "large" name="trash"></ion-icon></ion-button>
+            <ion-button  color="danger" class="ion-no-margin" (click) = "deleteOrder(order)"><ion-icon size = "large" name="trash" ></ion-icon></ion-button>
         </div>
     </div>
 </ion-content>

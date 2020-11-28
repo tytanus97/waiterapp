@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, NgZone, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, NgZone, OnInit } from "@angular/core";
 import {
   AlertController,
   ModalController,
@@ -20,6 +20,10 @@ declare let _ :any;
   styleUrls: ["./add-order.component.scss"],
 })
 export class AddOrderComponent implements OnInit {
+
+  @Input() data: Order;
+
+
   public tables: Array<number>;
   public chosenTable: number;
   public orderAnnotation: string;
@@ -41,6 +45,9 @@ export class AddOrderComponent implements OnInit {
     this.tables = this._tablesService.getAllTables();
     this.orderedDishes = new Array<OrderedDish>();
     this._currentOrder = new Order("0");
+
+
+    console.log(this.data);
   }
 
   public async goToSelectDish() {
@@ -126,7 +133,6 @@ export class AddOrderComponent implements OnInit {
       color: color,
     }).then(toast => toast.present())
     .finally(() => console.log('toast presented'));
-
   }
 
   private reset() {

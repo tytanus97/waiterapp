@@ -5,7 +5,7 @@ import { Plugins } from '@capacitor/core';
 import { WaiterService } from '../waiters/waiter.service';
 import { OrderedDish } from 'src/app/models/orderedDish';
 import { DishesService } from '../dishes/dishes.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 
 @Injectable({
@@ -34,6 +34,7 @@ export class OrdersService {
     orderedDishes.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('sniadanie')[1],'delivered'));
     orderedDishes.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('obiad')[2],'ready'));
 
+  
     let tmpOrder = new Order('1',this._waiterService.getLoggedWaiter(),5,new Date(new Date().getTime() - (1000 * 60 * 15))
     ,orderedDishes.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'active',orderedDishes);
     this._ordersEmplDataArr.push(tmpOrder);
@@ -42,9 +43,9 @@ export class OrdersService {
     const orderedDishes2 = new Array<OrderedDish>();
 
     orderedDishes2.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('sniadanie')[0],'inProgress'));
-    orderedDishes2.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('obiad')[0],'delivered'));
-    orderedDishes2.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('sniadanie')[1],'delivered'));
-    orderedDishes2.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('obiad')[2],'ready'));
+    orderedDishes2.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('obiad')[0],'inProgress'));
+    orderedDishes2.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('sniadanie')[1],'inProgress'));
+    orderedDishes2.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('obiad')[2],'inProgress'));
 
     tmpOrder = new Order('2',this._waiterService.getLoggedWaiter(),4,new Date(new Date().getTime() - (1000 * 60 * 10))
     ,orderedDishes2.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'active',orderedDishes2); 
@@ -104,6 +105,10 @@ export class OrdersService {
     .reduce((acc:number,curr:OrderedDish) =>  curr.orderDishStatus === 'ready'?acc+1:acc,0); 
 
     this.readyToDeliver.next(readyToDeliver);
+  }
+
+  public deleteOrder(order: Order) {
+    this._ordersEmplDataArr.splice(this._ordersEmplDataArr.indexOf(order),1);
   }
 }
 
