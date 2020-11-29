@@ -1,4 +1,4 @@
-import { ViewChild } from '@angular/core';
+import { OnDestroy, ViewChild } from '@angular/core';
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
@@ -12,68 +12,69 @@ import { ChooseDishComponent } from '../../../add-order/components/choose-dish/c
   templateUrl: './finished-tab.component.html',
   styleUrls: ['./finished-tab.component.scss'],
 })
-export class FinishedTabComponent implements OnInit {
+export class FinishedTabComponent implements OnInit,OnDestroy {
 
   public finishedOrders: Array<Order>;
 
 
   constructor(
-              private _route: ActivatedRoute,
-              private _modalCtrl: ModalController,
-              private _alertCtrl: AlertController,
-              private _ordersService: OrdersService,
-              ){}
+    private _route: ActivatedRoute,
+    private _modalCtrl: ModalController,
+    private _alertCtrl: AlertController,
+    private _ordersService: OrdersService,
+  ) { }
+ 
   ngOnInit() {
-    this._route.data.subscribe(result => {
-      this.finishedOrders = result.finishedOrders;
-      console.log(this.finishedOrders);
+    this._ordersService.finishedOrders.subscribe(result => {
+      this.finishedOrders = result;
     })
   }
 
 
   public async addToOrder(order: Order) {
-    const modal = await this._modalCtrl.create({component:ChooseDishComponent});
+    const modal = await this._modalCtrl.create({ component: ChooseDishComponent });
 
     await modal.present();
     await modal.onDidDismiss().then(result => {
-        if(result.data) {
-          const orderedDish = new OrderedDish(
-            this._ordersService.getRandomId()
-            ,result.data.dish,
-            'inProgress');
-            order.orderedDishes.push(orderedDish);
-            order.orderStatus = 'active';
-            setTimeout(() => {
-             this.finishedOrders.splice(this.finishedOrders.indexOf(order),1);
-            },1000)
-        }
+      if (result.data) {
+        const orderedDish = new OrderedDish(
+          this._ordersService.getRandomId()
+          , result.data.dish,
+          'inProgress');
+        order.orderedDishes.push(orderedDish);
+        order.orderStatus = 'active';
+        setTimeout(() => {
+          this._ordersService.fetchAll();
+        }, 1000)
+      }
     });
   }
 
-  public async finalizeOrder(order:Order) {
+  public async finalizeOrder(order: Order) {
     const alert = await this._alertCtrl.create({
-      header:'Zfinalizować zamówienie?',
-      message:`Do zapłaty ${order.totalPrice} zł`,
-      buttons:[
+      header: 'Zfinalizować zamówienie?',
+      message: `Do zapłaty ${order.totalPrice} zł`,
+      buttons: [
         {
-          text:'Nie',
-          role:'cancel'
+          text: 'Nie',
+          role: 'cancel'
         }, {
-          text:'Tak',
-          handler:() => {
+          text: 'Tak',
+          handler: () => {
             order.orderStatus = 'closed';
             setTimeout(() => {
-              this.finishedOrders = this.finishedOrders.splice(this.finishedOrders.indexOf(order),0);
-            },1000)
-           
+             this._ordersService.fetchAll();
+            }, 1000)
+
           }
         }
       ]
     });
 
     await alert.present();
-  
-     /*  console.log(el.nativeElement);
-      this._renderer.addClass(el.nativeElement,'leftToRight') */
-  } 
+  }
+
+  ngOnDestroy(): void {
+    this._ordersService.finishedOrders.unsubscribe();
+  }
 }

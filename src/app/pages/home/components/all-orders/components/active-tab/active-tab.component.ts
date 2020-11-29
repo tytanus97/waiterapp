@@ -1,7 +1,6 @@
-import {Component,NgZone,OnInit,Renderer2} from '@angular/core';
+import {Component,OnDestroy,OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AlertController, GestureController, IonCard, ModalController } from '@ionic/angular';
-
+import { AlertController, ModalController } from '@ionic/angular';
 import { Order } from 'src/app/models/order';
 import { OrderedDish } from 'src/app/models/orderedDish';
 import { OrdersService } from 'src/app/services/orders/orders.service';
@@ -13,25 +12,25 @@ import { ChooseDishComponent } from '../../../add-order/components/choose-dish/c
   templateUrl: './active-tab.component.html',
   styleUrls: ['./active-tab.component.scss'],
 })
-export class ActiveTabComponent implements OnInit {
+export class ActiveTabComponent implements OnInit,OnDestroy {
 
   public activeOrders: Array<Order>;
-  private _today: Date;
   public trigger: boolean = false;
 
   constructor(private _ordersService: OrdersService,
-    private _route: ActivatedRoute,
+
     private _alertController: AlertController,
     private _modalCtrl: ModalController) {
-    this._today = new Date();
-    this._route.data.subscribe(result => {
-      console.log('pobieram dane')
-      this.activeOrders = result.activeOrders;
-    })
   }
+ 
 
   ngOnInit() {
+
+    this._ordersService.activeOrders.subscribe(result => {
+      this.activeOrders = result;
+    });
   }
+
   public async changeStatus(orderedDish: OrderedDish, order: Order) {
     const alert = await this._alertController.create({
       message: 'Oznaczyć jako dostarczone?',
@@ -43,8 +42,9 @@ export class ActiveTabComponent implements OnInit {
         {
           text: 'OK',
           handler: () => {
-            
-            this._checkIfAllDelivered(order, orderedDish);
+            orderedDish.orderDishStatus = 'delivered';
+            this.trigger = !this.trigger;
+            this._checkIfAllDelivered(order);
           }
         }
       ]
@@ -52,17 +52,15 @@ export class ActiveTabComponent implements OnInit {
     await alert.present();
   }
 
-  private _checkIfAllDelivered(order: Order, orderedDish: OrderedDish) {
-    orderedDish.orderDishStatus = 'delivered';
+  private _checkIfAllDelivered(order: Order) {
     const result = order.orderedDishes.filter(o => o.orderDishStatus !== 'delivered').length;
     if (!result) {
       order.orderStatus = 'finished';
       setTimeout(() => {
-        this.activeOrders = this._ordersService.getAllOrdersByDateAndStatus(this._today, 'active');
+       this._ordersService.fetchAll();
       }, 1000);
     }
     this._ordersService.updateReadyToDeliver();
-    this.trigger = !this.trigger;
   }
 
   public async addToOrder(order: Order) {
@@ -84,7 +82,6 @@ export class ActiveTabComponent implements OnInit {
     });
   }
 
-
   public async editOrder(order: Order) {
       console.log('edit clicked');
      const modal =  await this._modalCtrl.create({
@@ -93,8 +90,10 @@ export class ActiveTabComponent implements OnInit {
          data: order
        } 
       });
-
       await modal.present();
+      modal.onDidDismiss().then(result => {
+        this._checkIfAllDelivered(result.data);
+      })
   }
 
   public async deleteOrder(order:Order) {
@@ -125,13 +124,17 @@ export class ActiveTabComponent implements OnInit {
               text:'Tak',
               handler: () => {
                 this._ordersService.deleteOrder(order);
-                this.activeOrders = this._ordersService.getAllOrdersByDateAndStatus(this._today, 'active');
+                this._ordersService.fetchActive();
               },
             }
           ]
         });
         (await alert).present();  
        }
+  }
+
+  ngOnDestroy(): void {
+    this._ordersService.activeOrders.unsubscribe();
   }
 }
 

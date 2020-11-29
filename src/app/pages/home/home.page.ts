@@ -14,11 +14,6 @@ export class HomePage implements OnInit {
     title:'Zamówienia',
     url:'/home/allOrders',
     icon:'flag'
-  },
-  {
-    title:'Dodaj zamówienie',
-    url:'/home/addOrder',
-    icon:'add-circle'
   }]
 
   public selectedPath;

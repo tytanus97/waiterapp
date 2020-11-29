@@ -12,8 +12,8 @@
       </ion-card-header>
       <ion-card-content class="ion-no-padding">
         <ion-label *ngIf="order.orderAnnotation != undefined && order.orderAnnotation.length > 0" class="ion-padding">{{order.orderAnnotation}}</ion-label>
-          <ion-item appMarkOrderedDish  *ngFor = "let orderedDish of order.orderedDishes;let i = index;"  
-          [orderedDish]="orderedDish" class="ion-no-padding ion-no-margin">
+          <ion-item *ngFor = "let orderedDish of order.orderedDishes;let i = index;"  
+           class="ion-no-padding ion-no-margin">
               <ion-label text-wrap class="ion-padding-start">
                   {{i+1}}. {{orderedDish.dish.dishName}}
               </ion-label>

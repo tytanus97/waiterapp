@@ -16,18 +16,21 @@ const routes: Routes = [
           {
             path: 'active',
             component: ActiveTabComponent,
+            runGuardsAndResolvers: "always",
             resolve: { activeOrders: OrdersResolverService },
             data: { status: 'active' }
           },
           {
             path: 'finished',
             component: FinishedTabComponent,
+            runGuardsAndResolvers: "always",
             resolve: { finishedOrders: OrdersResolverService },
             data: { status: 'finished' }
           },
           {
             path: 'closed',
             component: ClosedTabComponent,
+            runGuardsAndResolvers: "always",
             resolve:{closedOrders: OrdersResolverService },
             data: { status: 'closed'}
           },

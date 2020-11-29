@@ -3,7 +3,6 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { IonicModule } from "@ionic/angular";
 import { CardActionBarAnimationDirective } from 'src/app/utils/directives/card-action-bar-animation/card-action-bar-animation.directive';
-import { MarkOrderedDishDirective } from 'src/app/utils/directives/mark-ordered-dish/mark-ordered-dish.directive';
 import { FilterByCategoryPipe } from "src/app/utils/pipes/filter-by-category.pipe";
 import { QuantityByStatusPipe } from 'src/app/utils/pipes/quantity-by-status/quantity-by-status.pipe';
 import { SortByTimePipe } from 'src/app/utils/pipes/sort-by-time/sort-by-time.pipe';
@@ -32,7 +31,6 @@ import { HomePage } from "./home.page";
     ClosedTabComponent,
     SortByTimePipe,
     QuantityByStatusPipe,
-    MarkOrderedDishDirective,
     CardActionBarAnimationDirective,
     QuestionnaireComponent
   ],

@@ -29,6 +29,7 @@ export class AddOrderComponent implements OnInit {
   public orderAnnotation: string;
   public orderedDishes: Array<OrderedDish>;
   public totalPrice = 0;
+  private _tmpId = String(Math.floor(Math.random() * 20));
   private _currentOrder: Order;
 
   constructor(
@@ -46,8 +47,17 @@ export class AddOrderComponent implements OnInit {
     this.orderedDishes = new Array<OrderedDish>();
     this._currentOrder = new Order("0");
 
-
+    if(this.data) this.applyData();
     console.log(this.data);
+  }
+  
+  private applyData() {
+    this._tmpId = this.data.orderId;
+    this.chosenTable = this.data.table;
+    this.orderAnnotation = this.data.orderAnnotation;
+    this.orderedDishes = this.data.orderedDishes;
+    this.totalPrice = this.data.totalPrice;
+    this._currentOrder = this.data;
   }
 
   public async goToSelectDish() {
@@ -98,11 +108,9 @@ export class AddOrderComponent implements OnInit {
     this.totalPrice = sum;
   }
 
-
-
   public async sendOrder() {
     if (this.validate()) {
-      this._currentOrder.orderId =  String(Math.floor(Math.random() * 20));
+      this._currentOrder.orderId = this._tmpId;
       this._currentOrder.table = this.chosenTable;
       this._currentOrder.orderDate = new Date();
       this._currentOrder.orderedDishes = this.orderedDishes;
@@ -110,10 +118,18 @@ export class AddOrderComponent implements OnInit {
       this._currentOrder.totalPrice = this.totalPrice;
       this._currentOrder.waiter = this._waiterService.getLoggedWaiter();
       this._currentOrder.orderAnnotation = this.orderAnnotation;
-      const orderTransfer: Order =   _.cloneDeep(this._currentOrder); // JSON.parse(JSON.stringify(this._currentOrder));
-      this._orderService.addOrder(orderTransfer);
-      this.prompt('Dodano zamowienie','success');
-      this.reset();
+
+      if(!this.data) {
+        const orderTransfer: Order =   _.cloneDeep(this._currentOrder);
+        this._orderService.addOrder(orderTransfer);
+        this.prompt('Dodano zamowienie','success');
+      } else {
+        this.prompt('Zaktualizowano zamowienie','success');
+      }
+      setTimeout(() => {
+        if(!this.data) this._modalCtrl.dismiss();
+        else this._modalCtrl.dismiss(this._currentOrder);
+      },1000)
     } else {
       await this.prompt("Brakujace dane!", "warning");
     }
@@ -122,8 +138,6 @@ export class AddOrderComponent implements OnInit {
   private validate(): boolean {
     return this.orderedDishes.length > 0 && this.chosenTable !== undefined;
   }
-
-
   private async prompt(message: string, color: string) {
     this._toastCtrl.create({
       message: message,
@@ -135,15 +149,6 @@ export class AddOrderComponent implements OnInit {
     .finally(() => console.log('toast presented'));
   }
 
-  private reset() {
-    
-    this._currentOrder = new Order("0");
-    this.orderedDishes.length = 0;
-    this.chosenTable = undefined;
-    this.totalPrice = 0;
-    this.orderAnnotation = '';
-  }
-
   public async openQuestionnaire() {
 
     const questionnaire = await this._modalCtrl.create({component:QuestionnaireComponent});
@@ -152,6 +157,9 @@ export class AddOrderComponent implements OnInit {
     await questionnaire.onDidDismiss().then(res => {
       console.log('questionnaire dismissed');
     });
+  }
 
+  public back() {
+    this._modalCtrl.dismiss();
   }
 }
