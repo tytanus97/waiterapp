@@ -1,12 +1,12 @@
 <ion-content *ngIf="closedOrders != null && closedOrders.length > 0;else noClosedOrders">
-  <ion-card *ngFor = "let order of closedOrders | sortByTime;">
+  <ion-card *ngFor = "let order of closedOrders | sortByTime;" appAnimateDropdown>
       <ion-card-header class="ion-no-padding ion-padding-horizontal" color="light">
           <ion-item class="ion-no-padding ion-no-margin" color="light">
           <ion-card-title slot="start">
               <ion-label>Stolik {{order.table}}</ion-label>
           </ion-card-title>
-          <ion-label class="ion-text-center">{{order.orderedDishes | quantityByStatus:'delivered'}}/{{order.orderedDishes.length}}</ion-label>
-              <ion-label slot="end" class="ion-no-padding ion-no-margin ion-text-end">{{order.orderDate | date: 'shortTime'}}</ion-label>
+        <ion-label slot="start" class="ion-no-padding ion-no-margin ion-text-end">{{order.orderDate | date: 'shortTime'}}</ion-label>
+        <ion-icon slot="end" name="chevron-forward-outline" size="large" ></ion-icon>
           </ion-item>
       </ion-card-header>
       <ion-card-content class="ion-no-padding">

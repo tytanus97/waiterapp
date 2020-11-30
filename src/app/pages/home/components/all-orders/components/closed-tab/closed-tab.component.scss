@@ -1,0 +1,10 @@
+ion-card {
+    position:relative;
+    ion-card-header {
+    z-index:2;
+    }
+    ion-card-content {
+        z-index:1;
+        max-height:0px;
+    }
+}

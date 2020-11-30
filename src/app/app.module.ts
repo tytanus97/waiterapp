@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomePageModule } from './pages/home/home.module';
 import { AuthenticatePageModule } from './pages/authenticate/authenticate.module';
+import { AnimateDropdownDirective } from './utils/directives/animate-dropdown/animate-dropdown.directive';
 
 @NgModule({
   declarations: [AppComponent],

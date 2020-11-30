@@ -19,10 +19,6 @@ ion-item > div {
 
 .add-to-order-button {
   padding: 0;
-  icon {
-    margin: 0;
-    padding: 0;
-  }
 }
 
 .card-container {
@@ -37,21 +33,13 @@ ion-item > div {
       height:0;
       opacity:0;
       ion-button {
-        --border-radius: 0;
+        --background:rgba(#1b1b1ba8,0);
       }
   }
 }
 
 .zoom-little {
   animation: zoomLittleAnim 500ms forwards linear;
-}
-@keyframes zoomLittleAnim {
-  from {
-    --transform: scale(1);
-  }
-  to {
-    --transform: scale(1.1);
-  }
 }
 
 @keyframes notify {

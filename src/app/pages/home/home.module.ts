@@ -2,6 +2,7 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { IonicModule } from "@ionic/angular";
+import { AnimateDropdownDirective } from 'src/app/utils/directives/animate-dropdown/animate-dropdown.directive';
 import { CardActionBarAnimationDirective } from 'src/app/utils/directives/card-action-bar-animation/card-action-bar-animation.directive';
 import { FilterByCategoryPipe } from "src/app/utils/pipes/filter-by-category.pipe";
 import { QuantityByStatusPipe } from 'src/app/utils/pipes/quantity-by-status/quantity-by-status.pipe';
@@ -36,7 +37,8 @@ import { HomePage } from "./home.page";
     SortByTimePipe,
     QuantityByStatusPipe,
     CardActionBarAnimationDirective,
-    QuestionnaireComponent
+    QuestionnaireComponent,
+    AnimateDropdownDirective
   ],
   providers:[OrdersResolverService],
   exports:[SortByTimePipe,QuantityByStatusPipe]
