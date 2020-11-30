@@ -33,8 +33,8 @@
             {{orderedDish.dish.dishPrice | number:'1.2-2'}} zl
           </ion-col>
           <ion-col size="2">
-            <ion-icon name="trash-outline" class="dishOption ion-margin-right" (click)="showDishOption(orderedDish)">
-            </ion-icon>
+            <ion-icon name="trash-outline" [hidden] = "orderedDish.orderDishStatus == 'delivered' || orderedDish.orderDishStatus == 'ready'"
+             class="dishOption ion-margin-right" (click)="showDishOption(orderedDish)"></ion-icon>
           </ion-col>
         </ion-row>
       </ion-grid>

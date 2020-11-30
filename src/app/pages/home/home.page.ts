@@ -14,6 +14,16 @@ export class HomePage implements OnInit {
     title:'Zamówienia',
     url:'/home/allOrders',
     icon:'flag'
+  },
+  {
+    title: 'Raport',
+    url:'/home/raport',
+    icon:'bar-chart'
+  },
+  {
+    title: 'Kelner',
+    url:'/home/waiter',
+    icon:'person'
   }]
 
   public selectedPath;

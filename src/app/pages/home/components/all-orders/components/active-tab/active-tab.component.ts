@@ -92,7 +92,7 @@ export class ActiveTabComponent implements OnInit,OnDestroy {
       });
       await modal.present();
       modal.onDidDismiss().then(result => {
-        this._checkIfAllDelivered(result.data);
+        if(result.data) this._checkIfAllDelivered(result.data);
       })
   }
 

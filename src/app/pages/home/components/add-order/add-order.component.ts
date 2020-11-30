@@ -89,7 +89,6 @@ export class AddOrderComponent implements OnInit {
         {
           text: "Tak",
           handler: () => this.deleteOrderedDish(orderedDish),
-          cssClass: "optionButton",
         }
        
       ],
@@ -100,7 +99,8 @@ export class AddOrderComponent implements OnInit {
 
   private deleteOrderedDish(orderedDish: OrderedDish) {
     this.orderedDishes = this.orderedDishes.filter((od) => od != orderedDish);
-    this._zone.run(() => this.updateTotalPrice());
+    this.updateTotalPrice()
+  
   }
   private updateTotalPrice() {
     let sum = 0;

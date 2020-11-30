@@ -7,46 +7,62 @@ import { AllOrdersComponent } from './components/all-orders/all-orders.component
 import { ActiveTabComponent } from './components/all-orders/components/active-tab/active-tab.component';
 import { ClosedTabComponent } from './components/all-orders/components/closed-tab/closed-tab.component';
 import { FinishedTabComponent } from './components/all-orders/components/finished-tab/finished-tab.component';
+import { RaportComponent } from './components/raport/raport.component';
+import { WaiterComponent } from './components/waiter/waiter.component';
 import { HomePage } from './home.page';
 const routes: Routes = [
   {
     path: 'home', component: HomePage, children: [
       {
-        path: 'allOrders', component: AllOrdersComponent, children: [
+        path: 'allOrders',
+        component: AllOrdersComponent,
+        canActivateChild: [AuthGuard],
+        children: [
           {
             path: 'active',
             component: ActiveTabComponent,
-            runGuardsAndResolvers: "always",
+            canActivateChild: [AuthGuard],
             resolve: { activeOrders: OrdersResolverService },
             data: { status: 'active' }
           },
           {
             path: 'finished',
             component: FinishedTabComponent,
-            runGuardsAndResolvers: "always",
+            canActivateChild: [AuthGuard],
             resolve: { finishedOrders: OrdersResolverService },
             data: { status: 'finished' }
           },
           {
             path: 'closed',
             component: ClosedTabComponent,
-            runGuardsAndResolvers: "always",
-            resolve:{closedOrders: OrdersResolverService },
-            data: { status: 'closed'}
+            canActivateChild: [AuthGuard],
+            resolve: { closedOrders: OrdersResolverService },
+            data: { status: 'closed' }
           },
           {
-            path: '', redirectTo: 'active', pathMatch: 'full'
+            path: '',
+            redirectTo: 'active',
+            pathMatch: 'full'
           }
         ]
 
       },
       {
-        path: 'addOrder', component: AddOrderComponent
+        path: 'waiter',
+        canActivateChild: [AuthGuard],
+        component: WaiterComponent
       },
       {
-        path: '', redirectTo: 'allOrders', pathMatch: 'full'
+        path: 'raport',
+        canActivateChild: [AuthGuard],
+        component: RaportComponent
+      },
+      {
+        path: '',
+        redirectTo: 'allOrders',
+        pathMatch: 'full'
       }
-    ], canActivateChild: [AuthGuard]
+    ], canActivate: [AuthGuard]
   }
 ];
 

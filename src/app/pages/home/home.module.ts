@@ -14,6 +14,8 @@ import { AllOrdersComponent } from "./components/all-orders/all-orders.component
 import { ActiveTabComponent } from './components/all-orders/components/active-tab/active-tab.component';
 import { ClosedTabComponent } from './components/all-orders/components/closed-tab/closed-tab.component';
 import { FinishedTabComponent } from './components/all-orders/components/finished-tab/finished-tab.component';
+import { RaportComponent } from './components/raport/raport.component';
+import { WaiterComponent } from './components/waiter/waiter.component';
 import { HomePageRoutingModule } from "./home-routing.module";
 import { HomePage } from "./home.page";
 
@@ -29,6 +31,8 @@ import { HomePage } from "./home.page";
     ActiveTabComponent,
     FinishedTabComponent,
     ClosedTabComponent,
+    WaiterComponent,
+    RaportComponent,
     SortByTimePipe,
     QuantityByStatusPipe,
     CardActionBarAnimationDirective,

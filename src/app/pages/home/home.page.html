@@ -5,21 +5,21 @@
         <ion-menu-toggle slot="start">
           <ion-icon name="chevron-back-outline" size="large" ></ion-icon>
         </ion-menu-toggle>
-        <ion-title>Opcje</ion-title>
+        <ion-title>Menu</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <ion-list>
+      <ion-list class="ion-no-padding">
         <ion-menu-toggle auto-hide="false" *ngFor="let p of pages">
           <ion-item [routerLink] = "p.url">
             <ion-icon [name] = "p.icon" class="menuIcon"></ion-icon>
             {{p.title}}
           </ion-item>
         </ion-menu-toggle>
-        <ion-menu-toggle>
-          <ion-item (click) = "logout()"><ion-icon name="log-out" class="menuIcon"></ion-icon>Wyloguj</ion-item>
-        </ion-menu-toggle>
       </ion-list>
+      <ion-menu-toggle>
+        <ion-item  class="ion-margin-top" (click) = "logout()"><ion-icon name="log-out" class="menuIcon"></ion-icon>Wyloguj</ion-item>
+      </ion-menu-toggle>
     </ion-content>
   </ion-menu>
   <ion-router-outlet id="content"></ion-router-outlet>
