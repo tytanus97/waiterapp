@@ -3,11 +3,16 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <ion-icon slot="end" size="large" class="ion-margin" name="calendar-outline" (click) = "datePicker.open()"></ion-icon>
     <ion-title>Raport</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-<p>
-  raport works!
-</p>
+<ion-label>Raport z dnia: </ion-label>
+<ion-datetime  #datePicker doneText = "Wybierz" cancelText="Anuluj" [monthShortNames] = "monthShort"
+			text-center
+			(ionChange)="dateChanged($event)"
+			displayFormat="DD MMM, YYYY" 
+			[(ngModel)]="date"></ion-datetime>
+
 </ion-content>
