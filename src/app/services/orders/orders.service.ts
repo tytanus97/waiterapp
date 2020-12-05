@@ -58,7 +58,7 @@ export class OrdersService {
     orderedDishes2.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('obiad')[2],'delivered'));
 
     tmpOrder = new Order('2',this._waiterService.getLoggedWaiter(),4,new Date(this._currentDate.getTime() - (1000 * 60 * 10))
-    ,orderedDishes2.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'closed',orderedDishes2); 
+    ,orderedDishes2.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'closed',orderedDishes2);
     this._ordersEmplDataArr.push(tmpOrder);
 
 
@@ -72,6 +72,54 @@ export class OrdersService {
     tmpOrder = new Order('3',this._waiterService.getLoggedWaiter(),2,new Date(this._currentDate.getTime() - (1000 * 60 * 5))
     ,orderedDishes3.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'active',orderedDishes3); 
     this._ordersEmplDataArr.push(tmpOrder);
+
+    const orderedDishes4 = new Array<OrderedDish>();
+
+    orderedDishes4.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('sniadanie')[0],'delivered'));
+    orderedDishes4.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('obiad')[0],'delivered'));
+    orderedDishes4.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('sniadanie')[1],'delivered'));
+    orderedDishes4.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('obiad')[2],'delivered'));
+
+  
+    let tmpOrder4 = new Order('4',this._waiterService.getLoggedWaiter(),5,new Date(this._currentDate.getTime() -(1000*60*60*24)- (1000 * 60 * 15))
+    ,orderedDishes4.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'active',orderedDishes4);
+    this._ordersEmplDataArr.push(tmpOrder4);
+
+    const orderedDishes5 = new Array<OrderedDish>();
+
+    orderedDishes5.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('sniadanie')[0],'delivered'));
+    orderedDishes5.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('obiad')[0],'delivered'));
+    orderedDishes5.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('sniadanie')[1],'delivered'));
+    orderedDishes5.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('obiad')[2],'delivered'));
+
+  
+    let tmpOrder5 = new Order('5',this._waiterService.getLoggedWaiter(),5,new Date(this._currentDate.getTime()-(1000*60*60*24) - (1000 * 60 * 15))
+    ,orderedDishes5.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'active',orderedDishes5);
+    this._ordersEmplDataArr.push(tmpOrder5);
+
+    const orderedDishes6 = new Array<OrderedDish>();
+
+    orderedDishes6.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('sniadanie')[0],'delivered'));
+    orderedDishes6.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('obiad')[0],'delivered'));
+    orderedDishes6.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('sniadanie')[1],'delivered'));
+    orderedDishes6.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('obiad')[2],'delivered'));
+
+  
+    let tmpOrder6 = new Order('6',this._waiterService.getLoggedWaiter(),5,new Date(this._currentDate.getTime()-(1000*60*60*24) - (1000 * 60 * 15))
+    ,orderedDishes6.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'active',orderedDishes6);
+    this._ordersEmplDataArr.push(tmpOrder6);
+
+    const orderedDishes7 = new Array<OrderedDish>();
+
+    orderedDishes7.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('sniadanie')[0],'delivered'));
+    orderedDishes7.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('obiad')[0],'delivered'));
+    orderedDishes7.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('sniadanie')[1],'delivered'));
+    orderedDishes7.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('obiad')[2],'delivered'));
+
+  
+    let tmpOrder7 = new Order('7',this._waiterService.getLoggedWaiter(),5,new Date(this._currentDate.getTime()-(1000*60*60*24) - (1000 * 60 * 15))
+    ,orderedDishes7.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'active',orderedDishes7);
+    this._ordersEmplDataArr.push(tmpOrder7);
     
     this.fetchAll();
 
