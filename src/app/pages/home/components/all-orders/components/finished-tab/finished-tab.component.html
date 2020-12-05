@@ -1,5 +1,6 @@
 <ion-content *ngIf="finishedOrders != undefined && finishedOrders.length > 0; else noFinishedOrders">
   <ion-card *ngFor="let order of finishedOrders | sortByTime;let orderIndex = index"
+    class="ion-no-margin"
     [class.ion-card-right-to-left] = "order.orderStatus == 'active'"
     [class.ion-card-left-to-right] = "order.orderStatus == 'closed'">
       <ion-card-header class="ion-no-padding ion-padding-start" color="light">
@@ -11,12 +12,10 @@
           </ion-item>
       </ion-card-header>
       <ion-card-content class="ion-no-padding">
-        <ion-label *ngIf="order.orderAnnotation != undefined && order.orderAnnotation.length > 0" class="ion-padding">{{order.orderAnnotation}}</ion-label>
           <ion-item *ngFor = "let orderedDish of order.orderedDishes;let i = index;"  
-           class="ion-no-padding ion-no-margin">
-              <ion-label text-wrap class="ion-padding-start">
-                  {{i+1}}. {{orderedDish.dish.dishName}}
-              </ion-label>
+           class="ion-align-items-start ion-no-padding">
+           <span style="margin-right:0.5rem;margin-left:1rem;">{{i+1}}. </span>
+           <ion-label class= "ion-no-margin dish-label" text-wrap>{{orderedDish.dish.dishName}}</ion-label>
              <ion-item slot="end" lines="none" class="ion-no-padding ion-no-margin">
                  <div [ngSwitch] = "orderedDish.orderDishStatus" slot="end">
                     <div *ngSwitchCase = "'inProgress'" class="icon-container">
@@ -36,6 +35,11 @@
         
         <ion-button slot="end" (click) = "finalizeOrder(order,finishedOrders[orderIndex])" color="primary">Finalizuj</ion-button>
         </ion-item>
+        <ion-item *ngIf="order.orderAnnotation != undefined && order.orderAnnotation.length > 0">
+          <ion-label class="ion-no-padding ion-no-margin" style="font-size:0.9rem;" text-wrap>
+              {{order.orderAnnotation}}
+          </ion-label>
+          </ion-item>
       </ion-card-content>
   </ion-card>
 </ion-content>

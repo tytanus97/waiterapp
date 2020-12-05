@@ -52,7 +52,7 @@ export class FinishedTabComponent implements OnInit,OnDestroy {
 
   public async finalizeOrder(order: Order) {
     const alert = await this._alertCtrl.create({
-      header: 'Zfinalizować zamówienie?',
+      header: 'Sfinalizować zamówienie?',
       message: `Do zapłaty ${order.totalPrice} zł`,
       buttons: [
         {

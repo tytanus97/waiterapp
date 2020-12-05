@@ -38,6 +38,13 @@ ion-item > div {
   }
 }
 
+ion-card {
+  ion-card-content {
+    padding-top:1rem;
+  }
+}
+
+
 .zoom-little {
   animation: zoomLittleAnim 500ms forwards linear;
 }
