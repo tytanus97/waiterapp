@@ -11,14 +11,15 @@ import { AddOrderComponent } from '../add-order/add-order.component';
 export class AllOrdersComponent implements OnInit,OnDestroy {
 
   public readyToDeliver: number;
-
+  private _readyToDeliver$;
 
   constructor(private _ordersService: OrdersService, private _modalCtrl: ModalController) {
   }
   ngOnInit() {
-    this._ordersService.getReadyToDeliver().subscribe(value => {
+    console.log('initialized');
+    this._readyToDeliver$ = this._ordersService.getReadyToDeliver().asObservable().subscribe(value => {
       this.readyToDeliver = value;
-    })
+    });
   }
 
   public async openNewOrderModal() {
@@ -32,7 +33,8 @@ export class AllOrdersComponent implements OnInit,OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._ordersService.getReadyToDeliver().unsubscribe();
+    console.log('destroyed all orders');
+   this._readyToDeliver$.unsubscribe();
   }
 
 }

@@ -1,9 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ModalController } from '@ionic/angular';
 import { Order } from 'src/app/models/order';
 import { OrdersService } from 'src/app/services/orders/orders.service';
-import { ChooseDishComponent } from '../../../add-order/components/choose-dish/choose-dish.component';
+
 
 @Component({
   selector: 'app-closed-tab',
@@ -13,17 +11,19 @@ import { ChooseDishComponent } from '../../../add-order/components/choose-dish/c
 export class ClosedTabComponent implements OnInit,OnDestroy {
 
   public closedOrders: Array<Order>;
-
+  private _closedOrders$;
   constructor(private _ordersService: OrdersService) { }
   
   ngOnInit() {
-    this._ordersService.closedOrders.subscribe(result => {
+    console.log('closed init')
+    this._closedOrders$ =  this._ordersService.closedOrders.asObservable().subscribe(result => {
       this.closedOrders = result;
     });
   }
 
   ngOnDestroy(): void {
-     this._ordersService.closedOrders.unsubscribe();
+    console.log('closed destroy');
+    this._closedOrders$.unsubscribe();
   }
 
 }

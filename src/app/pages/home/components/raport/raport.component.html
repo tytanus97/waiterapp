@@ -3,16 +3,42 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-icon slot="end" size="large" class="ion-margin" name="calendar-outline" (click) = "datePicker.open()"></ion-icon>
     <ion-title>Raport</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-<ion-label>Raport z dnia: </ion-label>
-<ion-datetime  #datePicker doneText = "Wybierz" cancelText="Anuluj" [monthShortNames] = "monthShort"
+  <ion-item>
+    <ion-label >Raport z dnia: </ion-label>
+    <ion-datetime slot="end"  #datePicker doneText = "Wybierz" cancelText="Anuluj" [monthShortNames] = "monthShort"
 			text-center
 			(ionChange)="dateChanged($event)"
-			displayFormat="DD MMM, YYYY" 
+      displayFormat="DD MMM, YYYY"
+      placeholder="Wybierz dzień"
 			[(ngModel)]="date"></ion-datetime>
-
+  </ion-item>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title class="ion-text-center">Statystyki</ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="ion-no-padding">
+      <ion-item>
+        <ion-label  class="ion-no-margin">Utarg:</ion-label>
+        <span slot="end">1333,23 zł</span>
+      </ion-item>
+      <ion-item>
+        <ion-label  class="ion-no-margin">Liczba zamówień:</ion-label>
+        <span slot="end">30</span>
+      </ion-item>
+      <ion-item>
+        <ion-label  class="ion-no-margin">Liczba zamówionych dań:</ion-label>
+        <span slot="end">34</span>
+        <div>
+          <ion-icon name="chevron-down-outline" size="large" #dropDownBtn></ion-icon>
+        </div>
+      </ion-item>
+      <!-- <ion-item class="ion-no-margin ion-no-padding ion-text-center">
+        
+      </ion-item> -->
+    </ion-card-content>
+  </ion-card>
 </ion-content>

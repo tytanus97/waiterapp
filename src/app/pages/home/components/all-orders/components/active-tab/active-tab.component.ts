@@ -16,6 +16,7 @@ export class ActiveTabComponent implements OnInit,OnDestroy {
 
   public activeOrders: Array<Order>;
   public trigger: boolean = false;
+  private _activeOrders$;
 
   constructor(private _ordersService: OrdersService,
 
@@ -25,10 +26,10 @@ export class ActiveTabComponent implements OnInit,OnDestroy {
  
 
   ngOnInit() {
-
-    this._ordersService.activeOrders.subscribe(result => {
+    console.log('active init')
+    this._activeOrders$ = this._ordersService.activeOrders.asObservable().subscribe(result => {
       this.activeOrders = result;
-    });
+    });;
   }
 
   public async changeStatus(orderedDish: OrderedDish, order: Order) {
@@ -134,7 +135,8 @@ export class ActiveTabComponent implements OnInit,OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._ordersService.activeOrders.unsubscribe();
+    console.log('active destroy')
+    this._activeOrders$.unsubscribe();
   }
 }
 

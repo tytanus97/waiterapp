@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
+import { DatePicker } from '@ionic-native/date-picker/ngx';
 import { IonicModule } from "@ionic/angular";
 import { AnimateDropdownDirective } from 'src/app/utils/directives/animate-dropdown/animate-dropdown.directive';
 import { CardActionBarAnimationDirective } from 'src/app/utils/directives/card-action-bar-animation/card-action-bar-animation.directive';

@@ -15,7 +15,7 @@ import { ChooseDishComponent } from '../../../add-order/components/choose-dish/c
 export class FinishedTabComponent implements OnInit,OnDestroy {
 
   public finishedOrders: Array<Order>;
-
+  private _finishedOrders$;
 
   constructor(
     private _route: ActivatedRoute,
@@ -25,9 +25,10 @@ export class FinishedTabComponent implements OnInit,OnDestroy {
   ) { }
  
   ngOnInit() {
-    this._ordersService.finishedOrders.subscribe(result => {
+    console.log('finshed init');
+    this._finishedOrders$ = this._ordersService.finishedOrders.asObservable().subscribe(result => {
       this.finishedOrders = result;
-    })
+    });
   }
 
 
@@ -75,6 +76,7 @@ export class FinishedTabComponent implements OnInit,OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._ordersService.finishedOrders.unsubscribe();
+    console.log('finish destroy');
+    this._finishedOrders$.unsubscribe();
   }
 }

@@ -1,5 +1,7 @@
 {
   "name": "waiterapp",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

@@ -1,0 +1,21 @@
+ion-card {
+    overflow:visible;
+    ion-card-content {
+        ion-item:last-child {
+            position:relative;
+            overflow:visible;
+            
+            div {
+                display:flex;
+                align-items: flex-end;
+                background-color: var(--ion-color-light);
+                border-radius:10px;
+                position:absolute;
+                right:50%;
+                transform:translateX(50%);
+                top:80%;
+            }
+            
+        }
+    }
+}

@@ -14,6 +14,7 @@ export class AnimateDropdownDirective implements OnInit {
   ngOnInit(): void {
     this._cardContent = this._el.nativeElement.querySelector('ion-card-content');
     this._icon = this._el.nativeElement.querySelector('ion-card-header > ion-item > ion-icon');
+    console.log(this._icon);
 
     this._icon.addEventListener('click',this.bindIconDropDownAnimation.bind(this))
   }
