@@ -1,6 +1,4 @@
 
-
-
 ion-item > div {
     text-align: center;
 }
@@ -33,7 +31,9 @@ ion-item > div {
 ion-card {
     margin:0.5rem;
     ion-card-content {
-        padding-top:1rem;
+        ion-item:first-child {
+            padding-top:1rem;
+        }
     }
 }
 
