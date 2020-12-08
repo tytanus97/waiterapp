@@ -39,13 +39,9 @@
     </ion-card-content>
     <ion-card-content  class="drop-down-list ion-no-margin ion-no-padding">
       <ion-list #dropDownList>
-        <ion-item color="light" lines="none">
-          <ion-label  class="ion-no-margin">Utarg:</ion-label>
-          <span slot="end">1333,23 zł</span>
-        </ion-item>
-        <ion-item color="light" lines="none">
-          <ion-label  class="ion-no-margin">Liczba zamówień:</ion-label>
-          <span slot="end">30</span>
+        <ion-item color="light" lines="none" *ngFor="let categoryValue of categoryValues | keyvalue">
+          <ion-label  class="ion-no-margin">{{categoryValue.key | titlecase}}</ion-label>
+          <span slot="end">{{categoryValue.value}}</span>
         </ion-item>
       </ion-list>
       <div (click) = "toggleDropDown()">

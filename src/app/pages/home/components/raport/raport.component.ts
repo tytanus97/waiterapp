@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DatePicker } from '@ionic-native/date-picker/ngx'
 import { Order } from 'src/app/models/order';
 import { OrdersService } from 'src/app/services/orders/orders.service';
@@ -8,11 +8,11 @@ import { OrdersService } from 'src/app/services/orders/orders.service';
   templateUrl: './raport.component.html',
   styleUrls: ['./raport.component.scss'],
 })
-export class RaportComponent implements OnInit {
+export class RaportComponent implements OnInit,OnDestroy {
   public dateStr;
   public monthShort = ['Sty','Lut','Mar','Kwi','Maj','Cze','Lip','Sie','Wrz','Paz','Lis','Gru'];
   public ordersByDate: Array<Order>
-  
+  public categoryValues: Map<string,number>;
   public total;
   public totalOrders;
   public totalOrderedDishes;
@@ -22,21 +22,17 @@ export class RaportComponent implements OnInit {
 
   private dropped = false;
 
-  constructor(private _ordersService: OrdersService) {
-
-   }
+  constructor(private _ordersService: OrdersService) {}
+ 
   
   ngOnInit() {
-   // this.ordersByDate = this._ordersService.getAllOrdersByDateAndStatus(this.date,'closed');
+    this.categoryValues = new Map();
+    console.log('raport init');
   }
-
   public dateChanged(event) {
-   // console.log(event);
-    console.log(this.dateStr);
-    console.log(new Date(Date.parse(this.dateStr)));
     this.ordersByDate = this._ordersService.getAllOrdersByDateAndStatus(new Date(Date.parse(this.dateStr)),'closed');
-    console.log(this.ordersByDate);
-    this.fetchStats();
+    this.categoryValues.clear();
+    this.fetchStats(); 
   }
 
   public toggleDropDown() {
@@ -77,7 +73,16 @@ export class RaportComponent implements OnInit {
         this.total += o.totalPrice;
         this.totalOrders++;
         return o.orderedDishes;
-      }).forEach(od => this.totalOrderedDishes++);
+      }).forEach(od =>  {
+        this.totalOrderedDishes++;
+        let category = od.dish.dishCategory;
+        let value = this.categoryValues.get(category);
+        this.categoryValues.set(category,value?++value:1);
+      });
+    }
+
+    ngOnDestroy(): void {
+      console.log('raport destoryed');
     }
 }
 
