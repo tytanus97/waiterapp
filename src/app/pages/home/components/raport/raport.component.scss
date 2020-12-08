@@ -1,28 +1,30 @@
 ion-card {
-    overflow:visible;
-    ion-card-content.drop-down-list {
-         background-color: var(--ion-color-light);
-         position:relative;
-         overflow: visible;
-         & > * {
-            background-color: var(--ion-color-light);
-         }
-         div {
-            display:flex;
-            align-items: flex-end;
-            background-color: var(--ion-color-light);
-            border-radius:10px;
-            position:absolute;
-            right:50%;
-            transform:translate(50%,-20%);
-            top:100%;
-         }
-         ion-list {
-             padding:0;
-             max-height:0;
-             ion-item {
-                 --ion-color-shade: var(--ion-color-light);
-             }
-         }
+  overflow: visible;
+  ion-card-content.drop-down-list {
+    border: 1px solid darkslategray;
+    border-radius: 5px;
+    background-color: var(--ion-color-light);
+    position: relative;
+    overflow: visible;
+    & > * {
+      background-color: var(--ion-color-light);
     }
+    div {
+      display: flex;
+      align-items: flex-end;
+      background-color: var(--ion-color-light);
+      border-radius: 10px;
+      position: absolute;
+      right: 50%;
+      transform: translate(50%, -20%);
+      top: 100%;
+    }
+    ion-list {
+      padding: 0;
+      max-height: 0;
+      ion-item {
+        --ion-color-shade: var(--ion-color-light);
+      }
+    }
+  }
 }

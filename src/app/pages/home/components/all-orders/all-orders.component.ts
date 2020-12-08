@@ -8,7 +8,7 @@ import { AddOrderComponent } from '../add-order/add-order.component';
   templateUrl: './all-orders.component.html',
   styleUrls: ['./all-orders.component.scss'],
 })
-export class AllOrdersComponent implements OnInit,OnDestroy {
+export class AllOrdersComponent implements OnInit, OnDestroy {
 
   public readyToDeliver: number;
   private _readyToDeliver$;
@@ -34,7 +34,7 @@ export class AllOrdersComponent implements OnInit,OnDestroy {
 
   ngOnDestroy(): void {
     console.log('destroyed all orders');
-   this._readyToDeliver$.unsubscribe();
+    this._readyToDeliver$.unsubscribe();
   }
 
 }
