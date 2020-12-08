@@ -14,31 +14,49 @@
 			(ionChange)="dateChanged($event)"
       displayFormat="DD MMM, YYYY"
       placeholder="Wybierz dzień"
-			[(ngModel)]="date"></ion-datetime>
+			[(ngModel)]="dateStr"></ion-datetime>
   </ion-item>
-  <ion-card>
+  <ion-card *ngIf="ordersByDate != undefined && ordersByDate.length > 0;else noData">
     <ion-card-header>
       <ion-card-title class="ion-text-center">Statystyki</ion-card-title>
     </ion-card-header>
     <ion-card-content class="ion-no-padding">
-      <ion-item>
+      <ion-list class="ion-no-padding">
+      <ion-item lines="none">
         <ion-label  class="ion-no-margin">Utarg:</ion-label>
-        <span slot="end">1333,23 zł</span>
+        <span slot="end">{{total}} zł</span>
       </ion-item>
-      <ion-item>
+      <ion-item lines="none">
         <ion-label  class="ion-no-margin">Liczba zamówień:</ion-label>
-        <span slot="end">30</span>
+        <span slot="end">{{totalOrders}}</span>
       </ion-item>
-      <ion-item>
-        <ion-label  class="ion-no-margin">Liczba zamówionych dań:</ion-label>
-        <span slot="end">34</span>
-        <div>
-          <ion-icon name="chevron-down-outline" size="large" #dropDownBtn></ion-icon>
-        </div>
-      </ion-item>
-      <!-- <ion-item class="ion-no-margin ion-no-padding ion-text-center">
+      <ion-item lines="none">
+        <ion-label class="ion-no-margin">Liczba zamówionych dań:</ion-label>
+        <span slot="end">{{totalOrderedDishes}}</span>
         
-      </ion-item> -->
+      </ion-item>
+    </ion-list>
+    </ion-card-content>
+    <ion-card-content  class="drop-down-list ion-no-margin ion-no-padding">
+      <ion-list #dropDownList>
+        <ion-item color="light" lines="none">
+          <ion-label  class="ion-no-margin">Utarg:</ion-label>
+          <span slot="end">1333,23 zł</span>
+        </ion-item>
+        <ion-item color="light" lines="none">
+          <ion-label  class="ion-no-margin">Liczba zamówień:</ion-label>
+          <span slot="end">30</span>
+        </ion-item>
+      </ion-list>
+      <div (click) = "toggleDropDown()">
+        <ion-icon name="chevron-down-outline" size="large" #dropDownBtn></ion-icon>
+      </div>
     </ion-card-content>
   </ion-card>
 </ion-content>
+
+<ng-template #noData>
+  <ion-item class="ion-margin" style="border-radius:5px">
+    <ion-label class="ion-margin ion-text-center">Brak danych</ion-label>
+  </ion-item>
+</ng-template>

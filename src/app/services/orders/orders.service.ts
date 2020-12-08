@@ -82,7 +82,7 @@ export class OrdersService {
 
   
     let tmpOrder4 = new Order('4',this._waiterService.getLoggedWaiter(),5,new Date(this._currentDate.getTime() -(1000*60*60*24)- (1000 * 60 * 15))
-    ,orderedDishes4.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'active',orderedDishes4);
+    ,orderedDishes4.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'closed',orderedDishes4);
     this._ordersEmplDataArr.push(tmpOrder4);
 
     const orderedDishes5 = new Array<OrderedDish>();
@@ -93,8 +93,8 @@ export class OrdersService {
     orderedDishes5.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('obiad')[2],'delivered'));
 
   
-    let tmpOrder5 = new Order('5',this._waiterService.getLoggedWaiter(),5,new Date(this._currentDate.getTime()-(1000*60*60*24) - (1000 * 60 * 15))
-    ,orderedDishes5.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'active',orderedDishes5);
+    let tmpOrder5 = new Order('5',this._waiterService.getLoggedWaiter(),5,new Date(this._currentDate.getTime()- (1000*60*60*24) - (1000 * 60 * 15))
+    ,orderedDishes5.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'closed',orderedDishes5);
     this._ordersEmplDataArr.push(tmpOrder5);
 
     const orderedDishes6 = new Array<OrderedDish>();
@@ -106,7 +106,7 @@ export class OrdersService {
 
   
     let tmpOrder6 = new Order('6',this._waiterService.getLoggedWaiter(),5,new Date(this._currentDate.getTime()-(1000*60*60*24) - (1000 * 60 * 15))
-    ,orderedDishes6.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'active',orderedDishes6);
+    ,orderedDishes6.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'closed',orderedDishes6);
     this._ordersEmplDataArr.push(tmpOrder6);
 
     const orderedDishes7 = new Array<OrderedDish>();
@@ -118,7 +118,7 @@ export class OrdersService {
 
   
     let tmpOrder7 = new Order('7',this._waiterService.getLoggedWaiter(),5,new Date(this._currentDate.getTime()-(1000*60*60*24) - (1000 * 60 * 15))
-    ,orderedDishes7.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'active',orderedDishes7);
+    ,orderedDishes7.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'closed',orderedDishes7);
     this._ordersEmplDataArr.push(tmpOrder7);
     
     this.fetchAll();
