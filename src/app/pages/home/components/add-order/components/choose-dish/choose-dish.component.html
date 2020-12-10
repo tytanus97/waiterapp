@@ -5,7 +5,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-item class="ion-margin">
+  <ion-item class="ion-margin" lines="full">
     <ion-label>Kategoria dania</ion-label>
     <ion-select [(ngModel)]="selectedCategory" placeholder="Wybierz kategorie" cancelText="Anuluj" okText="Wybierz">
       <ion-select-option [value]="allCategory">{{
@@ -19,9 +19,9 @@
     <ion-item *ngFor="let category of dishesWithCategories | keyvalue | filterByCategory:selectedCategory"
       class="dish-category-list-category-element">
       <ion-list class="dish-category-list-dish-element">
-        <ion-item class="category-header"><ion-label>{{category.key | uppercase}}</ion-label></ion-item>
+        <ion-item class="category-header" lines="full"><ion-label>{{category.key | uppercase}}</ion-label></ion-item>
         <ion-list class="dish-list">
-          <ion-item *ngFor="let dish of category.value" class="dish-element" (click) = "addDish(dish)">
+          <ion-item *ngFor="let dish of category.value" class="dish-element" (click) = "addDish(dish)" lines="full">
             <ion-label text-wrap slot="start" class="dish-name">{{dish.dishName}}
               <ion-label  class="dish-description" text-wrap>{{dish.dishDescription}}</ion-label>
             </ion-label>

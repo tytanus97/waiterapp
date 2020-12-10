@@ -56,3 +56,6 @@ ion-card {
     color: gray;
   }
 }
+ion-item {
+  --inner-border-width:0;
+}

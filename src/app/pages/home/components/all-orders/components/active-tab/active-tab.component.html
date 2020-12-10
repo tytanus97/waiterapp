@@ -15,10 +15,12 @@
                 </ion-item>
             </ion-card-header>
             <ion-card-content class="ion-no-padding">
-                <ion-item *ngFor="let orderedDish of order.orderedDishes;let i = index;"
-                    class="ion-align-items-start ion-no-padding">
-                    <span style="margin-right:0.5rem;margin-left:1rem;">{{i+1}}. </span>
-                    <ion-label class= "ion-no-margin dish-label" text-wrap>{{orderedDish.dish.dishName}}</ion-label>
+                <ion-item *ngFor = "let orderedDish of order.orderedDishes;let i = index;" lines="full"  
+                class="ion-align-items-center ion-no-padding">
+                <div class="label-container">
+                <span style="margin-right:0.5rem;margin-left:1rem;">{{i+1}}. </span>
+                <ion-label class= "ion-no-margin dish-label" text-wrap>{{orderedDish.dish.dishName}}</ion-label>
+                 </div>
                     <ion-item slot="end" lines="none" class="ion-no-padding ion-no-margin icon-item">
                         <div [ngSwitch]="orderedDish.orderDishStatus" slot="end">
                             <div *ngSwitchCase="'inProgress'" class="icon-container">

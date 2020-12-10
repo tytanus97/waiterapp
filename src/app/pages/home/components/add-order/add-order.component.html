@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-icon name="arrow-back-outline" slot="start" size="large" class="ion-margin-start" (click) = "back()"></ion-icon>
+    <ion-icon name="arrow-back-outline" slot="start" size="large" class="ion-margin-start" (click)="back()"></ion-icon>
     <ion-title>Dodaj zamówienie</ion-title>
     <ion-icon name="document-text-outline" size="large" class="questionnaire-icon" slot="end"
       (click)="openQuestionnaire()"></ion-icon>
@@ -17,7 +17,7 @@
 
   <ion-card class=" ion-no-margin ion-margin-horizontal orderedDishesCard">
     <ion-card-header class="ion-no-padding">
-      <ion-item class="ion-no-padding">
+      <ion-item class="ion-no-padding" lines="full">
         <ion-icon name="fast-food" slot="start" class="ion-margin"></ion-icon>
         <ion-card-subtitle>Zamowione pozycje</ion-card-subtitle>
         <span slot="end">{{orderedDishes.length}}</span>
@@ -33,14 +33,15 @@
             <span>{{orderedDish.dish.dishPrice | number:'1.2-2'}} zl</span>
           </ion-col>
           <ion-col size="2">
-            <ion-icon name="trash-outline" [hidden] = "orderedDish.orderDishStatus == 'delivered' || orderedDish.orderDishStatus == 'ready'"
-             class="dishOption ion-margin-right" (click)="showDishOption(orderedDish)"></ion-icon>
+            <ion-icon name="trash-outline"
+              [hidden]="orderedDish.orderDishStatus == 'delivered' || orderedDish.orderDishStatus == 'ready'"
+              class="dishOption ion-margin-right" (click)="showDishOption(orderedDish)"></ion-icon>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card-content>
   </ion-card>
-  <ion-item>
+  <ion-item lines="full">
     <ion-item slot="start">
       <h3>Suma:</h3>
     </ion-item>
@@ -51,9 +52,10 @@
   </ion-item>
 
 
-<ion-item class='order-annotation'>
-  <ion-textarea [(ngModel)] = "orderAnnotation" placeholder="Uwagi do zamówienia" rows="6" inputmode="text"></ion-textarea>
-</ion-item>
+  <ion-item class='order-annotation' lines="full">
+    <ion-textarea [(ngModel)]="orderAnnotation" placeholder="Uwagi do zamówienia" rows="6" inputmode="text">
+    </ion-textarea>
+  </ion-item>
 
 
   <!--  <ion-label *ngIf="orderAnnotation != undefined && orderAnnotation.length != 0; else noAnnotation"></ion-label> -->
@@ -76,5 +78,5 @@
 </ion-content>
 
 <ng-template #noOrderedDishes>
-  <ion-item>Brak dodanych dań</ion-item>
+  <ion-item lines="full">Brak dodanych dań</ion-item>
 </ng-template>

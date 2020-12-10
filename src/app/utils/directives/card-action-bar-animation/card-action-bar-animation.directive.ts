@@ -17,6 +17,7 @@ export class CardActionBarAnimationDirective {
     const gesture = this._gestureCtrl.create({
       el: this._el.nativeElement,
       gestureName: 'long-press',
+      threshold:0,
       onStart: () => {
         console.log('long press start');
         this._longPressActive = true;

@@ -1,6 +1,4 @@
-ion-item > div {
-  text-align: center;
-}
+
 
 .icon-container {
   min-width: 2.5rem;
@@ -38,15 +36,16 @@ ion-item > div {
   }
 }
 
-ion-card {
-  ion-card-content {
-    ion-item:first-child {
-      padding-top:1rem;
-  }
-  }
+
+.label-container {
+  display:flex;
+  flex-direction: row;
 }
 
-
+ion-item {
+ // --border-style:none;
+ --inner-border-width:0;
+}
 .zoom-little {
   animation: zoomLittleAnim 500ms forwards linear;
 }

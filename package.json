@@ -19,6 +19,7 @@
     "@angular/platform-browser": "~10.0.0",
     "@angular/platform-browser-dynamic": "~10.0.0",
     "@angular/router": "~10.0.0",
+    "@capacitor/android": "^2.4.4",
     "@capacitor/core": "2.4.4",
     "@ionic-native/core": "^5.0.0",
     "@ionic-native/date-picker": "^5.30.0",
@@ -26,8 +27,7 @@
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic-super-tabs/angular": "^7.0.8",
     "@ionic/angular": "^5.4.1",
-    "capacitor-datepicker": "0.0.2",
-    "cordova-plugin-datepicker": "^0.9.3",
+    "capacitor-dark-mode": "^1.0.5",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
