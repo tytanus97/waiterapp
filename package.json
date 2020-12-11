@@ -28,6 +28,7 @@
     "@ionic-super-tabs/angular": "^7.0.8",
     "@ionic/angular": "^5.4.1",
     "capacitor-dark-mode": "^1.0.5",
+    "chart.js": "^2.9.4",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"

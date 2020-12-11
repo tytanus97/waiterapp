@@ -56,6 +56,18 @@
       </div>
     </ion-card-content>
   </ion-card>
+  <ion-slides scrollbar="true" [options]="slideOpts" ><!--  *ngIf="ordersByDate != undefined && ordersByDate.length > 0"> -->
+    <ion-slide>
+      <h1>Ruch</h1>
+      <canvas id="crowdness"></canvas>
+    </ion-slide>
+    <ion-slide>
+      <h1>Slide 2</h1>
+    </ion-slide>
+    <ion-slide>
+      <h1>Slide 3</h1>
+    </ion-slide>
+  </ion-slides>
 </ion-content>
 
 <ng-template #noData>

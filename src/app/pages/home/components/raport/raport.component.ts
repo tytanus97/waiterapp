@@ -1,14 +1,14 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { last } from 'lodash';
 import { Order } from 'src/app/models/order';
 import { OrdersService } from 'src/app/services/orders/orders.service';
-
+import Chart from 'chart.js';
 @Component({
   selector: 'app-raport',
   templateUrl: './raport.component.html',
   styleUrls: ['./raport.component.scss'],
 })
-export class RaportComponent implements OnInit, OnDestroy {
+export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
   public dateStr;
   public monthShort = ['Sty', 'Lut', 'Mar', 'Kwi', 'Maj', 'Cze', 'Lip', 'Sie', 'Wrz', 'Paz', 'Lis', 'Gru'];
   public ordersByDate: Array<Order>;
@@ -24,7 +24,16 @@ export class RaportComponent implements OnInit, OnDestroy {
 
   private dropped = false;
 
+  slideOpts = {
+    initialSlide: 1,
+    speed: 400
+  };
+
   constructor(private _ordersService: OrdersService) { }
+
+
+  ngAfterViewInit(): void {
+  }
 
 
   ngOnInit() {
@@ -96,12 +105,69 @@ export class RaportComponent implements OnInit, OnDestroy {
     this.statsMap.set('totalOrderedDishes',totalOrderedDishes.toString());
     this.statsMap.set('totalOrders',totalOrders.toString());
 
+    this.createCrowndessChart();
+
+    
   }
 
   private formatNumber(num: number): string {
     return num > 9 ? num.toString():`0${num}`;
   }
   
+  createCrowndessChart() {
+    const data = this.processData();
+    const ctx = document.getElementById('crowdness');
+    const crowndnessChart = new Chart(ctx,{
+      type: 'bar',
+      data: {
+          labels: data.keys,
+          datasets: [{
+              label: '',
+              data: data.values,
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          legend: {
+            labels: {
+              fontSize:0
+            }
+          },
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero: true
+                  }
+              }]
+          }
+      }
+  });
+  }
+  processData() {
+    const orderHourMap: Map<number,number> = new Map();
+    
+    this.ordersByDate.forEach(o => {
+      const orderHour = o.orderDate.getHours();
+      orderHourMap.set(orderHour,orderHourMap.has(orderHour)?orderHourMap.get(orderHour) + 1:1);
+    });
+
+
+
+    const data  = {
+      keys:Array.from(orderHourMap.keys()).map(e => this.formatNumber(e)),
+      values: Array.from(orderHourMap.values())
+    }
+
+    return data;
+  }
+
+
   ngOnDestroy(): void {
     console.log('raport destoryed');
   }
