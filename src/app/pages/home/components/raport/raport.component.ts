@@ -115,7 +115,7 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   
   createCrowndessChart() {
-    const data = this.processData();
+    const data = this.processDataForCrowndess();
     const ctx = document.getElementById('crowdness');
     const crowndnessChart = new Chart(ctx,{
       type: 'bar',
@@ -149,15 +149,13 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
       }
   });
   }
-  processData() {
+  processDataForCrowndess() {
     const orderHourMap: Map<number,number> = new Map();
-    
-    this.ordersByDate.forEach(o => {
-      const orderHour = o.orderDate.getHours();
-      orderHourMap.set(orderHour,orderHourMap.has(orderHour)?orderHourMap.get(orderHour) + 1:1);
-    });
 
-
+    for(let i = 0;i<23;i++) {
+      const ordersInIndexHour = this.ordersByDate.filter(o => o.orderDate.getHours() === i);
+      orderHourMap.set(i,ordersInIndexHour.length);
+    }
 
     const data  = {
       keys:Array.from(orderHourMap.keys()).map(e => this.formatNumber(e)),
