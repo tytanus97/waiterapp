@@ -5,6 +5,7 @@ import { WaiterService } from '../waiters/waiter.service';
 import { OrderedDish } from 'src/app/models/orderedDish';
 import { DishesService } from '../dishes/dishes.service';
 import { BehaviorSubject, Observable, of } from 'rxjs';
+import { AuthService } from '../authentication/auth.service';
 
 
 @Injectable({
@@ -21,7 +22,7 @@ export class OrdersService {
 
   private _currentDate: Date;
   
-  constructor(private _httpClient: HttpClient,private _waiterService: WaiterService,private _dishService: DishesService) { 
+  constructor(private _httpClient: HttpClient,private _authService: AuthService,private _dishService: DishesService) { 
 
       this._readyToDeliver = new BehaviorSubject<number>(null);
       this.activeOrders = new BehaviorSubject<Array<Order>>(null);
@@ -45,7 +46,7 @@ export class OrdersService {
     orderedDishes.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('obiad')[2],'ready'));
 
   
-    let tmpOrder = new Order('1',this._waiterService.getLoggedWaiter(),5,new Date(this._currentDate.getTime() - (1000 * 60 * 15))
+    let tmpOrder = new Order('1',this._authService.getLoggedWaiter(),5,new Date(this._currentDate.getTime() - (1000 * 60 * 15))
     ,orderedDishes.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'active',orderedDishes);
     this._ordersEmplDataArr.push(tmpOrder);
 
@@ -57,7 +58,7 @@ export class OrdersService {
     orderedDishes2.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('sniadanie')[1],'delivered'));
     orderedDishes2.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('obiad')[2],'delivered'));
 
-    tmpOrder = new Order('2',this._waiterService.getLoggedWaiter(),4,new Date(this._currentDate.getTime() - (1000 * 60 * 10))
+    tmpOrder = new Order('2',this._authService.getLoggedWaiter(),4,new Date(this._currentDate.getTime() - (1000 * 60 * 10))
     ,orderedDishes2.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'closed',orderedDishes2);
     this._ordersEmplDataArr.push(tmpOrder);
 
@@ -69,7 +70,7 @@ export class OrdersService {
     orderedDishes3.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('sniadanie')[1],'delivered'));
     orderedDishes3.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('obiad')[2],'ready'));
 
-    tmpOrder = new Order('3',this._waiterService.getLoggedWaiter(),2,new Date(this._currentDate.getTime() - (1000 * 60 * 5))
+    tmpOrder = new Order('3',this._authService.getLoggedWaiter(),2,new Date(this._currentDate.getTime() - (1000 * 60 * 5))
     ,orderedDishes3.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'active',orderedDishes3); 
     this._ordersEmplDataArr.push(tmpOrder);
 
@@ -81,7 +82,7 @@ export class OrdersService {
     orderedDishes4.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('obiad')[2],'delivered'));
 
   
-    let tmpOrder4 = new Order('4',this._waiterService.getLoggedWaiter(),5,new Date(this._currentDate.getTime() -(1000*60*60*24)- (1000 * 60 * 15))
+    let tmpOrder4 = new Order('4',this._authService.getLoggedWaiter(),5,new Date(this._currentDate.getTime() -(1000*60*60*24)- (1000 * 60 * 20))
     ,orderedDishes4.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'closed',orderedDishes4);
     this._ordersEmplDataArr.push(tmpOrder4);
 
@@ -93,7 +94,7 @@ export class OrdersService {
     orderedDishes5.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('obiad')[2],'delivered'));
 
   
-    let tmpOrder5 = new Order('5',this._waiterService.getLoggedWaiter(),5,new Date(this._currentDate.getTime()- (1000*60*60*24) - (1000 * 60 * 15))
+    let tmpOrder5 = new Order('5',this._authService.getLoggedWaiter(),5,new Date(this._currentDate.getTime()- (1000*60*60*24) - (1000 * 60 * 15))
     ,orderedDishes5.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'closed',orderedDishes5);
     this._ordersEmplDataArr.push(tmpOrder5);
 
@@ -105,7 +106,7 @@ export class OrdersService {
     orderedDishes6.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('obiad')[2],'delivered'));
 
   
-    let tmpOrder6 = new Order('6',this._waiterService.getLoggedWaiter(),5,new Date(this._currentDate.getTime()-(1000*60*60*24) - (1000 * 60 * 15))
+    let tmpOrder6 = new Order('6',this._authService.getLoggedWaiter(),5,new Date(this._currentDate.getTime()-(1000*60*60*24) - (1000 * 60 * 10))
     ,orderedDishes6.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'closed',orderedDishes6);
     this._ordersEmplDataArr.push(tmpOrder6);
 
@@ -117,7 +118,7 @@ export class OrdersService {
     orderedDishes7.push(new OrderedDish(this.getRandomId(),this._dishService.getAllDishesByCategory('obiad')[2],'delivered'));
 
   
-    let tmpOrder7 = new Order('7',this._waiterService.getLoggedWaiter(),5,new Date(this._currentDate.getTime()-(1000*60*60*24) - (1000 * 60 * 15))
+    let tmpOrder7 = new Order('7',this._authService.getLoggedWaiter(),5,new Date(this._currentDate.getTime()-(1000*60*60*24) - (1000 * 60 * 5))
     ,orderedDishes7.reduce((acc,curr) => acc+curr.dish.dishPrice,0),'closed',orderedDishes7);
     this._ordersEmplDataArr.push(tmpOrder7);
     

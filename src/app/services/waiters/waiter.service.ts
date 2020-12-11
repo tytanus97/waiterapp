@@ -6,13 +6,16 @@ import { Waiter } from 'src/app/models/waiter';
 })
 export class WaiterService {
 
-  private _waiter: Waiter;
+  private _waiters: Array<Waiter>;
 
-  constructor() { 
-    this._waiter = new Waiter(1,"Pawel","Ataman");
+  constructor() {
+    console.log('waiter service constructor');
+    this._waiters = new Array<Waiter>();
+    this._waiters.push(new Waiter(1,'Pawel','Ataman','pawel.ataman@email.com','kelner'));
   }
 
-  public getLoggedWaiter() {
-    return this._waiter;
+  public findWaiterByEmail(email:string): Waiter {
+    const waiter: Waiter = this._waiters.find(w => w.waiterEmail === email);
+    return waiter;
   }
 }

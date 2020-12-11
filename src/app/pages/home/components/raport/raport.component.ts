@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { last } from 'lodash';
 import { Order } from 'src/app/models/order';
 import { OrdersService } from 'src/app/services/orders/orders.service';
 
@@ -12,6 +13,8 @@ export class RaportComponent implements OnInit, OnDestroy {
   public monthShort = ['Sty', 'Lut', 'Mar', 'Kwi', 'Maj', 'Cze', 'Lip', 'Sie', 'Wrz', 'Paz', 'Lis', 'Gru'];
   public ordersByDate: Array<Order>;
   public categoryValues: Map<string, number>;
+  
+  public statsMap: Map<string,string>;
   public total;
   public totalOrders;
   public totalOrderedDishes;
@@ -26,6 +29,7 @@ export class RaportComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.categoryValues = new Map();
+    this.statsMap = new Map();
     console.log('raport init');
   }
   public dateChanged(event) {
@@ -64,21 +68,40 @@ export class RaportComponent implements OnInit, OnDestroy {
   }
 
   private fetchStats() {
-    this.total = 0;
-    this.totalOrderedDishes = 0;
-    this.totalOrders = 0;
+    let total = 0;
+    let totalOrderedDishes = 0;
+    let totalOrders = 0;
+    let firstOrderTime = this.ordersByDate[0].orderDate;
+    let lastOrderTime = this.ordersByDate[0].orderDate;
 
     this.ordersByDate.flatMap(o => {
-      this.total += o.totalPrice;
-      this.totalOrders++;
+      total += o.totalPrice;
+      totalOrders++;
+
+      if(firstOrderTime.getTime() > o.orderDate.getTime()) firstOrderTime = o.orderDate;
+      if(lastOrderTime.getTime() < o.orderDate.getTime()) lastOrderTime = o.orderDate;
+
       return o.orderedDishes;
     }).forEach(od => {
-      this.totalOrderedDishes++;
+      totalOrderedDishes++;
       const category = od.dish.dishCategory;
       const value = this.categoryValues.get(category);
       this.categoryValues.set(category, value ? value + 1 : 1);
     });
+
+
+    this.statsMap.set('firstOrderTime',this.formatNumber(firstOrderTime.getHours()) + ':' + this.formatNumber(firstOrderTime.getMinutes()));
+    this.statsMap.set('lastOrderTime',this.formatNumber(lastOrderTime.getHours()) + ':' + this.formatNumber(lastOrderTime.getMinutes()));
+    this.statsMap.set('total',total.toString());
+    this.statsMap.set('totalOrderedDishes',totalOrderedDishes.toString());
+    this.statsMap.set('totalOrders',totalOrders.toString());
+
   }
+
+  private formatNumber(num: number): string {
+    return num > 9 ? num.toString():`0${num}`;
+  }
+  
   ngOnDestroy(): void {
     console.log('raport destoryed');
   }

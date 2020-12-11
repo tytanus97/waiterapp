@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Waiter } from 'src/app/models/waiter';
+import { AuthService } from 'src/app/services/authentication/auth.service';
 import { WaiterService } from 'src/app/services/waiters/waiter.service';
 
 @Component({
@@ -11,10 +12,10 @@ export class WaiterComponent implements OnInit {
 
   public loggedWaiter: Waiter;
 
-  constructor(private _waiterService: WaiterService) { }
+  constructor(private _authService: AuthService) { }
 
   ngOnInit() {
-    this.loggedWaiter = this._waiterService.getLoggedWaiter();
+    this.loggedWaiter = this._authService.getLoggedWaiter();
   }
 
 }

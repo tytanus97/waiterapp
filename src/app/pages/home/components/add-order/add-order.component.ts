@@ -12,6 +12,7 @@ import { WaiterService } from "src/app/services/waiters/waiter.service";
 import { ChooseDishComponent } from "./components/choose-dish/choose-dish.component";
 import 'lodash';
 import { QuestionnaireComponent } from './components/questionnaire/questionnaire.component';
+import { AuthService } from 'src/app/services/authentication/auth.service';
 declare let _ :any;
 
 @Component({
@@ -34,11 +35,10 @@ export class AddOrderComponent implements OnInit {
 
   constructor(
     private _tablesService: TablesService,
-    private _waiterService: WaiterService,
+    private _authService: AuthService,
     private _orderService: OrdersService,
     private _modalCtrl: ModalController,
     private _alertCtrl: AlertController,
-    private _zone: NgZone,
     private _toastCtrl: ToastController,
   ) {}
 
@@ -116,7 +116,7 @@ export class AddOrderComponent implements OnInit {
       this._currentOrder.orderedDishes = this.orderedDishes;
       this._currentOrder.orderStatus = 'active';
       this._currentOrder.totalPrice = this.totalPrice;
-      this._currentOrder.waiter = this._waiterService.getLoggedWaiter();
+      this._currentOrder.waiter = this._authService.getLoggedWaiter();
       this._currentOrder.orderAnnotation = this.orderAnnotation;
 
       if(!this.data) {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterEvent } from '@angular/router';
 import { take, takeUntil } from 'rxjs/operators';
+import { Waiter } from 'src/app/models/waiter';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 
 @Component({
@@ -19,22 +20,18 @@ export class HomePage implements OnInit {
     title: 'Raport',
     url:'/home/raport',
     icon:'bar-chart'
-  },
-  {
-    title: 'Kelner',
-    url:'/home/waiter',
-    icon:'person'
-  }]
+  }];
 
   public selectedPath;
-
+  public loggedWaiter: Waiter;
   constructor(private _router: Router,private _route: ActivatedRoute,private _authService: AuthService) {
      this._router.events.subscribe((event:RouterEvent) => {
       this.selectedPath = event.url;
     })  
   }
   ngOnInit() {
- 
+      this.loggedWaiter = this._authService.getLoggedWaiter();
+      console.log(this.loggedWaiter);
   }
 
   public navigate(url: string) {

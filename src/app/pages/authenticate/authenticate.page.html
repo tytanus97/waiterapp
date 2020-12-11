@@ -10,12 +10,12 @@
   <h2>Zaloguj się jako kelner</h2>
   <form (ngSubmit) = "authenticateWaiter()" [formGroup] = "authenticationForm">
         <ion-item class="formControll">
-          <ion-label position="floating">Imie</ion-label>
-          <ion-input type="text" formControlName="firstName"></ion-input>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input type="text" formControlName="email"></ion-input>
         </ion-item>
         <ion-item class="formControll">
-          <ion-label position="floating">Nazwisko</ion-label>
-          <ion-input type="text"  formControlName="lastName"></ion-input>
+          <ion-label position="floating">Hasło</ion-label>
+          <ion-input type="password"  formControlName="password"></ion-input>
         </ion-item>
         <ion-button size = "large" fill="solid" type="submit" expand="block" color="primary">Zaloguj</ion-button>
 </form>

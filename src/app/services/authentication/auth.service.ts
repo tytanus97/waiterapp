@@ -1,16 +1,31 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { WaiterCredentials } from 'src/app/models/waiterCredentials';
 import { Storage } from '@capacitor/core';
+import { WaiterService } from '../waiters/waiter.service';
+import { Waiter } from 'src/app/models/waiter';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  
 
-  constructor(private httpClient: HttpClient) {
+  public loggedUser;
+
+  constructor(private httpClient: HttpClient,private _waiterService: WaiterService) {
+
+    Storage.get({key:'loggedUser'}).then(result => 
+      {
+        console.log('email from mem', result.value);
+        return result.value;
+    }).then(email => {
+      if(email) {
+        const waiter = this._waiterService.findWaiterByEmail(email);
+        console.log(waiter);
+        this.loggedUser = waiter;
+      }
+    })
    }
 
   isLogged() {
@@ -21,13 +36,21 @@ export class AuthService {
   }
 
   authenticate(waiterCredentials: WaiterCredentials) {
-      if(waiterCredentials.firstName === 'Pawel' && waiterCredentials.lastName === 'Ataman') {
-        Storage.set({'key':'loggedUser','value':waiterCredentials.firstName});
+      const waiter: Waiter = this._waiterService.findWaiterByEmail(waiterCredentials.email);
+      if(!waiter) {
+        return of(false);
+      }
+      if(waiterCredentials.email === waiter.waiterEmail && waiterCredentials.password === waiter.waiterPassword) {
+        Storage.set({'key':'loggedUser','value':waiterCredentials.email});
         return of(true);
       } else return of(false);
   }
 
   logOut() {
     return Storage.remove({'key':'loggedUser'});
+  }
+
+  getLoggedWaiter() {
+    return this.loggedUser;   
   }
 }

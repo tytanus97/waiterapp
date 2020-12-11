@@ -1,8 +1,12 @@
 export class Waiter {
+ 
+ 
   constructor(
     private _waiterId: number,
     private _waiterFirstName: string,
-    private _waiterLastName: string
+    private _waiterLastName: string,
+    private _waiterEmail: string,
+    private _waiterPassword: string
   ) {}
 
   public get waiterLastName(): string {
@@ -22,5 +26,17 @@ export class Waiter {
   }
   public set waiterId(value: number) {
     this._waiterId = value;
+  }
+  public get waiterEmail(): string {
+    return this._waiterEmail;
+  }
+  public set waiterEmail(value: string) {
+    this._waiterEmail = value;
+  } 
+  public get waiterPassword(): string {
+    return this._waiterPassword;
+  }
+  public set waiterPassword(value: string) {
+    this._waiterPassword = value;
   }
 }

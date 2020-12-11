@@ -20,8 +20,8 @@ export class AuthenticatePage implements OnInit {
 
   ngOnInit() {
     this.authenticationForm = this.fb.group({
-      firstName:[null,{validators:[Validators.required]}],
-      lastName: [null,{validators:[Validators.required]}]
+      email:[null,{validators:[Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]}],
+      password: [null,{validators:[Validators.required]}]
     })
   }
 
@@ -32,9 +32,9 @@ export class AuthenticatePage implements OnInit {
 
   authenticateWaiter() {
       if(this.authenticationForm.valid && !this.authenticationForm.pending) {
-        const firstName = this.authenticationForm.get('firstName').value.trim();
-        const lastName = this.authenticationForm.get('lastName').value.trim();        
-        const waiterCredentials: WaiterCredentials = {firstName:firstName,lastName:lastName}
+        const email = this.authenticationForm.get('email').value.trim();
+        const password = this.authenticationForm.get('password').value.trim();        
+        const waiterCredentials: WaiterCredentials = {email:email,password:password}
         this.authService.authenticate(waiterCredentials).pipe(take(1)).subscribe(response => {
           if(!response) this.presentErrorLoginToast('Niepoprawne dane logowania!');
           else this.router.navigate(['/home'])
@@ -44,12 +44,12 @@ export class AuthenticatePage implements OnInit {
       }
   }
 
-  get firstName() {
-    return this.authenticationForm.get('firstName');
+  get email() {
+    return this.authenticationForm.get('email');
   }
 
-  get lastName() {
-    return this.authenticationForm.get('lastNmae');
+  get password() {
+    return this.authenticationForm.get('password');
   }
 
   async presentErrorLoginToast(message: string) {

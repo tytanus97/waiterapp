@@ -22,18 +22,25 @@
     </ion-card-header>
     <ion-card-content class="ion-no-padding">
       <ion-list class="ion-no-padding">
-      <ion-item lines="none">
+      <ion-item lines="none" class="stat-item">
         <ion-label  class="ion-no-margin">Utarg:</ion-label>
-        <span slot="end">{{total}} zł</span>
+        <span slot="end">{{statsMap.get('total')}} zł</span>
       </ion-item>
-      <ion-item lines="none">
+      <ion-item lines="none"  class="stat-item">
         <ion-label  class="ion-no-margin">Liczba zamówień:</ion-label>
-        <span slot="end">{{totalOrders}}</span>
+        <span slot="end">{{statsMap.get('totalOrders')}}</span>
       </ion-item>
-      <ion-item lines="none">
+      <ion-item lines="none"  class="stat-item">
         <ion-label class="ion-no-margin">Liczba zamówionych dań:</ion-label>
-        <span slot="end">{{totalOrderedDishes}}</span>
-        
+        <span slot="end">{{statsMap.get('totalOrderedDishes')}}</span>  
+      </ion-item>
+      <ion-item lines="none"  class="stat-item">
+        <ion-label class="ion-no-margin">Pierwsze zamówienie:</ion-label>
+        <span slot="end">{{statsMap.get('firstOrderTime')}}</span>  
+      </ion-item>
+      <ion-item lines="none"  class="stat-item">
+        <ion-label class="ion-no-margin">Ostatnie zamówienie:</ion-label>
+        <span slot="end">{{statsMap.get('lastOrderTime')}}</span>  
       </ion-item>
     </ion-list>
     </ion-card-content>

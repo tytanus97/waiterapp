@@ -18,8 +18,12 @@
         </ion-menu-toggle>
       </ion-list>
       <ion-menu-toggle>
-        <ion-item  class="ion-margin-top" (click) = "logout()"><ion-icon name="log-out" class="menuIcon"></ion-icon>Wyloguj</ion-item>
+        <ion-item (click) = "logout()"><ion-icon name="log-out" class="menuIcon"></ion-icon>Wyloguj</ion-item>
       </ion-menu-toggle>
+      <ion-item class="logged-waiter-label" color="primary">
+        <ion-icon name="person" class="menuIcon"></ion-icon>
+        <ion-label>Zalogowany jako {{loggedWaiter?.waiterFirstName}} {{loggedWaiter?.waiterLastName}}</ion-label>
+      </ion-item>
     </ion-content>
   </ion-menu>
   <ion-router-outlet id="content"></ion-router-outlet>
