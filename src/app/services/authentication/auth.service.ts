@@ -16,19 +16,8 @@ export class AuthService {
   public loggedUser;
 
   constructor(private httpClient: HttpClient,private _waiterService: WaiterService) {
-
-     Storage.get({key:'loggedUser'}).then(result => 
-      {
-        console.log('email from mem', result.value);
-        return result.value;
-    }).then(email => {
-      if(email) {
-        const waiter = this._waiterService.findWaiterByEmail(email);
-        console.log(waiter);
-        this.loggedUser = waiter;
-      }
-    })
-   }
+    this.fetchLoggedUser();
+  }
 
   isLogged() {
     return Storage.get({'key':'loggedUser'}).then(res => {
@@ -44,12 +33,27 @@ export class AuthService {
       }
       if(waiterCredentials.email === waiter.waiterEmail && waiterCredentials.password === waiter.waiterPassword) {
         Storage.set({'key':'loggedUser','value':waiterCredentials.email});
+        this.fetchLoggedUser();
         return of(true);
       } else return of(false);
   }
 
   logOut() {
     return Storage.remove({'key':'loggedUser'});
+  }
+
+  fetchLoggedUser() {
+    Storage.get({key:'loggedUser'}).then(result => 
+      {
+        console.log('email from mem', result.value);
+        return result.value;
+    }).then(email => {
+      if(email) {
+        const waiter = this._waiterService.findWaiterByEmail(email);
+        console.log(waiter);
+        this.loggedUser = waiter;
+      }
+    })
   }
 
   getLoggedWaiter() {
