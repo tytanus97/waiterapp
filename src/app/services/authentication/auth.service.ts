@@ -2,9 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { WaiterCredentials } from 'src/app/models/waiterCredentials';
-import { Storage } from '@capacitor/core';
+import { Plugins } from '@capacitor/core';
 import { WaiterService } from '../waiters/waiter.service';
 import { Waiter } from 'src/app/models/waiter';
+
+const { Storage } = Plugins;
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,7 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient,private _waiterService: WaiterService) {
 
-    Storage.get({key:'loggedUser'}).then(result => 
+     Storage.get({key:'loggedUser'}).then(result => 
       {
         console.log('email from mem', result.value);
         return result.value;
