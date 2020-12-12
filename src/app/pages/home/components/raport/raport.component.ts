@@ -1,8 +1,10 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { last } from 'lodash';
 import { Order } from 'src/app/models/order';
 import { OrdersService } from 'src/app/services/orders/orders.service';
 import Chart from 'chart.js';
+import { Subject } from 'rxjs';
+
 @Component({
   selector: 'app-raport',
   templateUrl: './raport.component.html',
@@ -14,10 +16,13 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
   public ordersByDate: Array<Order>;
   public categoryValues: Map<string, number>;
   
+  public dateChangedEvent: Subject<Array<Order>> = new Subject<Array<Order>>();
+
   public statsMap: Map<string,string>;
   public total;
   public totalOrders;
   public totalOrderedDishes;
+  
 
   @ViewChild('dropDownBtn') private dropDownBtn;
   @ViewChild('dropDownList') private dropDownList;
@@ -45,6 +50,9 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
     this.ordersByDate = this._ordersService.getAllOrdersByDateAndStatus(new Date(Date.parse(this.dateStr)), 'closed');
     this.categoryValues.clear();
     this.fetchStats();
+    console.log(this.ordersByDate);
+    console.log('date changed')
+    this.dateChangedEvent.next(this.ordersByDate);
   }
 
   public toggleDropDown() {
@@ -58,7 +66,7 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.dropped) {
       this.dropDownList.el.animate([
         { maxHeight: 0 },
-        { maxHeight: '300px' }
+        { maxHeight: '400px' }
       ], {
         duration: 600,
         fill: 'forwards',
@@ -105,66 +113,12 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
     this.statsMap.set('totalOrderedDishes',totalOrderedDishes.toString());
     this.statsMap.set('totalOrders',totalOrders.toString());
 
-    this.createCrowndessChart();
-
     
   }
 
   private formatNumber(num: number): string {
     return num > 9 ? num.toString():`0${num}`;
   }
-  
-  createCrowndessChart() {
-    const data = this.processDataForCrowndess();
-    const ctx = document.getElementById('crowdness');
-    const crowndnessChart = new Chart(ctx,{
-      type: 'bar',
-      data: {
-          labels: data.keys,
-          datasets: [{
-              label: '',
-              data: data.values,
-              backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)'
-              ],
-              borderColor: [
-                  'rgba(255, 99, 132, 1)'
-              ],
-              borderWidth: 1
-          }]
-      },
-      options: {
-          legend: {
-            labels: {
-              fontSize:0
-            }
-          },
-          scales: {
-              yAxes: [{
-                  ticks: {
-                      beginAtZero: true
-                  }
-              }]
-          }
-      }
-  });
-  }
-  processDataForCrowndess() {
-    const orderHourMap: Map<number,number> = new Map();
-
-    for(let i = 0;i<23;i++) {
-      const ordersInIndexHour = this.ordersByDate.filter(o => o.orderDate.getHours() === i);
-      orderHourMap.set(i,ordersInIndexHour.length);
-    }
-
-    const data  = {
-      keys:Array.from(orderHourMap.keys()).map(e => this.formatNumber(e)),
-      values: Array.from(orderHourMap.values())
-    }
-
-    return data;
-  }
-
 
   ngOnDestroy(): void {
     console.log('raport destoryed');

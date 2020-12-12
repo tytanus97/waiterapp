@@ -24,7 +24,7 @@
       <ion-list class="ion-no-padding">
       <ion-item lines="none" class="stat-item">
         <ion-label  class="ion-no-margin">Utarg:</ion-label>
-        <span slot="end">{{statsMap.get('total')}} zł</span>
+        <span slot="end">{{statsMap.get('total') | number:'2.2' }} zł</span>
       </ion-item>
       <ion-item lines="none"  class="stat-item">
         <ion-label  class="ion-no-margin">Liczba zamówień:</ion-label>
@@ -58,8 +58,7 @@
   </ion-card>
   <ion-slides scrollbar="true" [options]="slideOpts" ><!--  *ngIf="ordersByDate != undefined && ordersByDate.length > 0"> -->
     <ion-slide>
-      <h1>Ruch</h1>
-      <canvas id="crowdness"></canvas>
+      <app-crowdness-chart [dateChangedEvent] = "dateChangedEvent.asObservable()"></app-crowdness-chart>
     </ion-slide>
     <ion-slide>
       <h1>Slide 2</h1>
