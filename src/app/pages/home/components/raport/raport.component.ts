@@ -16,7 +16,8 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
   public ordersByDate: Array<Order>;
   public categoryValues: Map<string, number>;
   
-  public dateChangedEvent: Subject<Array<Order>> = new Subject<Array<Order>>();
+  public notifyCrowdnessChart: Subject<Array<Order>> = new Subject<Array<Order>>();
+  public notifyCategoriesChart:  Subject<Map<string, number>> = new Subject<Map<string, number>>();
 
   public statsMap: Map<string,string>;
   public total;
@@ -52,7 +53,8 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
     this.fetchStats();
     console.log(this.ordersByDate);
     console.log('date changed')
-    this.dateChangedEvent.next(this.ordersByDate);
+    this.notifyCrowdnessChart.next(this.ordersByDate);
+    this.notifyCategoriesChart.next(this.categoryValues);
   }
 
   public toggleDropDown() {
@@ -113,7 +115,6 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
     this.statsMap.set('totalOrderedDishes',totalOrderedDishes.toString());
     this.statsMap.set('totalOrders',totalOrders.toString());
 
-    
   }
 
   private formatNumber(num: number): string {

@@ -58,10 +58,10 @@
   </ion-card>
   <ion-slides scrollbar="true" [options]="slideOpts" ><!--  *ngIf="ordersByDate != undefined && ordersByDate.length > 0"> -->
     <ion-slide>
-      <app-crowdness-chart [dateChangedEvent] = "dateChangedEvent.asObservable()"></app-crowdness-chart>
+      <app-crowdness-chart style="width:100%;height:100%;" [dataObservable] = "notifyCrowdnessChart.asObservable()"></app-crowdness-chart>
     </ion-slide>
     <ion-slide>
-      <h1>Slide 2</h1>
+      <app-categories-chart style="width:100%;height:100%" [dataObservable] = "notifyCategoriesChart.asObservable()"></app-categories-chart>
     </ion-slide>
     <ion-slide>
       <h1>Slide 3</h1>

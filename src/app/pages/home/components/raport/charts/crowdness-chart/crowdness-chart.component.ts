@@ -11,14 +11,15 @@ export class CrowdnessChartComponent implements OnInit, OnDestroy{
   
   private crowdnessChart: Chart;
   private ordersByDate;
+
   @Input()
-  private dateChangedEvent: Observable<Array<Order>>;
-  private eventChanged$;
+  public dataObservable: Observable<Array<Order>>;
+  private data$;
   constructor() { }
  
 
   ngOnInit() {
-    this.eventChanged$ = this.dateChangedEvent.subscribe(e => {
+    this.data$ = this.dataObservable.subscribe(e => {
      console.log(e);
       this.ordersByDate = e;
       this.createCrowndessChart();
@@ -80,6 +81,6 @@ export class CrowdnessChartComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
-  this.eventChanged$.unsubscribe(); 
+  this.data$.unsubscribe(); 
  }
 }
