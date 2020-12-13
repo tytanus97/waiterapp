@@ -35,7 +35,6 @@ export class CrowdnessChartComponent implements OnInit, OnDestroy{
       data: {
           labels: data.keys,
           datasets: [{
-              label: '',
               data: data.values,
               backgroundColor: 'rgba(255, 99, 132, 0.2)',
               borderColor: 'rgba(255, 99, 132, 1)',
@@ -44,16 +43,17 @@ export class CrowdnessChartComponent implements OnInit, OnDestroy{
       },
       options: {
           legend: {
-            labels: {
-              fontSize:0
-            }
+            display:false
           },
           scales: {
-              yAxes: [{
-                  ticks: {
-                      beginAtZero: true
-                  }
-              }]
+            yAxes: [{
+              gridLines: {
+                display:false
+              },
+              ticks: {
+                display:false
+              }
+          }]
           }
       }
   });

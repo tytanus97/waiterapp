@@ -18,7 +18,6 @@ import { ClosedTabComponent } from './components/all-orders/components/closed-ta
 import { FinishedTabComponent } from './components/all-orders/components/finished-tab/finished-tab.component';
 import { CategoriesChartComponent } from "./components/raport/charts/categories-chart/categories-chart.component";
 import { CrowdnessChartComponent } from "./components/raport/charts/crowdness-chart/crowdness-chart.component";
-import { IncomeChartComponent } from "./components/raport/charts/income-chart/income-chart.component";
 import { RaportComponent } from './components/raport/raport.component';
 import { WaiterComponent } from './components/waiter/waiter.component';
 import { HomePageRoutingModule } from "./home-routing.module";
@@ -44,8 +43,7 @@ import { HomePage } from "./home.page";
     QuestionnaireComponent,
     AnimateDropdownDirective,
     CrowdnessChartComponent,
-    CategoriesChartComponent,
-    IncomeChartComponent
+    CategoriesChartComponent
   ],
   providers:[OrdersResolverService],
   exports:[SortByTimePipe,QuantityByStatusPipe]
