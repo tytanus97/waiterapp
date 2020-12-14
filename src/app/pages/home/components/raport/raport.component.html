@@ -4,6 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Raport</ion-title>
+    <ion-icon slot="end" name="download-outline" size="large" class="ion-padding-end" (click) = "generatePDF()"></ion-icon>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -16,7 +17,7 @@
       placeholder="Wybierz dzień"
 			[(ngModel)]="dateStr"></ion-datetime>
   </ion-item>
-  <ion-card *ngIf="ordersByDate != undefined && ordersByDate.length > 0;else noData">
+  <ion-card *ngIf="ordersByDate != undefined && ordersByDate.length > 0;else noData" >
     <ion-card-header>
       <ion-card-title class="ion-text-center">Statystyki</ion-card-title>
     </ion-card-header>
@@ -44,8 +45,8 @@
       </ion-item>
     </ion-list>
     </ion-card-content>
-    <ion-card-content  class="drop-down-list ion-no-margin ion-no-padding">
-      <ion-list #dropDownList>
+    <ion-card-content  id="primaryStats"  class="drop-down-list ion-no-margin ion-no-padding">
+      <ion-list #dropDownList id="dropDownList">
         <ion-item color="light" lines="none" *ngFor="let categoryValue of categoryValues | keyvalue">
           <ion-label  class="ion-no-margin">{{categoryValue.key | titlecase}}</ion-label>
           <span slot="end">{{categoryValue.value}}</span>
@@ -56,7 +57,7 @@
       </div>
     </ion-card-content>
   </ion-card>
-  <ion-slides scrollbar="true" [options]="slideOpts" ><!--  *ngIf="ordersByDate != undefined && ordersByDate.length > 0"> -->
+  <ion-slides scrollbar="true" [options]="slideOpts" *ngIf="ordersByDate != undefined && ordersByDate.length > 0">
     <ion-slide>
       <app-crowdness-chart style="width:100%;height:100%;" [dataObservable] = "notifyCrowdnessChart.asObservable()"></app-crowdness-chart>
     </ion-slide>

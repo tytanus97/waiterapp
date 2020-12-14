@@ -1,9 +1,12 @@
-import { AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { last } from 'lodash';
+import { AfterViewInit, Component, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Order } from 'src/app/models/order';
 import { OrdersService } from 'src/app/services/orders/orders.service';
-import Chart from 'chart.js';
 import { Subject } from 'rxjs';
+import { ToastController } from '@ionic/angular';
+import domtoimage from 'dom-to-image'
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-raport',
@@ -11,7 +14,7 @@ import { Subject } from 'rxjs';
   styleUrls: ['./raport.component.scss'],
 })
 export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
-  public dateStr;
+  public dateStr :string;
   public monthShort = ['Sty', 'Lut', 'Mar', 'Kwi', 'Maj', 'Cze', 'Lip', 'Sie', 'Wrz', 'Paz', 'Lis', 'Gru'];
   public ordersByDate: Array<Order>;
   public categoryValues: Map<string, number>;
@@ -28,6 +31,7 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('dropDownBtn') private dropDownBtn;
   @ViewChild('dropDownList') private dropDownList;
 
+
   private dropped = false;
 
   slideOpts = {
@@ -35,7 +39,9 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
     speed: 400
   };
 
-  constructor(private _ordersService: OrdersService) { }
+  constructor(private _ordersService: OrdersService,
+              private _toastCtrl: ToastController,
+              private renderer: Renderer2) { }
 
 
   ngAfterViewInit(): void {
@@ -49,12 +55,18 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   public dateChanged(event) {
     this.ordersByDate = this._ordersService.getAllOrdersByDateAndStatus(new Date(Date.parse(this.dateStr)), 'closed');
+    if(!this.ordersByDate || !(this.ordersByDate.length > 0)) return;
+
     this.categoryValues.clear();
     this.fetchStats();
     console.log(this.ordersByDate);
     console.log('date changed')
-    this.notifyCrowdnessChart.next(this.ordersByDate);
-    this.notifyCategoriesChart.next(this.categoryValues);
+
+    setTimeout(() => {
+      this.notifyCrowdnessChart.next(this.ordersByDate);
+      this.notifyCategoriesChart.next(this.categoryValues);
+    },0);
+    
   }
 
   public toggleDropDown() {
@@ -111,16 +123,115 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.statsMap.set('firstOrderTime',this.formatNumber(firstOrderTime.getHours()) + ':' + this.formatNumber(firstOrderTime.getMinutes()));
     this.statsMap.set('lastOrderTime',this.formatNumber(lastOrderTime.getHours()) + ':' + this.formatNumber(lastOrderTime.getMinutes()));
-    this.statsMap.set('total',total.toString());
+    this.statsMap.set('total',total.toFixed(2).toString());
     this.statsMap.set('totalOrderedDishes',totalOrderedDishes.toString());
     this.statsMap.set('totalOrders',totalOrders.toString());
-
   }
 
   private formatNumber(num: number): string {
     return num > 9 ? num.toString():`0${num}`;
   }
 
+  public async generatePDF() {
+    if(!this.dateStr || this.dateStr.length === 0) {
+      this.showWarningToast('Wybierz poprawną datę!');
+    } else {
+      let crowdnessDataURL;
+      let categoriesDataURL;
+      const crowdnessChart = document.getElementById('crowdness');
+      const categoriesChart = document.getElementById('categories');
+
+      await domtoimage.toSvg(crowdnessChart,{quality:0.95}).then( (dataURL) => {
+        crowdnessDataURL = dataURL;
+      })
+      await domtoimage.toSvg(categoriesChart).then( (dataURL) => {
+        categoriesDataURL = dataURL;
+      })
+
+      const date = this.dateStr.split('T')[0]
+      const currentDate = new Date();
+      const pdf = { 
+        content: [
+          {text:`Raport z dnia ${date}`,style:'header'},
+          {text: `Wygenerowano ${currentDate.toISOString().split('T')[0]} o godzinie ${this.formatNumber(currentDate.getHours())}:${this.formatNumber(currentDate.getMinutes())}`,style:'smallText'},
+          {
+            style:'table',
+            table: {
+              widths:[200,200],
+              headerRows:1,
+              body:[[{text:'Statystyki zamówień',style:'tableHeader',colSpan:2,alignment:'center'},{}],
+              ['Utarg',{text:this.statsMap.get('total')+ ' zł',alignment:'right'}],
+              ['Ilość zamówień',{text:this.statsMap.get('totalOrders'),alignment:'right'}],
+              ['Ilosc zamówionych dań',{text:this.statsMap.get('totalOrderedDishes'),alignment:'right'}],
+              ['Godzina pierwszego zamówienia',{text:this.statsMap.get('firstOrderTime'),alignment:'right'}],
+              ['Godzina ostatniego zamówienia',{text:this.statsMap.get('lastOrderTime'),alignment:'right'}]]
+            },
+          },
+          {
+            style:'table',
+            table: {
+              widths:[200,200],
+              headerRows:1,
+              body:this.formatDataForCategories()
+            },
+          }, 
+              { 
+                image:crowdnessDataURL,
+                width:300,
+              },
+              {
+                image:categoriesDataURL,
+                width:300
+              }
+        ],
+        styles: {
+          header: {
+            fontSize:18,
+            bold:true,
+            margin:[0,0,0,10]
+          },
+          table: {
+            margin: [0, 5, 10, 15]
+          },
+          graphHeader: {
+            margin:[0,15,0,0]
+          },
+          tableHeader: {
+            bold: true,
+            fontSize: 14,
+            color: 'black'
+          },
+          smallText: {
+            bold:false,
+            fontSize:9,
+            color:'black'
+          }
+        }
+      };
+      pdfMake.createPdf(pdf).download(`${currentDate.toISOString().split('T')[0]}.pdf`);
+    }
+  }
+  private formatDataForCategories() {
+    const arr = new Array<[any,any]>();
+    arr.push([{text:'Statystyki kategorii dań',style:'tableHeader',colSpan:2,alignment:'center'},{}]);
+    this.categoryValues.forEach((v,k) => {
+      arr.push([this.capitalize(k),{text:v.toString(),alignment:'right'}]);
+    });
+    return arr;
+  }
+  private async showWarningToast(message: string) {
+    const warningToast = await this._toastCtrl.create({
+      message:message,
+      animated:true,
+      duration:1500,
+      position:'bottom',
+      color:'warning'
+    });
+    await warningToast.present();
+  }
+  private capitalize(str: string):string {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
   ngOnDestroy(): void {
     console.log('raport destoryed');
   }

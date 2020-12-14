@@ -23,6 +23,7 @@ ion-card {
     background-color: var(--ion-color-light);
     position: relative;
     overflow: visible;
+    opacity:1;
     & > * {
       background-color: var(--ion-color-light);
     }
@@ -45,4 +46,3 @@ ion-card {
     }
   }
 }
-
