@@ -10,7 +10,7 @@ import { SortByTimePipe } from 'src/app/utils/pipes/sort-by-time/sort-by-time.pi
 import { OrdersResolverService } from 'src/app/utils/resolvers/orders-resolver/active-orders-resolver.service';
 import { AddOrderComponent } from "./components/add-order/add-order.component";
 import { ChooseDishComponent } from "./components/add-order/components/choose-dish/choose-dish.component";
-import { QuestionnaireComponent } from './components/add-order/components/questionnaire/questionnaire.component';
+import { RecommendDishComponent } from "./components/add-order/components/recommend-dish/recommend-dish.component";
 import { AllOrdersComponent } from "./components/all-orders/all-orders.component";
 import { ActiveTabComponent } from './components/all-orders/components/active-tab/active-tab.component';
 import { ClosedTabComponent } from './components/all-orders/components/closed-tab/closed-tab.component';
@@ -39,10 +39,10 @@ import { HomePage } from "./home.page";
     SortByTimePipe,
     QuantityByStatusPipe,
     CardActionBarAnimationDirective,
-    QuestionnaireComponent,
     AnimateDropdownDirective,
     CrowdnessChartComponent,
-    CategoriesChartComponent
+    CategoriesChartComponent,
+    RecommendDishComponent
   ],
   providers:[OrdersResolverService],
   exports:[SortByTimePipe,QuantityByStatusPipe]

@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon name="arrow-back-outline" slot="start" size="large" class="ion-margin-start" (click)="back()"></ion-icon>
+    <ion-title>Sugeruj danie</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+<ion-button color="primary" expand="block" class="ion-margin recommend-btn" fill="solid" (click) = "randomize()">Rekomenduj danie</ion-button>
+<ion-card *ngFor="let recommendedDish of recommendedDishArr">
+  <ion-card-header>
+    <ion-card-title>{{recommendedDish.dishName}}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+  
+  </ion-card-content>
+</ion-card>
+</ion-content>

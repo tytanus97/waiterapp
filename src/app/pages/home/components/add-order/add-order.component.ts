@@ -11,8 +11,8 @@ import { TablesService } from "src/app/services/tables/tables.service";
 import { WaiterService } from "src/app/services/waiters/waiter.service";
 import { ChooseDishComponent } from "./components/choose-dish/choose-dish.component";
 import 'lodash';
-import { QuestionnaireComponent } from './components/questionnaire/questionnaire.component';
 import { AuthService } from 'src/app/services/authentication/auth.service';
+import { RecommendDishComponent } from "./components/recommend-dish/recommend-dish.component";
 declare let _ :any;
 
 @Component({
@@ -68,14 +68,17 @@ export class AddOrderComponent implements OnInit {
     (await selectDish).present();
     (await selectDish).onDidDismiss().then((res) => {
       if (res.data) {
-        const orderedDish = new OrderedDish(
-          0,
-          res.data.dish,
-          "inProgress");
-        this.orderedDishes.push(orderedDish);
-        this.updateTotalPrice();
+        this.addToOrder(res.data);
       }
     });
+  }
+  addToOrder(data: any) {
+    const orderedDish = new OrderedDish(
+      0,
+      data.dish,
+      "inProgress");
+    this.orderedDishes.push(orderedDish);
+    this.updateTotalPrice();
   }
 
   public async showDishOption(orderedDish: OrderedDish) {
@@ -149,9 +152,9 @@ export class AddOrderComponent implements OnInit {
     .finally(() => console.log('toast presented'));
   }
 
-  public async openQuestionnaire() {
+  public async opeRecommendDish() {
 
-    const questionnaire = await this._modalCtrl.create({component:QuestionnaireComponent});
+    const questionnaire = await this._modalCtrl.create({component:RecommendDishComponent});
 
     await questionnaire.present();
     await questionnaire.onDidDismiss().then(res => {

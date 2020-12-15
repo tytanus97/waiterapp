@@ -100,6 +100,11 @@ export class DishesService {
      return this.dishesCategoriesExmplDataSet;
    }
 
+   public getRandomDish() {
+      const randomIndex = Math.floor(Math.random() * this.dishesExmplDataArray.length);
+      return this.dishesExmplDataArray[randomIndex];
+   }
+
    getAllDishesByCategory(dishCategoryName: string) {
      return this.dishesExmplDataArray.filter(d => d.dishCategory === dishCategoryName);
    }
