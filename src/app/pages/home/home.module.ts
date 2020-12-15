@@ -18,7 +18,6 @@ import { FinishedTabComponent } from './components/all-orders/components/finishe
 import { CategoriesChartComponent } from "./components/raport/charts/categories-chart/categories-chart.component";
 import { CrowdnessChartComponent } from "./components/raport/charts/crowdness-chart/crowdness-chart.component";
 import { RaportComponent } from './components/raport/raport.component';
-import { WaiterComponent } from './components/waiter/waiter.component';
 import { HomePageRoutingModule } from "./home-routing.module";
 import { HomePage } from "./home.page";
 
@@ -34,7 +33,6 @@ import { HomePage } from "./home.page";
     ActiveTabComponent,
     FinishedTabComponent,
     ClosedTabComponent,
-    WaiterComponent,
     RaportComponent,
     SortByTimePipe,
     QuantityByStatusPipe,
