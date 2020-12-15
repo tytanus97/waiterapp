@@ -2,11 +2,15 @@ import { AfterViewInit, Component, OnDestroy, OnInit, Renderer2, ViewChild } fro
 import { Order } from 'src/app/models/order';
 import { OrdersService } from 'src/app/services/orders/orders.service';
 import { Subject } from 'rxjs';
-import { ToastController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import domtoimage from 'dom-to-image'
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+import { Platform } from '@ionic/angular';
+
+import { Plugins, FilesystemDirectory, FilesystemEncoding } from '@capacitor/core';
+const { Filesystem } = Plugins;
 
 @Component({
   selector: 'app-raport',
@@ -41,7 +45,8 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private _ordersService: OrdersService,
               private _toastCtrl: ToastController,
-              private renderer: Renderer2) { }
+              private platform: Platform,
+              private alertCtrl: AlertController) { }
 
 
   ngAfterViewInit(): void {
@@ -134,7 +139,7 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public async generatePDF() {
     if(!this.dateStr || this.dateStr.length === 0) {
-      this.showWarningToast('Wybierz poprawną datę!');
+      this.showToast('Wybierz poprawną datę!','warning');
     } else {
       let crowdnessDataURL;
       let categoriesDataURL;
@@ -208,9 +213,47 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         }
       };
-      pdfMake.createPdf(pdf).download(`${currentDate.toISOString().split('T')[0]}.pdf`);
+
+      const alert = await this.alertCtrl.create({
+        message:'Zapisać raport pdf?',
+        buttons:[
+          {
+            text:'Nie',
+            role:'cancel'
+          },
+          {
+            text:'Tak',
+            handler:() => this.downloadPDF(pdfMake.createPdf(pdf))
+          }
+        ]
+      })
+      await alert.present();
     }
   }
+
+  private downloadPDF(pdf) {
+
+    if(this.platform.is('capacitor')) {
+    pdf.getBase64(async data => {
+      try {
+        const result =  await Filesystem.writeFile({
+          path:`${this.dateStr.split('T')[0]}.pdf`,
+          data,
+          directory:FilesystemDirectory.Documents,
+          recursive:true
+        });
+        this.showToast('Zapisano pdf w pamięci urządzenia','success');
+      } catch(e) {
+        this.showToast('Nie mozna zapisac pliku','danger')
+        console.error('Nie mozna zapisac pliku',e);   
+      }
+    })
+    } else {
+      pdf.download(`${this.dateStr.split('T')[0]}.pdf`);
+      this.showToast('Zapisano pdf w pamięci urządzenia','success');
+    }
+  }
+
   private formatDataForCategories() {
     const arr = new Array<[any,any]>();
     arr.push([{text:'Statystyki kategorii dań',style:'tableHeader',colSpan:2,alignment:'center'},{}]);
@@ -219,15 +262,16 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     return arr;
   }
-  private async showWarningToast(message: string) {
+  private async showToast(message: string,color) {
     const warningToast = await this._toastCtrl.create({
       message:message,
       animated:true,
       duration:1500,
       position:'bottom',
-      color:'warning'
+      color:color
     });
     await warningToast.present();
+    console.log('toast showed');
   }
   private capitalize(str: string):string {
     return str.charAt(0).toUpperCase() + str.slice(1);

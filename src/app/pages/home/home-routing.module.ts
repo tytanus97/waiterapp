@@ -8,7 +8,6 @@ import { ActiveTabComponent } from './components/all-orders/components/active-ta
 import { ClosedTabComponent } from './components/all-orders/components/closed-tab/closed-tab.component';
 import { FinishedTabComponent } from './components/all-orders/components/finished-tab/finished-tab.component';
 import { RaportComponent } from './components/raport/raport.component';
-import { WaiterComponent } from './components/waiter/waiter.component';
 import { HomePage } from './home.page';
 const routes: Routes = [
   {
@@ -46,11 +45,6 @@ const routes: Routes = [
           }
         ]
 
-      },
-      {
-        path: 'waiter',
-        canActivateChild: [AuthGuard],
-        component: WaiterComponent
       },
       {
         path: 'raport',
