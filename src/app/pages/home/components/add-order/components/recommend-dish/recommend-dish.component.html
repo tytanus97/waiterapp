@@ -4,8 +4,7 @@
     <ion-title>Sugeruj danie</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content>
-<ion-button color="primary" expand="block" class="ion-margin recommend-btn" fill="solid" (click) = "randomize()">Rekomenduj danie</ion-button>
+<ion-content class="ion-padding-bottom">
 <ion-card *ngFor="let recommendedDish of recommendedDishArr">
   <ion-card-header class="ion-no-padding ion-padding-start ion-padding-top ion-margin-bottom">
     <ion-card-title class="card-title">{{recommendedDish.dishName}}</ion-card-title>
@@ -17,8 +16,9 @@
       <span class="dish-price" slot="end">{{recommendedDish.dishPrice | number:'2.2'}} zł</span>
     </ion-item>
     <ion-item class="ion-no-margin ion-no-padding">
-    <ion-button slot="end" class="add-btn" color="secondary">Dodaj</ion-button>
+    <ion-button slot="end" class="add-btn" color="secondary" (click) = "add(recommendedDish)">Dodaj</ion-button>
   </ion-item>
   </ion-card-content>
 </ion-card>
+<ion-button color="primary" expand="block" class="ion-margin recommend-btn" fill="solid" (click) = "randomize()">Rekomenduj danie</ion-button>
 </ion-content>

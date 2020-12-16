@@ -158,7 +158,9 @@ export class AddOrderComponent implements OnInit {
 
     await questionnaire.present();
     await questionnaire.onDidDismiss().then(res => {
-      console.log('questionnaire dismissed');
+      console.log('recommended dismissed');
+      console.log(res.data);
+      this.addToOrder(res.data);
     });
   }
 
