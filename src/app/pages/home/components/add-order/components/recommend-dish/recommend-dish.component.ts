@@ -22,6 +22,7 @@ export class RecommendDishComponent implements OnInit {
     const randomizedDish = this._dishesService.getRandomDish()
     this.recommendedDishArr.push(randomizedDish);
     console.log(randomizedDish);
+    
   }
 
   public back() {
