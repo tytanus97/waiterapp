@@ -12,6 +12,9 @@ import { AuthService } from '../authentication/auth.service';
   providedIn: 'root'
 })
 export class OrdersService {
+  updateOrder(order: Order) {
+    throw new Error('Method not implemented.');
+  }
 
   private _ordersEmplDataArr: Array<Order>;
   private _readyToDeliver: BehaviorSubject<number>;

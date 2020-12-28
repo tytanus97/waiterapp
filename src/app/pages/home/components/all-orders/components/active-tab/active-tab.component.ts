@@ -46,6 +46,7 @@ export class ActiveTabComponent implements OnInit,OnDestroy {
             orderedDish.orderDishStatus = 'delivered';
             this.trigger = !this.trigger;
             this._checkIfAllDelivered(order);
+            this._ordersService.updateOrder(order);
           }
         }
       ]
@@ -54,7 +55,8 @@ export class ActiveTabComponent implements OnInit,OnDestroy {
   }
 
   private _checkIfAllDelivered(order: Order) {
-    const result = order.orderedDishes.filter(o => o.orderDishStatus !== 'delivered').length;
+    const result = order.orderedDishes.
+    filter(o => o.orderDishStatus !== 'delivered').length;
     if (!result) {
       order.orderStatus = 'finished';
       setTimeout(() => {
