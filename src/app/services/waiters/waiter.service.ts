@@ -9,7 +9,6 @@ export class WaiterService {
   private _waiters: Array<Waiter>;
 
   constructor() {
-    console.log('waiter service constructor');
     this._waiters = new Array<Waiter>();
     this._waiters.push(new Waiter(1,'Pawel','Ataman','pawel.ataman@email.com','kelner'));
   }

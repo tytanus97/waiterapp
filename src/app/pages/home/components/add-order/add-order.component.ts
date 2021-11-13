@@ -24,7 +24,6 @@ export class AddOrderComponent implements OnInit {
 
   @Input() data: Order;
 
-
   public tables: Array<number>;
   public chosenTable: number;
   public orderAnnotation: string;
@@ -154,12 +153,11 @@ export class AddOrderComponent implements OnInit {
 
   public async opeRecommendDish() {
 
-    const questionnaire = await this._modalCtrl.create({component:RecommendDishComponent});
-
-    await questionnaire.present();
-    await questionnaire.onDidDismiss().then(res => {
-      console.log('recommended dismissed');
-      console.log(res.data);
+    const modal = await this._modalCtrl.create(
+      {component:RecommendDishComponent
+      });
+    await modal.present();
+    await modal.onDidDismiss().then(res => {
       this.addToOrder(res.data);
     });
   }

@@ -15,14 +15,14 @@ export class ClosedTabComponent implements OnInit,OnDestroy {
   constructor(private _ordersService: OrdersService) { }
   
   ngOnInit() {
-    console.log('closed init')
+    
     this._closedOrders$ =  this._ordersService.closedOrders.asObservable().subscribe(result => {
       this.closedOrders = result;
     });
   }
 
   ngOnDestroy(): void {
-    console.log('closed destroy');
+   
     this._closedOrders$.unsubscribe();
   }
 

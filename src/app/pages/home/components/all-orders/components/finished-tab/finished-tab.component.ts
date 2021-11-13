@@ -25,7 +25,7 @@ export class FinishedTabComponent implements OnInit,OnDestroy {
   ) { }
  
   ngOnInit() {
-    console.log('finshed init');
+   
     this._finishedOrders$ = this._ordersService.finishedOrders.asObservable().subscribe(result => {
       this.finishedOrders = result;
     });
@@ -76,7 +76,6 @@ export class FinishedTabComponent implements OnInit,OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('finish destroy');
     this._finishedOrders$.unsubscribe();
   }
 }

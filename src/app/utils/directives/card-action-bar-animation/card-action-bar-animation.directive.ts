@@ -14,55 +14,30 @@ export class CardActionBarAnimationDirective {
   }
 
   private bindLongPress() {
-    const gesture = this._gestureCtrl.create({
-      el: this._el.nativeElement,
-      gestureName: 'long-press',
-      threshold:0,
+    const gesture = this._gestureCtrl.create({el: this._el.nativeElement,gestureName: 'long-press',threshold:0,
       onStart: () => {
-        console.log('long press start');
         this._longPressActive = true;
-        this.countPressDuration(0, this._el);
-      },
-      onEnd: () => {
-        this._longPressActive = false;
-        console.log('long press stop');
-      }
-    })
+        this.countPressDuration(0, this._el);},
+      onEnd: () => { 
+        this._longPressActive = false;}})
     gesture.enable(true);
   }
 
   private countPressDuration(pressDuration: number, element: ElementRef) {
-
     setTimeout(() => {
       if (this._longPressActive) {
-        console.log(pressDuration);
         pressDuration++;
         if (pressDuration > 3) {
           this._longPressActive = false;
           const lastChild = element.nativeElement.lastChild;
-          
           if (!this._dropDownActive) {
             this._dropDownActive = true;
-            lastChild.animate(
-              [
-                { transform: 'translateY(-100%)', height: 0, opacity: 0 },
-                {
-                  opacity: 0
-                },
-                { transform: 'translateY(0)', height: 'initial', opacity: 1 }
-              ],
-              {
-                duration: 500,
-                fill: 'forwards',
-                easing: 'ease-out'
-              });
-            
-          }
-        } else {
-          this.countPressDuration(pressDuration, element);
-        }
-      }
-    }, 300);
+            lastChild.animate([{ transform: 'translateY(-100%)', height: 0, opacity: 0 },
+                { opacity: 0},
+                { transform: 'translateY(0)', height: 'initial', opacity: 1 }],
+              {duration: 500,fill: 'forwards', easing: 'ease-out'});
+            }} else { this.countPressDuration(pressDuration, element);
+            }}}, 300);
   }
   @HostListener('click')
   private cardTouched() {

@@ -45,7 +45,7 @@ export class AuthService {
   fetchLoggedUser() {
     Storage.get({key:'loggedUser'}).then(result => 
       {
-        console.log('email from mem', result.value);
+        
         return result.value;
     }).then(email => {
       if(email) {

@@ -18,15 +18,14 @@ export class ActiveTabComponent implements OnInit,OnDestroy {
   public trigger: boolean = false;
   private _activeOrders$;
 
-  constructor(private _ordersService: OrdersService,
-
+  constructor(
+    private _ordersService: OrdersService,
     private _alertController: AlertController,
     private _modalCtrl: ModalController) {
   }
  
 
   ngOnInit() {
-    console.log('active init')
     this._activeOrders$ = this._ordersService.activeOrders.asObservable().subscribe(result => {
       this.activeOrders = result;
     });;
@@ -78,7 +77,6 @@ export class ActiveTabComponent implements OnInit,OnDestroy {
           this._ordersService.getRandomId(),
           res.data.dish,
           "inProgress");
-        console.log(orderedDish);
         order.orderedDishes.push(orderedDish);
         order.totalPrice += orderedDish.dish.dishPrice;
       }
@@ -86,7 +84,6 @@ export class ActiveTabComponent implements OnInit,OnDestroy {
   }
 
   public async editOrder(order: Order) {
-      console.log('edit clicked');
      const modal =  await this._modalCtrl.create({
        component:AddOrderComponent,
        componentProps: {
@@ -137,7 +134,7 @@ export class ActiveTabComponent implements OnInit,OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('active destroy')
+  
     this._activeOrders$.unsubscribe();
   }
 }
