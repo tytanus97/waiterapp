@@ -31,7 +31,7 @@ export class HomePage implements OnInit {
   }
   ngOnInit() {
       this.loggedWaiter = this._authService.getLoggedWaiter();
-      console.log(this.loggedWaiter);
+    
   }
 
   public navigate(url: string) {

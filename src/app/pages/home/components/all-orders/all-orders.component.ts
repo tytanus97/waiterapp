@@ -16,7 +16,6 @@ export class AllOrdersComponent implements OnInit, OnDestroy {
   constructor(private _ordersService: OrdersService, private _modalCtrl: ModalController) {
   }
   ngOnInit() {
-    console.log('initialized');
     this._readyToDeliver$ = this._ordersService.getReadyToDeliver().asObservable().subscribe(value => {
       this.readyToDeliver = value;
     });
@@ -28,12 +27,10 @@ export class AllOrdersComponent implements OnInit, OnDestroy {
     });
     await newOrderModal.present();
     newOrderModal.onDidDismiss().then(result => {
-      console.log('new ordrr modal dismissed');
     });
   }
 
   ngOnDestroy(): void {
-    console.log('destroyed all orders');
     this._readyToDeliver$.unsubscribe();
   }
 

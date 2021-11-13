@@ -56,7 +56,7 @@ export class DishesService {
     this.dishesExmplDataArray.push(new Dish(9,"Bostock",21.00,
     "2 sztuki chalki nasaczonej syrome",'lunch'));
     this.dishesExmplDataArray.push(new Dish(10,'Granola Bowl',18.00,
-    "Ochechy i nasiona praone na miodzie, jogurt naturalny, pulpa mango, owoce",'lunch'));
+    "Orzechy i nasiona prażone na miodzie, jogurt naturalny, pulpa mango, owoce",'lunch'));
 
     //desery
     this.dishesExmplDataArray.push(new Dish(11,"Nalesniki maslankowe",14.00,

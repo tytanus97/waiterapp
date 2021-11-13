@@ -25,6 +25,10 @@ export class RecommendDishComponent implements OnInit {
     
   }
 
+  public add(dish:Dish) {
+      this.modalCtrl.dismiss({dish});
+  }
+
   public back() {
     this.modalCtrl.dismiss();
   }

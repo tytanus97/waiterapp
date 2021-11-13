@@ -56,23 +56,17 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.categoryValues = new Map();
     this.statsMap = new Map();
-    console.log('raport init');
+    
   }
   public dateChanged(event) {
-    this.ordersByDate = this._ordersService.getAllOrdersByDateAndStatus(new Date(Date.parse(this.dateStr)), 'closed');
+    this.ordersByDate = this._ordersService
+    .getAllOrdersByDateAndStatus(new Date(Date.parse(this.dateStr)), 'closed');
     if(!this.ordersByDate || !(this.ordersByDate.length > 0)) return;
-
-    this.categoryValues.clear();
-    this.fetchStats();
-    console.log(this.ordersByDate);
-    console.log('date changed')
-
+    this.categoryValues.clear(); this.fetchStats();
     setTimeout(() => {
       this.notifyCrowdnessChart.next(this.ordersByDate);
       this.notifyCategoriesChart.next(this.categoryValues);
-    },0);
-    
-  }
+    },0);}
 
   public toggleDropDown() {
     this.dropDownBtn.el.animate([{},
@@ -109,14 +103,11 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
     let totalOrders = 0;
     let firstOrderTime = this.ordersByDate[0].orderDate;
     let lastOrderTime = this.ordersByDate[0].orderDate;
-
     this.ordersByDate.flatMap(o => {
       total += o.totalPrice;
       totalOrders++;
-
       if(firstOrderTime.getTime() > o.orderDate.getTime()) firstOrderTime = o.orderDate;
       if(lastOrderTime.getTime() < o.orderDate.getTime()) lastOrderTime = o.orderDate;
-
       return o.orderedDishes;
     }).forEach(od => {
       totalOrderedDishes++;
@@ -124,10 +115,10 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
       const value = this.categoryValues.get(category);
       this.categoryValues.set(category, value ? value + 1 : 1);
     });
-
-
-    this.statsMap.set('firstOrderTime',this.formatNumber(firstOrderTime.getHours()) + ':' + this.formatNumber(firstOrderTime.getMinutes()));
-    this.statsMap.set('lastOrderTime',this.formatNumber(lastOrderTime.getHours()) + ':' + this.formatNumber(lastOrderTime.getMinutes()));
+    this.statsMap.set('firstOrderTime',this.formatNumber(firstOrderTime.getHours()) +
+                               ':' + this.formatNumber(firstOrderTime.getMinutes()));
+    this.statsMap.set('lastOrderTime',this.formatNumber(lastOrderTime.getHours())
+                               + ':' + this.formatNumber(lastOrderTime.getMinutes()));
     this.statsMap.set('total',total.toFixed(2).toString());
     this.statsMap.set('totalOrderedDishes',totalOrderedDishes.toString());
     this.statsMap.set('totalOrders',totalOrders.toString());
@@ -143,22 +134,20 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       let crowdnessDataURL;
       let categoriesDataURL;
+
       const crowdnessChart = document.getElementById('crowdness');
       const categoriesChart = document.getElementById('categories');
-
-      await domtoimage.toSvg(crowdnessChart,{quality:0.95}).then( (dataURL) => {
-        crowdnessDataURL = dataURL;
-      })
-      await domtoimage.toSvg(categoriesChart).then( (dataURL) => {
-        categoriesDataURL = dataURL;
-      })
+      await domtoimage.toSvg(crowdnessChart).then(dataURL => crowdnessDataURL = dataURL)
+      await domtoimage.toSvg(categoriesChart).then(dataURL => categoriesDataURL = dataURL);
 
       const date = this.dateStr.split('T')[0]
       const currentDate = new Date();
       const pdf = { 
         content: [
           {text:`Raport z dnia ${date}`,style:'header'},
-          {text: `Wygenerowano ${currentDate.toISOString().split('T')[0]} o godzinie ${this.formatNumber(currentDate.getHours())}:${this.formatNumber(currentDate.getMinutes())}`,style:'smallText'},
+          {text: `Wygenerowano ${currentDate.toISOString().split('T')[0]} o godzinie
+           ${this.formatNumber(currentDate.getHours())}:${this.formatNumber(currentDate.getMinutes())}`
+           ,style:'smallText'},
           {
             style:'table',
             table: {
@@ -232,7 +221,6 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private downloadPDF(pdf) {
-
     if(this.platform.is('capacitor')) {
     pdf.getBase64(async data => {
       try {
@@ -240,14 +228,14 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
           path:`${this.dateStr.split('T')[0]}.pdf`,
           data,
           directory:FilesystemDirectory.Documents,
+
           recursive:true
         });
         this.showToast('Zapisano pdf w pamięci urządzenia','success');
       } catch(e) {
         this.showToast('Nie mozna zapisac pliku','danger')
         console.error('Nie mozna zapisac pliku',e);   
-      }
-    })
+      }})
     } else {
       pdf.download(`${this.dateStr.split('T')[0]}.pdf`);
       this.showToast('Zapisano pdf w pamięci urządzenia','success');
@@ -271,13 +259,12 @@ export class RaportComponent implements OnInit, AfterViewInit, OnDestroy {
       color:color
     });
     await warningToast.present();
-    console.log('toast showed');
+   
   }
   private capitalize(str: string):string {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
   ngOnDestroy(): void {
-    console.log('raport destoryed');
   }
 }
 

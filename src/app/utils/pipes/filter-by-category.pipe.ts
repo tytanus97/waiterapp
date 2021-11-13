@@ -10,5 +10,4 @@ export class FilterByCategoryPipe implements PipeTransform {
     if(!value || !dishCategory || dishCategory === 'wszystkie') return value;
     return value.filter((kv) => kv.key === dishCategory);
   }
-
 }

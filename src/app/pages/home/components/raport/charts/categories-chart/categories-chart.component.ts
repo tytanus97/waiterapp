@@ -24,9 +24,7 @@ export class CategoriesChartComponent implements OnInit {
   }
   createCategoriesChart() {
     if(this.categoryChart) this.categoryChart.destroy();
-
     const data = this.processDataForCategories();
-
     const ctx = document.getElementById('categories');
     this.categoryChart = new Chart(ctx,{
       type: 'doughnut',
@@ -66,15 +64,10 @@ export class CategoriesChartComponent implements OnInit {
                   },
                   ticks: {
                       display: false
-                  }
-              }]
-          }
-      }
-  });
+                  }}]} }});
   }
 
   private processDataForCategories() {
-    console.log(Array.from(this.categoryValues.keys()));
     return {
       labels:Array.from(this.categoryValues.keys()),
       values:Array.from(this.categoryValues.values())

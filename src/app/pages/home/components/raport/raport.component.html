@@ -10,7 +10,8 @@
 <ion-content>
   <ion-item>
     <ion-label >Raport z dnia: </ion-label>
-    <ion-datetime slot="end"  #datePicker doneText = "Wybierz" cancelText="Anuluj" [monthShortNames] = "monthShort"
+    <ion-datetime slot="end"  #datePicker doneText = "Wybierz"
+     cancelText="Anuluj" [monthShortNames] = "monthShort"
 			text-center
 			(ionChange)="dateChanged($event)"
       displayFormat="DD MMM, YYYY"
@@ -59,10 +60,12 @@
   </ion-card>
   <ion-slides scrollbar="true" [options]="slideOpts" *ngIf="ordersByDate != undefined && ordersByDate.length > 0">
     <ion-slide>
-      <app-crowdness-chart style="width:100%;height:100%;" [dataObservable] = "notifyCrowdnessChart.asObservable()"></app-crowdness-chart>
+      <app-crowdness-chart style="width:100%;height:100%;" [dataObservable] = "notifyCrowdnessChart.asObservable()">
+      </app-crowdness-chart>
     </ion-slide>
     <ion-slide>
-      <app-categories-chart style="width:100%;height:100%" [dataObservable] = "notifyCategoriesChart.asObservable()"></app-categories-chart>
+      <app-categories-chart style="width:100%;height:100%" [dataObservable] = "notifyCategoriesChart.asObservable()">
+      </app-categories-chart>
     </ion-slide>
   </ion-slides>
 </ion-content>
